@@ -1,12 +1,15 @@
 package com.example.fei.zmap_test;
 
 import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -20,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout top;
     private FrameLayout bottom;
     private String TAG = "MainActivity";
+    private MapView mapView;
+    private AMap aMap;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,27 +48,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
         top = (LinearLayout) findViewById(R.id.top_view);
-        MapView mapView = (MapView) findViewById(R.id.map);
+        mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
-        final AMap aMap = mapView.getMap();
+        aMap = mapView.getMap();
 
+        addListener();
+    }
+    //为每个Button添加监听器
+    public void addListener(){
         //缩放
-        Button zoom_in = (Button) findViewById(R.id.zoom_in);
+        ImageButton zoom_in = (ImageButton) findViewById(R.id.zoom_in);
         zoom_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 aMap.animateCamera(CameraUpdateFactory.zoomIn());
             }
         });
-        Button zoom_out = (Button) findViewById(R.id.zoom_out);
+        ImageButton zoom_out = (ImageButton) findViewById(R.id.zoom_out);
         zoom_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 aMap.animateCamera(CameraUpdateFactory.zoomOut());
             }
         });
-        */
+        //个人信息
+        ImageButton me = (ImageButton) findViewById(R.id.me);
+        me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO start profile activity
+            }
+        });
     }
 }

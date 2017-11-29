@@ -9,7 +9,6 @@
             <!--填充颜色-->
             <solid android:color="@color/colorWhite"/>
             <!--内容与该圆形的间距-->
-            <stroke android:color="@color/colorGray" android:width="0.8dp"/>
             <padding android:bottom="3dp" android:left="3dp" android:right="3dp" android:top="3dp"/>
             <corners
                 android:radius="10dp"/>
@@ -22,7 +21,6 @@
             android:shape="rectangle">
             <solid android:color="@color/colorGray"/>
             <padding android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp"/>
-            <stroke android:color="@color/colorGray" android:width="0.8dp"/>
             <corners
             android:radius="10dp"/>
         </shape>

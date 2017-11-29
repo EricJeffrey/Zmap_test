@@ -5,7 +5,6 @@
     android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--
     <com.amap.api.maps.MapView
         android:id="@+id/map"
         android:orientation="vertical"
@@ -13,14 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </com.amap.api.maps.MapView>
-    !-->
-    <LinearLayout
-        android:orientation="vertical"
-        android:background="@color/colorUseless"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </LinearLayout>
-
     <LinearLayout
         android:id="@+id/top_view"
         android:orientation="vertical"
@@ -34,12 +25,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageButton
+                android:id="@+id/me"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="35dp"
-                android:minHeight="35dp"
-                android:layout_marginTop="@dimen/common_margin"
-                android:layout_marginBottom="@dimen/common_margin"
+                android:minWidth="@dimen/button_size"
+                android:minHeight="@dimen/button_size"
                 android:background="@drawable/oval"
                 android:src="@drawable/headicon"/>
             <TextView
@@ -58,13 +48,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/oval"
                 android:src="@drawable/microphone"
-                android:minHeight="35dp"
-                android:minWidth="35dp"
-                android:layout_marginTop="@dimen/common_margin"
-                android:layout_marginBottom="@dimen/common_margin"
+                android:minHeight="@dimen/button_size"
+                android:minWidth="@dimen/button_size"
                 android:layout_gravity="end|center"
                 />
         </LinearLayout>
+
         <!--横排圆形和圆角矩形按钮!-->
         <RelativeLayout
             android:orientation="horizontal"
@@ -75,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/oval"
+                android:elevation="@dimen/elevation"
                 android:minHeight="@dimen/button_size"
                 android:minWidth="@dimen/button_size"
                 android:src="@drawable/message"
@@ -83,12 +73,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/map"
+                android:elevation="@dimen/elevation"
                 android:background="@drawable/round_rectangle"
                 android:minHeight="@dimen/button_size"
                 android:minWidth="@dimen/button_size"
                 android:layout_alignParentEnd="true"
                 />
         </RelativeLayout>
+
         <!--竖排五个按钮!-->
         <LinearLayout
             android:orientation="vertical"
@@ -110,7 +102,7 @@
                 />
             <View
                 android:layout_width="@dimen/button_size"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_gravity="end"
                 android:background="@drawable/div38">
             </View>
@@ -125,7 +117,7 @@
                 />
             <View
                 android:layout_width="@dimen/button_size"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_gravity="end"
                 android:background="@drawable/div38">
             </View>
@@ -140,7 +132,7 @@
                 />
             <View
                 android:layout_width="@dimen/button_size"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_gravity="end"
                 android:background="@drawable/div38">
             </View>
@@ -155,7 +147,7 @@
                 />
             <View
                 android:layout_width="@dimen/button_size"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_gravity="end"
                 android:background="@drawable/div38">
             </View>
@@ -169,6 +161,7 @@
                 android:layout_gravity="end"
                 />
         </LinearLayout>
+
         <!--+，-缩放按钮!-->
         <LinearLayout
             android:orientation="vertical"
@@ -177,9 +170,10 @@
             android:background="@drawable/round_rectangle"
             android:padding="0dp"
             android:layout_gravity="end"
-            android:layout_marginTop="35dp"
-            android:layout_marginBottom="35dp">
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp">
             <ImageButton
+                android:id="@+id/zoom_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/button_size"
@@ -190,11 +184,12 @@
                 />
             <View
                 android:layout_width="@dimen/button_size"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_gravity="end"
                 android:background="@drawable/div38">
             </View>
             <ImageButton
+                android:id="@+id/zoom_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/button_size"
@@ -204,6 +199,7 @@
                 android:layout_gravity="end"
                 />
         </LinearLayout>
+
         <!--路线，定位，家 按钮!-->
         <LinearLayout
             android:orientation="vertical"
@@ -218,6 +214,7 @@
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/button_size"
                     android:minWidth="@dimen/button_size"
+                    android:elevation="@dimen/elevation"
                     android:src="@drawable/whereme"
                     android:background="@drawable/oval"/>
                 <ImageButton
@@ -229,6 +226,7 @@
                     android:background="@drawable/half_round_rectangle"
                     android:textSize="20sp"
                     android:layout_centerVertical="true"
+                    android:elevation="@dimen/elevation"
                     android:src="@drawable/route"/>
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -237,19 +235,34 @@
                     android:minWidth="@dimen/button_size"
                     android:src="@drawable/target"
                     android:background="@drawable/oval"
+                    android:elevation="@dimen/elevation"
                     android:layout_alignParentEnd="true"/>
             </RelativeLayout>
             <!--搜索附近框!-->
-            <TextView
-                android:clickable="true"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/common_margin"
-                android:backgroundTint="@color/colorWhite"
-                android:background="@drawable/round_rectangle"
-                android:textSize="20sp"
-                android:gravity="center_vertical"
-                android:hint="搜索附近"/>
+                android:background="@drawable/round_rectangle">
+                <ImageView
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:minHeight="@dimen/button_size"
+                    android:minWidth="@dimen/button_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/logo"/>
+                <TextView
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="20sp"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:hint="搜索附近"/>
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 </FrameLayout>
