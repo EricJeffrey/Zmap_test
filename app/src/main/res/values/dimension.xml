@@ -4,4 +4,5 @@
     <dimen name="button_size">40dp</dimen>
     <dimen name="common_margin">10dp</dimen>
     <dimen name="round_size">10dp</dimen>
+    <dimen name="elevation">3dp</dimen>
 </resources>

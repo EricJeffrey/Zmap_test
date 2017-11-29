@@ -30,24 +30,27 @@
         <!--个人信息按钮，搜索框!-->
         <LinearLayout
             android:orientation="horizontal"
-            android:background="@color/colorWhite"
+            android:background="@drawable/round_rectangle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:minWidth="35dp"
                 android:minHeight="35dp"
                 android:layout_marginTop="@dimen/common_margin"
                 android:layout_marginBottom="@dimen/common_margin"
                 android:background="@drawable/oval"
                 android:src="@drawable/headicon"/>
-            <EditText
+            <TextView
                 android:id="@+id/search_box"
+                android:clickable="true"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
                 android:hint="查找地点、公交、地铁"
                 android:layout_gravity="center"/>
             <ImageButton
@@ -91,6 +94,8 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_rectangle"
+            android:padding="0dp"
             android:layout_marginTop="@dimen/common_margin"
             android:layout_marginBottom="@dimen/common_margin"
             android:layout_gravity="end">
@@ -167,11 +172,13 @@
         <!--+，-缩放按钮!-->
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/button_size"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_rectangle"
+            android:padding="0dp"
             android:layout_gravity="end"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp">
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="35dp">
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -234,10 +241,14 @@
             </RelativeLayout>
             <!--搜索附近框!-->
             <TextView
+                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/common_margin"
                 android:backgroundTint="@color/colorWhite"
+                android:background="@drawable/round_rectangle"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
                 android:hint="搜索附近"/>
         </LinearLayout>
     </LinearLayout>
