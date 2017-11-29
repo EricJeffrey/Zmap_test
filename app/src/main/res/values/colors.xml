@@ -10,4 +10,6 @@
     <color name="colorGray">#AAAAAA</color>
     <color name="colorUseless">#E4F1EA</color>
     <color name="colorLightGray">#DCDCDC</color>
+    <color name="colorRiceWhite">#EFF1F3</color>
+    <color name="colorActionBar">#FAFAFA</color>
 </resources>
