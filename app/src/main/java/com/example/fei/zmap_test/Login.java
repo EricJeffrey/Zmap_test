@@ -13,17 +13,17 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_phone);
         getSupportActionBar().hide();
 
-        ImageButton back = (ImageButton) findViewById(R.id.login_back);
+        ImageButton back = (ImageButton) findViewById(R.id.login_phone_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        TextView register = (TextView) findViewById(R.id.go_register);
+        TextView register = (TextView) findViewById(R.id.login_phone_go_register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
         });
 
         //按钮目前只有返回功能
-        Button login_button = (Button) findViewById(R.id.login_button);
+        Button login_button = (Button) findViewById(R.id.login_phone_button);
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
