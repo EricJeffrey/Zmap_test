@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/profile_head1"/>
+                android:src="@drawable/profile_head"/>
             <TextView
                 android:id="@+id/login_register_text"
                 android:clickable="true"
