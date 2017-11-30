@@ -40,6 +40,5 @@ public class Profile extends AppCompatActivity {
     public void login(){
         Intent intent = new Intent(Profile.this, Login.class);
         startActivity(intent);
-        finish();
     }
 }
