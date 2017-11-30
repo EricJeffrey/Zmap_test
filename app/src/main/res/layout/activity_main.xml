@@ -36,7 +36,8 @@
                 android:minWidth="@dimen/button_size"
                 android:minHeight="@dimen/button_size"
                 android:background="@drawable/oval"
-                android:src="@drawable/headicon"/>
+                android:src="@drawable/headicon"
+                android:contentDescription="@string/app_name"/>
             <TextView
                 android:id="@+id/search_box"
                 android:clickable="true"
