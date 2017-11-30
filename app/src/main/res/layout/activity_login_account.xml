@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorActionBar">
         <ImageButton
-            android:id="@+id/login_back"
+            android:id="@+id/login_account_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/button_size"
@@ -27,7 +27,7 @@
             android:textSize="20sp"
             android:text="登录"/>
         <TextView
-            android:id="@+id/go_register"
+            android:id="@+id/login_accout_go_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common_margin"
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:hint="手机号码"/>
+            android:hint="手机号/邮箱/用户名"/>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -59,17 +59,11 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:hint="验证码"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin"
-                android:textSize="20sp"
-                android:text="发送验证码"/>
+                android:hint="密码"/>
         </LinearLayout>
     </LinearLayout>
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/login_account_button"
         android:layout_margin="@dimen/common_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
