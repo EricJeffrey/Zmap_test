@@ -27,7 +27,7 @@ public class Login_account extends AppCompatActivity {
                 finish();
             }
         });
-        ((TextView)findViewById(R.id.find_password)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.find_password)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Login_account.this, "我们会找到你的密码的", Toast.LENGTH_SHORT).show();

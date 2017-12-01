@@ -16,6 +16,7 @@ public class Register extends AppCompatActivity {
         getSupportActionBar().hide();
 
         ((TextView)findViewById(R.id.title_text)).setText("注册");
+        ((TextView)findViewById(R.id.go_register)).setText("");
 
         //按钮目前只有返回功能
         Button confirm_button = (Button) findViewById(R.id.register_button);
