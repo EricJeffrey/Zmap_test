@@ -34,8 +34,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Profile" />
-        <activity android:name=".Login" />
-        <activity android:name=".Register"></activity>
+        <activity android:name=".Login_phone" />
+        <activity android:name=".Register" />
+        <activity android:name=".Login_account"></activity>
     </application>
 
 </manifest>
