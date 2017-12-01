@@ -5,42 +5,11 @@
     android:layout_height="match_parent"
     android:background="@color/colorRiceWhite">
 
-    <!--手机号码框!-->
-    <RelativeLayout
+    <com.example.fei.zmap_test.Login_title_layout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorActionBar">
-        <ImageButton
-            android:id="@+id/login_phone_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/button_size"
-            android:minWidth="@dimen/button_size"
-            android:layout_margin="@dimen/common_margin"
-            android:layout_centerVertical="true"
-            android:background="@drawable/oval"
-            android:src="@drawable/offline_back"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common_margin"
-            android:layout_centerVertical="true"
-            android:layout_centerInParent="true"
-            android:textSize="20sp"
-            android:text="登录"/>
-        <TextView
-            android:id="@+id/login_phone_go_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common_margin"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:textSize="20sp"
-            android:textColor="@color/colorSkyBlue"
-            android:text="注册"/>
-    </RelativeLayout>
+        android:layout_height="wrap_content"/>
 
-    <!--!-->
+    <!--手机号码框,验证码与发送框!-->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -72,6 +41,8 @@
                 android:text="发送验证码"/>
         </LinearLayout>
     </LinearLayout>
+
+    <!--按钮!-->
     <Button
         android:id="@+id/login_phone_button"
         android:layout_margin="@dimen/common_margin"
@@ -81,4 +52,13 @@
         android:background="@drawable/round_rectangle"
         android:textSize="20sp"
         android:text="登录"/>
+
+    <!--账号密码登录文字!-->
+    <TextView
+        android:id="@+id/go_login_account_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_margin"
+        android:textColor="@color/colorSkyBlue"
+        android:text="账号密码登录"/>
 </LinearLayout>

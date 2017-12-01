@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class Register extends AppCompatActivity {
 
@@ -14,13 +15,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
 
-        ImageButton back = (ImageButton) findViewById(R.id.register_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        ((TextView)findViewById(R.id.title_text)).setText("注册");
 
         //按钮目前只有返回功能
         Button confirm_button = (Button) findViewById(R.id.register_button);

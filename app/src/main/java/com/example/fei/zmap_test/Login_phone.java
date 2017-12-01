@@ -16,18 +16,12 @@ public class Login_phone extends AppCompatActivity {
         setContentView(R.layout.activity_login_phone);
         getSupportActionBar().hide();
 
-        ImageButton back = (ImageButton) findViewById(R.id.login_phone_back);
-        back.setOnClickListener(new View.OnClickListener() {
+        ((TextView)findViewById(R.id.title_text)).setText("手机号登录");
+        TextView go_login_account = (TextView) findViewById(R.id.go_login_account_text);
+        go_login_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-            }
-        });
-        TextView register = (TextView) findViewById(R.id.login_phone_go_register);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Login_phone.this, Register.class);
+                Intent intent = new Intent(Login_phone.this, Login_account.class);
                 startActivity(intent);
                 finish();
             }

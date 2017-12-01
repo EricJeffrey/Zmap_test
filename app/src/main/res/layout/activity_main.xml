@@ -26,7 +26,7 @@
         <LinearLayout
             android:clickable="true"
             android:orientation="horizontal"
-            android:background="@drawable/round_rectangle"
+            android:background="@drawable/round_rectangle_not_selectable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageButton
@@ -254,7 +254,7 @@
                 android:layout_marginTop="@dimen/common_margin"
                 android:padding="0dp"
                 android:clickable="false"
-                android:background="@drawable/round_rectangle">
+                android:background="@drawable/round_rectangle_not_selectable">
                 <ImageView
                     android:clickable="true"
                     android:layout_width="@dimen/button_size"
