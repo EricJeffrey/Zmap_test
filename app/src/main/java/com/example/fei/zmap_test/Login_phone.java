@@ -17,22 +17,23 @@ public class Login_phone extends AppCompatActivity {
         getSupportActionBar().hide();
 
         ((TextView)findViewById(R.id.title_text)).setText("手机号登录");
-        TextView go_login_account = (TextView) findViewById(R.id.go_login_account_text);
-        go_login_account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Login_phone.this, Login_account.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        addListener(R.id.go_login_account_text);
 
         //按钮目前只有返回功能
-        Button login_button = (Button) findViewById(R.id.login_phone_button);
-        login_button.setOnClickListener(new View.OnClickListener() {
+        addListener(R.id.login_phone_button);
+    }
+    public void addListener(final int res){
+        findViewById(res).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                switch (res){
+                    case R.id.go_login_account_text:
+                        Intent intent = new Intent(Login_phone.this, Login_account.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.login_phone_button:finish();break;
+                }
             }
         });
     }
