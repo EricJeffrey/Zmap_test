@@ -26,16 +26,18 @@
             android:value="ad658669a3d6ce7a79e7c0a0b93c444a" />
 
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Profile" />
         <activity android:name=".Login_phone" />
         <activity android:name=".Register" />
-        <activity android:name=".Login_account"></activity>
+        <activity android:name=".Login_account" />
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
     </application>
 
 </manifest>
