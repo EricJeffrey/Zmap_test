@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 public class Profile extends AppCompatActivity {
 
@@ -15,30 +16,27 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         getSupportActionBar().hide();
 
-        ImageButton back = (ImageButton) findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        TextView login_register = (TextView) findViewById(R.id.login_register_text);
-        login_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
-        ImageButton me = (ImageButton) findViewById(R.id.show_me);
-        me.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
+        addListener(R.id.back);
+        addListener(R.id.login_register_text);
+        addListener(R.id.show_me);
+
+
+
     }
     public void login(){
         Intent intent = new Intent(Profile.this, Login_phone.class);
         startActivity(intent);
+    }
+    public void addListener(final int res){
+        findViewById(res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (res){
+                    case R.id.back:finish();break;
+                    case R.id.login_register_text:login();break;
+                    case R.id.show_me:login();break;
+                }
+            }
+        });
     }
 }
