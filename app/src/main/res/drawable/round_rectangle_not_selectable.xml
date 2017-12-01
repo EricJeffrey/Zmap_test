@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false">
+        <!--绘制 圆形-->
+        <shape
+            android:shape="rectangle">
+            <!--填充颜色-->
+            <solid android:color="@color/colorWhite"/>
+            <!--内容与该圆形的间距-->
+            <padding android:bottom="3dp" android:left="3dp" android:right="3dp" android:top="3dp"/>
+            <corners
+                android:radius="10dp"/>
+        </shape>
+    </item>
+</selector>
