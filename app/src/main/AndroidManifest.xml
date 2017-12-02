@@ -23,8 +23,9 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="ad658669a3d6ce7a79e7c0a0b93c444a" />
-
+            android:value="d75a03af5e5b6dd7d52cb0ae5437a718"
+            />
+        <service android:name="com.amap.api.location.APSService"></service>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -19,6 +19,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    defaultConfig {
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64"
+        }
+    }
 }
 
 dependencies {
@@ -29,4 +36,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/AMap_Search_V5.5.0_20171107.jar')
     compile files('libs/Android_Map3D_SDK_V5.5.0_20171107.jar')
+    implementation files('libs/AMap_Location_V3.6.1_20171012.jar')
 }
