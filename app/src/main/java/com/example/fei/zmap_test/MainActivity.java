@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.MyLocationStyle;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity{
     private String TAG = "MainActivity";
     private MapView mapView;
     private AMap aMap;
-    private boolean IsFirstLoc = true;
+    private UiSettings mUiSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity{
         Information();      //个人信息
         InitLoc();          //定位服务
         SetEdgeBar();       //显示&隐藏地图功能按钮
-
+        SetUI();            //地图原始UI布局设置
     }
     @Override
     protected void onDestroy() {
@@ -91,16 +92,14 @@ public class MainActivity extends AppCompatActivity{
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）默认执行此种模式。
         myLocationStyle.interval(20000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
-        myLocationStyle.strokeColor(Color.argb(00,00,00,00));//设置定位蓝点精度圆圈的边框颜色的方法。
-        myLocationStyle.radiusFillColor(Color.argb(00,00,00,00));//设置定位蓝点精度圆圈的填充颜色的方法。
+        myLocationStyle.strokeColor(Color.argb(80,00,00,205));//设置定位蓝点精度圆圈的边框颜色的方法。
+        myLocationStyle.radiusFillColor(Color.argb(50,00,191,255));//设置定位蓝点精度圆圈的填充颜色的方法。
         BitmapDescriptorFactory mBipmapFactory =new BitmapDescriptorFactory();
         myLocationStyle.myLocationIcon(mBipmapFactory.fromResource(R.drawable.location64));//设置定位蓝点的icon图标方法，需要用到BitmapDescriptor类对象作为参数。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
         aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
     }
-
-
 
 
     //个人信息
@@ -115,6 +114,15 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    //地图原始UI布局设置
+    public void SetUI(){
+        mUiSettings = aMap.getUiSettings();         //实例化UiSettings类对象
+        mUiSettings.setZoomControlsEnabled(false);  //不显示原始缩放按钮
+        mUiSettings.setCompassEnabled(true);        //显示指南针
+        mUiSettings.setScaleControlsEnabled(true);  //显示比例尺，默认右下角显示
+        mUiSettings.setMyLocationButtonEnabled(false); //隐藏默认的定位按钮
+
+    }
     //为每个Button添加监听器
     public void AddListener(){
         ImageButton zoom_in = (ImageButton) findViewById(R.id.zoom_in);//缩放
