@@ -38,7 +38,7 @@
                 android:background="@drawable/oval"
                 android:src="@drawable/headicon"
                 android:contentDescription="@string/app_name"/>
-            <Textview
+            <TextView
                 android:id="@+id/search_box"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
