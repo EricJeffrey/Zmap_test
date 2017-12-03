@@ -21,13 +21,13 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 
-public class MainActivity extends AppCompatActivity implements LocationSource,AMapLocationListener{
+public class MainActivity extends AppCompatActivity{
     private LinearLayout top;
     private FrameLayout bottom;
     private String TAG = "MainActivity";
     private MapView mapView;
     private AMap aMap;
-    private OnLocationChangedListener mListener = null;
+    private LocationSource.OnLocationChangedListener mListener = null;
     public AMapLocationClient mapLocationClient = null;
     public AMapLocationClientOption mapLocationClientOption = null;
     private boolean IsFirstLoc = true;
@@ -38,15 +38,49 @@ public class MainActivity extends AppCompatActivity implements LocationSource,AM
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();   //隐藏标题栏
 
+        Information();      //个人信息
+
+        /*
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
 
         AddListener();      //为每个Button添加监听器
+
         Init();             //初始化地图view
-        Information();      //个人信息
         initLoc();          //定位服务
         SetEdgeBar();       //显示&隐藏地图功能按钮
+*/
+    }
+
+    //个人信息
+    public void Information(){
+        ImageButton me = (ImageButton) findViewById(R.id.me);
+        me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Profile.class);
+                startActivity(intent);
+            }
+        });
+    }
+    /*
+    //为每个Button添加监听器
+    public void AddListener(){
+        ImageButton zoom_in = (ImageButton) findViewById(R.id.zoom_in);//缩放
+        zoom_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                aMap.animateCamera(CameraUpdateFactory.zoomIn());
+            }
+        });
+        ImageButton zoom_out = (ImageButton) findViewById(R.id.zoom_out);
+        zoom_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                aMap.animateCamera(CameraUpdateFactory.zoomOut());
+            }
+        });
 
     }
     @Override
@@ -102,12 +136,12 @@ public class MainActivity extends AppCompatActivity implements LocationSource,AM
     //定位服务
     private void initLoc() {
 
-/*
-        UiSettings settings = aMap.getUiSettings();//设置显示定位按钮 并且可以点击
-        aMap.setLocationSource(this);//设置定位监听
-        settings.setMyLocationButtonEnabled(true);// 是否显示定位按钮
-        aMap.setMyLocationEnabled(true);// 是否可触发定位并显示定位层
-*/
+
+//        UiSettings settings = aMap.getUiSettings();//设置显示定位按钮 并且可以点击
+//        aMap.setLocationSource(this);//设置定位监听
+//        settings.setMyLocationButtonEnabled(true);// 是否显示定位按钮
+//        aMap.setMyLocationEnabled(true);// 是否可触发定位并显示定位层
+
         if (mapLocationClient == null) {
             mapLocationClient = new AMapLocationClient(getApplicationContext());//初始化AMapLocationClient，并绑定监听
         }
@@ -130,13 +164,13 @@ public class MainActivity extends AppCompatActivity implements LocationSource,AM
                     aMap.moveCamera(CameraUpdateFactory.zoomTo(17));  //设置缩放级别
                     aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())));
                     mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-    /*              界面下部显示定位信息
-                    StringBuilder stringBuilder = new StringBuilder();
-                    int type = aMapLocation.getLocationType();//定位成功回调信息，设置相关消息
-                    String address = aMapLocation.getAddress();
-                    stringBuilder.append(type+address);
-                    Toast.makeText(this,stringBuilder.toString(),Toast.LENGTH_SHORT).show();
-*/
+//                    界面下部显示定位信息
+//                    StringBuilder stringBuilder = new StringBuilder();
+//                    int type = aMapLocation.getLocationType();//定位成功回调信息，设置相关消息
+//                    String address = aMapLocation.getAddress();
+//                    stringBuilder.append(type+address);
+//                    Toast.makeText(this,stringBuilder.toString(),Toast.LENGTH_SHORT).show();
+
                     IsFirstLoc=false;
                 }
             }else {
@@ -145,36 +179,7 @@ public class MainActivity extends AppCompatActivity implements LocationSource,AM
         }
     }
 
-    //个人信息
-    public void Information(){
-        ImageButton me = (ImageButton) findViewById(R.id.me);
-        me.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Profile.class);
-                startActivity(intent);
-            }
-        });
-    }
 
-    //为每个Button添加监听器
-    public void AddListener(){
-        ImageButton zoom_in = (ImageButton) findViewById(R.id.zoom_in);//缩放
-        zoom_in.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                aMap.animateCamera(CameraUpdateFactory.zoomIn());
-            }
-        });
-        ImageButton zoom_out = (ImageButton) findViewById(R.id.zoom_out);
-        zoom_out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                aMap.animateCamera(CameraUpdateFactory.zoomOut());
-            }
-        });
-
-    }
 
     //显示&隐藏地图功能按钮
     public void SetEdgeBar(){
@@ -193,4 +198,5 @@ public class MainActivity extends AppCompatActivity implements LocationSource,AM
             }
         });
     }
+    */
 }

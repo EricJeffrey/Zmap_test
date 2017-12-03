@@ -5,9 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/colorRiceWhite">
 
-    <com.example.fei.zmap_test.Login_title_layout
+    <com.example.fei.zmap_test.TitleLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:title_text="注册"
+        app:button_src="@drawable/back_button_blue_pressed_gray"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

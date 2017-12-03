@@ -25,20 +25,23 @@
             android:name="com.amap.api.v2.apikey"
             android:value="d75a03af5e5b6dd7d52cb0ae5437a718"
             />
-        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name="com.amap.api.location.APSService"/>
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".Profile" />
-        <activity android:name=".Login_phone" />
+        <activity android:name=".LoginPhone" >
+
+        </activity>
         <activity android:name=".Register" />
-        <activity android:name=".Login_account" />
+        <activity android:name=".LoginAccount" />
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

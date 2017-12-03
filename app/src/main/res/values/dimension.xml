@@ -5,5 +5,7 @@
     <dimen name="common_margin">10dp</dimen>
     <dimen name="round_size">10dp</dimen>
     <dimen name="elevation">3dp</dimen>
-    <dimen name="font_size_small">10sp</dimen>
+    <dimen name="profile_column_detail_text_font_size">10sp</dimen>
+    <dimen name="profile_middle_four_font_size">12sp</dimen>
+    <dimen name="profile_column_title_text_font_size">12sp</dimen>
 </resources>

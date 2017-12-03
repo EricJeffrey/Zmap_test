@@ -14,24 +14,21 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/button_size"
-            android:minWidth="@dimen/button_size"
-            android:background="@drawable/oval"
-            android:src="@drawable/offline_back"/>
+            android:background="@null"
+            android:src="@drawable/back_button_white_pressed_gray"/>
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/button_size"
-            android:minWidth="@dimen/button_size"
+            android:background="@null"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/oval"
-            android:src="@drawable/setting"/>
+            android:src="@drawable/setting_button_pressed_gray"/>
     </RelativeLayout>
 
     <ScrollView
         android:background="@color/colorRiceWhite"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -80,7 +77,7 @@
                         android:layout_marginBottom="@dimen/common_margin"
                         android:gravity="center"
                         android:textColor="@color/colorWhite"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:text="会员中心"/>
                     <ImageView
                         android:layout_width="1dp"
@@ -96,7 +93,7 @@
                         android:layout_marginBottom="@dimen/common_margin"
                         android:gravity="center"
                         android:textColor="@color/colorWhite"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:text="金币商城"/>
                 </LinearLayout>
             </LinearLayout>
@@ -108,662 +105,123 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <com.example.fei.zmap_test.ProfileMidColumn
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:clickable="true"
+                    android:focusable="true"
                     android:padding="@dimen/common_margin"
                     android:background="@drawable/rectangle_light_gray"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:src="@drawable/download"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
-                        android:text="离线地图"/>
-                </LinearLayout>
+                    app:column_text="离线地图"
+                    app:column_img="@drawable/download"/>
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <com.example.fei.zmap_test.ProfileMidColumn
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:clickable="true"
-                    android:background="@drawable/rectangle_light_gray"
+                    android:focusable="true"
                     android:padding="@dimen/common_margin"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:src="@drawable/navi_sound"/>
-                    <TextView
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
-                        android:text="导航语音包"/>
-                </LinearLayout>
+                    android:background="@drawable/rectangle_light_gray"
+                    app:column_text="导航语音包"
+                    app:column_img="@drawable/navi_sound"/>
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <com.example.fei.zmap_test.ProfileMidColumn
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:clickable="true"
+                    android:focusable="true"
                     android:padding="@dimen/common_margin"
                     android:background="@drawable/rectangle_light_gray"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:src="@drawable/star"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
-                        android:text="收藏夹"/>
-                </LinearLayout>
+                    app:column_text="收藏夹"
+                    app:column_img="@drawable/star"/>
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <com.example.fei.zmap_test.ProfileMidColumn
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:clickable="true"
+                    android:focusable="true"
                     android:padding="@dimen/common_margin"
                     android:background="@drawable/rectangle_light_gray"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:src="@drawable/tool_box"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
-                        android:text="工具箱"/>
-                </LinearLayout>
+                    app:column_text="工具箱"
+                    app:column_img="@drawable/tool_box"/>
 
             </LinearLayout>
 
             <!--我的栏!-->
-            <LinearLayout
-                android:orientation="vertical"
+            <com.example.fei.zmap_test.ProfileColumnLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/sub_column_mine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin"
-                android:background="@color/colorWhite">
-
-                <!--我的!-->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="@dimen/common_margin"
-                    android:text="我的"/>
-
-                <!--灰色线条!-->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/colorLightGray"
-                    android:layout_margin="@dimen/common_margin"/>
-
-                <!--1,2号!-->
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <!--1号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_weight="1">
-                        <!--评论图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/comment"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="评论"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text="写评论赢海量金币"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!--分割线!-->
-                    <ImageView
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_marginBottom="@dimen/common_margin"
-                        android:background="@color/colorLightGray"/>
-
-                    <!--2号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/common_margin">
-                        <!--订单图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/order"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="订单"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text="酒店、门票、火车票..."/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!--灰色线条!-->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/colorLightGray"
-                    android:layout_margin="@dimen/common_margin"/>
-
-                <!--3,4号!-->
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/common_margin">
-
-                    <!--3号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_weight="1">
-                        <!--地点贡献图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/medal"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="地点贡献"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text="参与贡献赢取多重惊喜"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!--分割线!-->
-                    <ImageView
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_marginBottom="@dimen/common_margin"
-                        android:background="@color/colorLightGray"/>
-
-                    <!--4号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/common_margin">
-                        <!--钱包图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/money"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="钱包"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text="可提现到支付宝账户"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
+                app:column_title_text="我的"
+                app:sub_column_title_text1="评论"
+                app:sub_column_title_text2="订单"
+                app:sub_column_title_text3="地点贡献"
+                app:sub_column_title_text4="钱包"
+                app:sub_column_detail_text1="写评论赢海量金币"
+                app:sub_column_detail_text2="酒店、门票、火车票..."
+                app:sub_column_detail_text3="参与贡献赢取多重惊喜"
+                app:sub_column_detail_text4="可提现到支付宝账号"
+                app:sub_column_img1="@drawable/comment"
+                app:sub_column_img2="@drawable/order"
+                app:sub_column_img3="@drawable/medal"
+                app:sub_column_img4="@drawable/money" />
 
             <!--驾车栏!-->
-            <LinearLayout
-                android:orientation="vertical"
+            <com.example.fei.zmap_test.ProfileColumnLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/sub_column_drive_car"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin"
-                android:background="@color/colorWhite">
-
-                <!--驾车!-->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="@dimen/common_margin"
-                    android:text="驾车"/>
-
-                <!--灰色线条!-->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/colorLightGray"
-                    android:layout_margin="@dimen/common_margin"/>
-
-                <!--1,2号!-->
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <!--1号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_weight="1">
-                        <!--车主服务图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/car"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="车主服务"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text="专项贴心服务"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!--分割线!-->
-                    <ImageView
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_marginBottom="@dimen/common_margin"
-                        android:background="@color/colorLightGray"/>
-
-                    <!--2号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/common_margin">
-                        <!--驾车头条图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/head_line"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="驾车头条"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text="雨天行车不开灯是违法？"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!--灰色线条!-->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/colorLightGray"
-                    android:layout_margin="@dimen/common_margin"/>
-
-                <!--3号!-->
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/common_margin"
-                    android:layout_marginBottom="@dimen/common_margin">
-                    <!--扫一扫图标!-->
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/scan"
-                        android:layout_marginStart="20dp"/>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/common_margin"
-                            android:textSize="15sp"
-                            android:textColor="@color/colorBlack"
-                            android:text="扫一扫"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/common_margin"
-                            android:layout_marginTop="@dimen/common_margin"
-                            android:textSize="@dimen/font_size_small"
-                            android:text="车机版本扫码登录"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
+                app:column_title_text="驾车"
+                app:sub_column_title_text1="车主服务"
+                app:sub_column_title_text2="驾车头条"
+                app:sub_column_title_text3="扫一扫"
+                app:sub_column_detail_text1="专项贴心服务"
+                app:sub_column_detail_text2="雨天行车不开灯是不是违法？"
+                app:sub_column_detail_text3="车机版本扫码登录"
+                app:sub_column_img1="@drawable/car"
+                app:sub_column_img2="@drawable/head_line"
+                app:sub_column_img3="@drawable/scan" />
 
             <!--其他栏!-->
-            <LinearLayout
-                android:orientation="vertical"
+            <com.example.fei.zmap_test.ProfileColumnLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/sub_column_others"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin"
-                android:background="@color/colorWhite">
-
-                <!--其他!-->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="@dimen/common_margin"
-                    android:text="其他"/>
-
-                <!--灰色线条!-->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/colorLightGray"
-                    android:layout_margin="@dimen/common_margin"/>
-
-                <!--1,2号!-->
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <!--1号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_weight="1">
-                        <!--活动专区图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/present"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="活动专区"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text=""/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!--分割线!-->
-                    <ImageView
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_marginBottom="@dimen/common_margin"
-                        android:background="@color/colorLightGray"/>
-
-                    <!--2号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/common_margin">
-                        <!--车主商城图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/shopping_car"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="车主商城"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text="智能车品好货优选"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!--灰色线条!-->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/colorLightGray"
-                    android:layout_margin="@dimen/common_margin"/>
-
-                <!--3,4号!-->
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/common_margin">
-
-                    <!--3号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_weight="1">
-                        <!--帮助与反馈图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/feedback"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="帮助与反馈"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text="使用说明以及我的反馈"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!--分割线!-->
-                    <ImageView
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/common_margin"
-                        android:layout_marginBottom="@dimen/common_margin"
-                        android:background="@color/colorLightGray"/>
-
-                    <!--4号!-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/common_margin">
-                        <!--特别鸣谢图标!-->
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/thanks"
-                            android:layout_marginStart="20dp"/>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorBlack"
-                                android:text="特别鸣谢"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/common_margin"
-                                android:layout_marginTop="@dimen/common_margin"
-                                android:textSize="@dimen/font_size_small"
-                                android:text="感谢高德热心用户"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
+                app:column_title_text="其他"
+                app:sub_column_title_text1="活动专区"
+                app:sub_column_title_text2="车主商城"
+                app:sub_column_title_text3="帮助与反馈"
+                app:sub_column_title_text4="特别鸣谢"
+                app:sub_column_detail_text1=""
+                app:sub_column_detail_text2="智能车品好货优选"
+                app:sub_column_detail_text3="使用说明以及我的反馈"
+                app:sub_column_detail_text4="感谢高德热心用户"
+                app:sub_column_img1="@drawable/present"
+                app:sub_column_img2="@drawable/shopping_car"
+                app:sub_column_img3="@drawable/feedback"
+                app:sub_column_img4="@drawable/thanks"/>
 
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>
