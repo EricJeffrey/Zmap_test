@@ -38,9 +38,8 @@
                 android:background="@drawable/oval"
                 android:src="@drawable/headicon"
                 android:contentDescription="@string/app_name"/>
-            <TextView
+            <Textview
                 android:id="@+id/search_box"
-                android:clickable="true"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -264,7 +263,6 @@
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/logo"/>
                 <TextView
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="20sp"
