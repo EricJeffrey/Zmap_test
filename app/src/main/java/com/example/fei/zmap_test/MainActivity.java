@@ -21,7 +21,7 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements LocationSource,AMapLocationListener{
     private LinearLayout top;
     private FrameLayout bottom;
     private String TAG = "MainActivity";
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity{
     public AMapLocationClient mapLocationClient = null;
     public AMapLocationClientOption mapLocationClientOption = null;
     private boolean IsFirstLoc = true;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity{
 
         Information();      //个人信息
 
-        /*
+
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity{
         Init();             //初始化地图view
         initLoc();          //定位服务
         SetEdgeBar();       //显示&隐藏地图功能按钮
-*/
+
     }
 
     //个人信息
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
-    /*
+
     //为每个Button添加监听器
     public void AddListener(){
         ImageButton zoom_in = (ImageButton) findViewById(R.id.zoom_in);//缩放
@@ -198,5 +198,5 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
-    */
+
 }
