@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="icon_size">20dp</dimen>
-    <dimen name="button_size">40dp</dimen>
+    <dimen name="button_size">38dp</dimen>
     <dimen name="common_margin">10dp</dimen>
     <dimen name="round_size">10dp</dimen>
     <dimen name="elevation">3dp</dimen>

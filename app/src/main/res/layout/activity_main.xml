@@ -186,8 +186,8 @@
             android:padding="0dp"
             android:elevation="3dp"
             android:layout_gravity="end"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginBottom="44dp"
             android:layout_marginEnd="@dimen/common_margin">
             <ImageButton
                 android:id="@+id/zoom_in"
@@ -242,7 +242,7 @@
                 android:textSize="20sp"
                 android:layout_centerVertical="true"
                 android:elevation="@dimen/elevation"
-                android:layout_margin="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin"
                 android:src="@drawable/route"/>
             <ImageButton
                 android:layout_width="wrap_content"
@@ -261,9 +261,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="0dp"
-            android:clickable="false"
+            android:clickable="true"
+            android:focusable="true"
             android:elevation="@dimen/elevation"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/common_margin"
             android:layout_marginBottom="@dimen/common_margin"
             android:layout_marginStart="@dimen/common_margin"
             android:layout_marginEnd="@dimen/common_margin"
@@ -287,7 +288,7 @@
                 android:textSize="20sp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:hint="  搜索附近"/>
+                android:hint=" 搜索附近"/>
         </LinearLayout>
 
     </LinearLayout>
