@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -15,17 +16,19 @@ import android.widget.Toast;
 
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.AMapCameraInfo;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
 
 public class MainActivity extends AppCompatActivity{
     private LinearLayout top;
-    private FrameLayout bottom;
-    private String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
     private MapView mapView;
     private AMap aMap;
     private UiSettings mUiSettings;
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity{
         myLocationStyle.strokeColor(Color.argb(80,00,00,205));//设置定位蓝点精度圆圈的边框颜色的方法。
         myLocationStyle.radiusFillColor(Color.argb(50,00,191,255));//设置定位蓝点精度圆圈的填充颜色的方法。
         BitmapDescriptorFactory mBipmapFactory =new BitmapDescriptorFactory();
-        myLocationStyle.myLocationIcon(mBipmapFactory.fromResource(R.drawable.location64));//设置定位蓝点的icon图标方法，需要用到BitmapDescriptor类对象作为参数。
+        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.location64));//设置定位蓝点的icon图标方法，需要用到BitmapDescriptor类对象作为参数。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
         aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
@@ -147,15 +150,11 @@ public class MainActivity extends AppCompatActivity{
         Log.d(TAG, "onCreate: Now Create");
         findViewById(R.id.search_box).clearFocus();
         top = (LinearLayout) findViewById(R.id.top_view);
-        bottom = (FrameLayout) findViewById(R.id.frame_layout);
-        bottom.setOnClickListener(new FrameLayout.OnClickListener() {
+        aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "click got", Toast.LENGTH_SHORT).show();
-                if(!view.equals(top)) {
-                    if(top.getVisibility() == View.INVISIBLE) top.setVisibility(View.VISIBLE);
-                    else top.setVisibility(View.INVISIBLE);
-                }
+            public void onMapClick(LatLng latLng) {
+                if(top.getVisibility() == View.VISIBLE) top.setVisibility(View.INVISIBLE);
+                else top.setVisibility(View.VISIBLE);
             }
         });
     }

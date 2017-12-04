@@ -3,6 +3,7 @@
     android:id="@+id/frame_layout"
     android:orientation="vertical"
     android:clickable="true"
+    android:focusable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,6 +12,7 @@
         android:id="@+id/map"
         android:orientation="vertical"
         android:clickable="true"
+        android:focusable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </com.amap.api.maps.MapView>
@@ -20,13 +22,15 @@
         android:id="@+id/top_view"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/common_margin">
+        android:layout_height="match_parent">
         <!--个人信息按钮，搜索框!-->
         <LinearLayout
             android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal"
             android:background="@drawable/round_rectangle_not_selectable"
+            android:elevation="@dimen/elevation"
+            android:layout_margin="@dimen/common_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageButton
@@ -63,27 +67,33 @@
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_margin">
+            android:layout_height="wrap_content">
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/oval"
-                android:elevation="@dimen/elevation"
                 android:minHeight="@dimen/button_size"
                 android:minWidth="@dimen/button_size"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/common_margin"
+                android:layout_marginStart="@dimen/common_margin"
+                android:elevation="3dp"
                 android:src="@drawable/message"
-                android:layout_alignParentStart="true"/>
+                android:background="@drawable/oval"/>
+
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/map"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/common_margin"
+                android:layout_marginStart="@dimen/common_margin"
                 android:elevation="@dimen/elevation"
                 android:background="@drawable/round_rectangle"
                 android:minHeight="@dimen/button_size"
                 android:minWidth="@dimen/button_size"
-                android:layout_alignParentEnd="true"
-                />
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
         <!--竖排五个按钮!-->
@@ -92,9 +102,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/round_rectangle"
+            android:elevation="3dp"
             android:padding="0dp"
-            android:layout_marginTop="@dimen/common_margin"
-            android:layout_marginBottom="@dimen/common_margin"
+            android:layout_margin="@dimen/common_margin"
             android:layout_gravity="end">
             <ImageButton
                 android:layout_width="wrap_content"
@@ -174,9 +184,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_rectangle"
             android:padding="0dp"
+            android:elevation="3dp"
             android:layout_gravity="end"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="@dimen/common_margin">
             <ImageButton
                 android:id="@+id/zoom_in"
                 android:layout_width="wrap_content"
@@ -206,70 +218,72 @@
         </LinearLayout>
 
         <!--路线，定位，家 按钮!-->
-        <LinearLayout
-            android:orientation="vertical"
-            android:clickable="true"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <RelativeLayout
-                android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/common_margin">
+            <ImageButton
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/button_size"
+                android:minWidth="@dimen/button_size"
+                android:elevation="@dimen/elevation"
+                android:src="@drawable/whereme"
+                android:background="@drawable/oval"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:minWidth="@dimen/button_size"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/half_round_rectangle"
+                android:textSize="20sp"
+                android:layout_centerVertical="true"
+                android:elevation="@dimen/elevation"
+                android:src="@drawable/route"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/button_size"
+                android:minWidth="@dimen/button_size"
+                android:src="@drawable/target"
+                android:background="@drawable/oval"
+                android:elevation="@dimen/elevation"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+        <!--搜索附近框!-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/common_margin"
+            android:padding="0dp"
+            android:clickable="false"
+            android:elevation="@dimen/elevation"
+            android:layout_margin="@dimen/common_margin"
+            android:background="@drawable/round_rectangle_not_selectable">
+            <ImageView
                 android:clickable="true"
-                android:layout_marginTop="20dp">
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
-                    android:elevation="@dimen/elevation"
-                    android:src="@drawable/whereme"
-                    android:background="@drawable/oval"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="50dp"
-                    android:minWidth="@dimen/button_size"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/half_round_rectangle"
-                    android:textSize="20sp"
-                    android:layout_centerVertical="true"
-                    android:elevation="@dimen/elevation"
-                    android:src="@drawable/route"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
-                    android:src="@drawable/target"
-                    android:background="@drawable/oval"
-                    android:elevation="@dimen/elevation"
-                    android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
-            <!--搜索附近框!-->
-            <LinearLayout
-                android:orientation="horizontal"
+                android:focusable="true"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="match_parent"
+                android:minHeight="@dimen/button_size"
+                android:minWidth="@dimen/button_size"
+                android:layout_gravity="center_vertical"
+                android:paddingStart="@dimen/common_margin"
+                android:paddingBottom="@dimen/common_margin"
+                android:paddingTop="12dp"
+                android:paddingEnd="0dp"
+                android:src="@drawable/logo"/>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/common_margin"
-                android:padding="0dp"
-                android:clickable="false"
-                android:background="@drawable/round_rectangle_not_selectable">
-                <ImageView
-                    android:clickable="true"
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="match_parent"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/logo"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="20sp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:hint="  搜索附近"/>
-            </LinearLayout>
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:hint="  搜索附近"/>
         </LinearLayout>
 
     </LinearLayout>
