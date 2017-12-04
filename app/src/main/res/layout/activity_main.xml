@@ -222,8 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:focusable="true"
-            android:padding="@dimen/common_margin">
+            android:focusable="true">
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -231,6 +230,7 @@
                 android:minWidth="@dimen/button_size"
                 android:elevation="@dimen/elevation"
                 android:src="@drawable/whereme"
+                android:layout_margin="@dimen/common_margin"
                 android:background="@drawable/oval"/>
             <ImageButton
                 android:layout_width="wrap_content"
@@ -242,6 +242,7 @@
                 android:textSize="20sp"
                 android:layout_centerVertical="true"
                 android:elevation="@dimen/elevation"
+                android:layout_margin="@dimen/common_margin"
                 android:src="@drawable/route"/>
             <ImageButton
                 android:layout_width="wrap_content"
@@ -251,6 +252,7 @@
                 android:src="@drawable/target"
                 android:background="@drawable/oval"
                 android:elevation="@dimen/elevation"
+                android:layout_margin="@dimen/common_margin"
                 android:layout_alignParentEnd="true"/>
         </RelativeLayout>
         <!--搜索附近框!-->
@@ -258,11 +260,13 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/common_margin"
             android:padding="0dp"
             android:clickable="false"
             android:elevation="@dimen/elevation"
-            android:layout_margin="@dimen/common_margin"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="@dimen/common_margin"
+            android:layout_marginStart="@dimen/common_margin"
+            android:layout_marginEnd="@dimen/common_margin"
             android:background="@drawable/round_rectangle_not_selectable">
             <ImageView
                 android:clickable="true"
