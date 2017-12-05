@@ -1,37 +1,49 @@
 package com.example.fei.zmap_test;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.graphics.Color;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.AMapCameraInfo;
-import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.traffic.TrafficSearch;
+import com.amap.api.services.traffic.TrafficStatusResult;
 
-public class MainActivity extends AppCompatActivity{
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MainActivity extends AppCompatActivity implements AMapLocationListener,LocationSource {
     private LinearLayout top;
     private static final String TAG = "MainActivity";
     private MapView mapView;
     private AMap aMap;
     private UiSettings mUiSettings;
+
+    private AMapLocationClient mLocationClient = null;//定位发起端
+    private AMapLocationClientOption mLocationOption = null;//定位参数
+    private OnLocationChangedListener mListener = null;//定位监听器
+    private AMapLocation MyAmapLocation=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +55,15 @@ public class MainActivity extends AppCompatActivity{
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
 
+
         AddListener();      //为每个Button添加监听器
         Init();             //初始化地图view
         Information();      //个人信息
+        InitLocIcon();      //定义蓝色按钮
         InitLoc();          //定位服务
         SetEdgeBar();       //显示&隐藏地图功能按钮
         SetUI();            //地图原始UI布局设置
+        SetTraffic();       //设置交通态势信息
     }
     @Override
     protected void onDestroy() {
@@ -81,6 +96,91 @@ public class MainActivity extends AppCompatActivity{
         mapView.onSaveInstanceState(outState);
     }
 
+    //定位服务
+    private void InitLoc() {
+        mLocationClient =new AMapLocationClient(getApplicationContext());               //初始化定位
+        mLocationClient.setLocationListener(this);                                      //设置定位回调监听
+        mLocationOption = new AMapLocationClientOption();                               //初始化定位参数
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy); //设置高精度模式
+        mLocationOption.setNeedAddress(true);                                           //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setOnceLocation(true);                                          //设置是否只定位一次,默认为false;
+        mLocationOption.setMockEnable(false);                                           //设置是否允许模拟位置,默认为false，不允许模拟位置
+        mLocationOption.setInterval(2000);                                              //设置定位间隔,单位毫秒,默认为2000ms
+        mLocationClient.setLocationOption(mLocationOption);                             //给定位客户端对象设置定位参数
+        mLocationClient.startLocation();                                                //启动定位
+    }
+
+    /**
+     * 定位成功后回调函数
+     */
+    @Override
+    public void onLocationChanged(AMapLocation amapLocation) {
+        MyAmapLocation =amapLocation;
+        if (amapLocation != null) {
+            if (amapLocation.getErrorCode() == 0) {
+                //定位成功回调信息，设置相关消息
+                amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见官方定位类型表
+                amapLocation.getLatitude();//获取纬度
+                amapLocation.getLongitude();//获取经度
+                amapLocation.getAccuracy();//获取精度信息
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = new Date(amapLocation.getTime());
+                df.format(date);//定位时间
+                amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+                amapLocation.getCountry();//国家信息
+                amapLocation.getProvince();//省信息
+                amapLocation.getCity();//城市信息
+                amapLocation.getDistrict();//城区信息
+                amapLocation.getStreet();//街道信息
+                amapLocation.getStreetNum();//街道门牌号信息
+                amapLocation.getCityCode();//城市编码
+                amapLocation.getAdCode();//地区编码
+
+                // 如果不设置标志位，此时再拖动地图时，它会不断将地图移动到当前的位置
+                aMap.moveCamera(CameraUpdateFactory.zoomTo(17)); //设置缩放级别
+                aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude())));//将地图移动到定位点
+                mListener.onLocationChanged(amapLocation);//点击定位按钮 能够将地图的中心移动到定位点
+                //aMap.addMarker(getMarkerOptions(amapLocation));//添加图钉
+                StringBuffer buffer = new StringBuffer();//获取定位信息
+                buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince() + "" + amapLocation.getCity() + "" + amapLocation.getProvince() + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet() + "" + amapLocation.getStreetNum());
+                Toast.makeText(getApplicationContext(), buffer.toString(), Toast.LENGTH_LONG).show();
+            } else {
+                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                Log.e("AmapError", "location Error, ErrCode:"
+                        + amapLocation.getErrorCode() + ", errInfo:"
+                        + amapLocation.getErrorInfo());
+
+                Toast.makeText(getApplicationContext(), "定位失败", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    /**
+     * 激活定位
+     */
+    @Override
+    public void activate(OnLocationChangedListener listener) {
+        mListener = listener;
+        if (mLocationClient == null) {
+            Toast.makeText(getApplicationContext(), "mLocationClient == null", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * 停止定位
+     */
+    @Override
+    public void deactivate() {
+        mListener = null;
+        if (mLocationClient != null) {
+            mLocationClient.stopLocation();
+            mLocationClient.onDestroy();
+        }
+        mLocationClient = null;
+    }
+
+
     //初始化地图view
     private void Init() {
         if (aMap == null) {
@@ -88,19 +188,18 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    //定位服务
-    private void InitLoc() {
+    //定义显示定位蓝色按钮
+    private void InitLocIcon() {
         aMap.moveCamera(CameraUpdateFactory.zoomTo(17));  //设置缩放级别
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）默认执行此种模式。
-        myLocationStyle.interval(20000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);//连续定位、蓝点不会移动到地图中心点，定位点依照设备方向旋转，并且蓝点会跟随设备移动。
         myLocationStyle.strokeColor(Color.argb(80,00,00,205));//设置定位蓝点精度圆圈的边框颜色的方法。
         myLocationStyle.radiusFillColor(Color.argb(50,00,191,255));//设置定位蓝点精度圆圈的填充颜色的方法。
         BitmapDescriptorFactory mBipmapFactory =new BitmapDescriptorFactory();
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.location64));//设置定位蓝点的icon图标方法，需要用到BitmapDescriptor类对象作为参数。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
+        //aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
     }
 
@@ -142,7 +241,15 @@ public class MainActivity extends AppCompatActivity{
                 aMap.animateCamera(CameraUpdateFactory.zoomOut());
             }
         });
-
+        ImageButton Location = (ImageButton) findViewById(R.id.location);
+        Location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                aMap.moveCamera(CameraUpdateFactory.zoomTo(17)); //设置缩放级别
+                aMap.moveCamera(CameraUpdateFactory.changeBearing(0));
+                aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(MyAmapLocation.getLatitude(), MyAmapLocation.getLongitude())));
+            }
+        });
     }
 
     //显示&隐藏地图功能按钮
@@ -158,4 +265,17 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
+
+    //设置交通态势信息
+    public void SetTraffic(){
+        TrafficSearch trafficSearch = new TrafficSearch(this);
+        trafficSearch.setTrafficSearchListener(new TrafficSearch.OnTrafficSearchListener() {
+            @Override
+            public void onRoadTrafficSearched(TrafficStatusResult trafficStatusResult, int i) {
+
+            }
+        });
+
+    }
+
 }
