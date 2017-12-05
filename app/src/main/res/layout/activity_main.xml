@@ -57,6 +57,7 @@
                     android:hint="查找地点、公交、地铁"
                     android:layout_gravity="center"/>
                 <ImageButton
+                    android:id="@+id/voice_search_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/oval"
@@ -73,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageButton
+                    android:id="@+id/msg_center_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/button_size"
@@ -112,6 +114,7 @@
                 android:layout_margin="@dimen/common_margin"
                 android:layout_gravity="end">
                 <ImageButton
+                    android:id="@+id/instant_route_status_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/button_size"
@@ -127,6 +130,7 @@
                     android:background="@drawable/div38">
                 </View>
                 <ImageButton
+                    android:id="@+id/take_taxi_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/button_size"
@@ -142,6 +146,7 @@
                     android:background="@drawable/div38">
                 </View>
                 <ImageButton
+                    android:id="@+id/shared_bike_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/button_size"
@@ -157,6 +162,7 @@
                     android:background="@drawable/div38">
                 </View>
                 <ImageButton
+                    android:id="@+id/team_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/button_size"
@@ -172,11 +178,12 @@
                     android:background="@drawable/div38">
                 </View>
                 <ImageButton
+                    android:id="@+id/report_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/button_size"
                     android:minWidth="@dimen/button_size"
-                    android:src="@drawable/more"
+                    android:src="@drawable/report"
                     android:background="@drawable/rectangle_bottom"
                     android:layout_gravity="end"
                     />
@@ -239,6 +246,7 @@
                     android:layout_margin="@dimen/common_margin"
                     android:background="@drawable/oval"/>
                 <ImageButton
+                    android:id="@+id/route_plan_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="50dp"
@@ -251,6 +259,7 @@
                     android:layout_marginBottom="@dimen/common_margin"
                     android:src="@drawable/route"/>
                 <ImageButton
+                    android:id="@+id/home_workplace_set_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/button_size"
@@ -289,12 +298,14 @@
                     android:paddingEnd="0dp"
                     android:src="@drawable/logo"/>
                 <TextView
+                    android:id="@+id/near_search_box"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:hint=" 搜索附近"/>
+                    android:textColor="@color/colorBlack"
+                    android:text=" 搜索附近"/>
             </LinearLayout>
 
         </LinearLayout>

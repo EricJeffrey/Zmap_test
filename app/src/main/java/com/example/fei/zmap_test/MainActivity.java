@@ -266,6 +266,17 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         AddListenerById(R.id.pond_map);
         AddListenerById(R.id.map_setting);
         AddListenerById(R.id.map_mode_button);
+        AddListenerById(R.id.search_box);
+        AddListenerById(R.id.voice_search_button);
+        AddListenerById(R.id.msg_center_button);
+        AddListenerById(R.id.instant_route_status_button);
+        AddListenerById(R.id.take_taxi_button);
+        AddListenerById(R.id.shared_bike_button);
+        AddListenerById(R.id.team_button);
+        AddListenerById(R.id.home_workplace_set_button);
+        AddListenerById(R.id.route_plan_button);
+        AddListenerById(R.id.near_search_box);
+        AddListenerById(R.id.report_button);
     }
     //依照ID添加监听器
     public void AddListenerById(final int resId){
@@ -326,7 +337,39 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     case R.id.map_setting:
                         Toast.makeText(MainActivity.this, "你点击了地图设置", Toast.LENGTH_SHORT).show();
                         break;
-
+                    case R.id.search_box:
+                        Toast.makeText(MainActivity.this, "你点击了搜索", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.voice_search_button:
+                        Toast.makeText(MainActivity.this, "你点击了语音搜索", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.msg_center_button:
+                        Toast.makeText(MainActivity.this, "你点击了消息中心", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.instant_route_status_button:
+                        Toast.makeText(MainActivity.this, "你点击了实时路况", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.take_taxi_button:
+                        Toast.makeText(MainActivity.this, "你点击了叫车", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.shared_bike_button:
+                        Toast.makeText(MainActivity.this, "你点击了共享单车", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.team_button:
+                        Toast.makeText(MainActivity.this, "你点击了组队出行", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.home_workplace_set_button:
+                        Toast.makeText(MainActivity.this, "你点击了家，公司位置设置", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.route_plan_button:
+                        Toast.makeText(MainActivity.this, "你点击了路线规划", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.near_search_box:
+                        Toast.makeText(MainActivity.this, "你点击了搜索附近", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.report_button:
+                        Toast.makeText(MainActivity.this, "你点击了上报", Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
         });
