@@ -3,6 +3,7 @@
     <dimen name="icon_size">20dp</dimen>
     <dimen name="button_size">38dp</dimen>
     <dimen name="common_margin">10dp</dimen>
+    <dimen name="double_common_margin">20dp</dimen>
     <dimen name="round_size">10dp</dimen>
     <dimen name="elevation">3dp</dimen>
     <dimen name="profile_column_detail_text_font_size">10sp</dimen>

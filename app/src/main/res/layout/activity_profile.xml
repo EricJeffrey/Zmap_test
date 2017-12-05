@@ -16,12 +16,14 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:src="@drawable/back_button_white_pressed_gray"/>
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/setting_button_pressed_gray"/>
+            android:layout_alignParentTop="true"
+            android:background="@null"
+            android:src="@drawable/setting_button_pressed_gray" />
     </RelativeLayout>
 
     <ScrollView

@@ -4,9 +4,11 @@ import android.content.Intent;
 
 import android.graphics.Color;
 import android.location.Location;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -45,6 +47,15 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private OnLocationChangedListener mListener = null;//定位监听器
     private AMapLocation MyAmapLocation=null;
 
+    private DrawerLayout drawerLayout;
+    private ImageButton map_mode_normal_button;
+    private ImageButton map_mode_satellite_button;
+    private ImageButton map_mode_bus_button;
+    private ImageButton traffic_accident_button;
+    private ImageButton my_collection_button;
+    private int traffic_accident_button_status;
+    private int my_collection_button_status;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +66,22 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
 
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+        });
+        map_mode_normal_button =(ImageButton) findViewById(R.id.map_mode_normal_button);
+        map_mode_bus_button = (ImageButton) findViewById(R.id.map_mode_bus_button);
+        map_mode_satellite_button = (ImageButton) findViewById(R.id.map_mode_satellite_button);
+        traffic_accident_button = (ImageButton) findViewById(R.id.traffic_accident_button);
+        my_collection_button = (ImageButton) findViewById(R.id.my_collection_button);
+        traffic_accident_button_status = 1;
+        my_collection_button_status = 1;
 
         AddListener();      //为每个Button添加监听器
         Init();             //初始化地图view
@@ -227,27 +254,80 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     }
     //为每个Button添加监听器
     public void AddListener(){
-        ImageButton zoom_in = (ImageButton) findViewById(R.id.zoom_in);//缩放
-        zoom_in.setOnClickListener(new View.OnClickListener() {
+        AddListenerById(R.id.zoom_in);
+        AddListenerById(R.id.zoom_out);
+        AddListenerById(R.id.location);
+        AddListenerById(R.id.map_mode_bus_button);
+        AddListenerById(R.id.map_mode_normal_button);
+        AddListenerById(R.id.map_mode_satellite_button);
+        AddListenerById(R.id.my_collection_button);
+        AddListenerById(R.id.traffic_accident_button);
+        AddListenerById(R.id.fog_haze_button);
+        AddListenerById(R.id.pond_map);
+        AddListenerById(R.id.map_setting);
+        AddListenerById(R.id.map_mode_button);
+    }
+    //依照ID添加监听器
+    public void AddListenerById(final int resId){
+        findViewById(resId).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                aMap.animateCamera(CameraUpdateFactory.zoomIn());
-            }
-        });
-        ImageButton zoom_out = (ImageButton) findViewById(R.id.zoom_out);
-        zoom_out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                aMap.animateCamera(CameraUpdateFactory.zoomOut());
-            }
-        });
-        ImageButton Location = (ImageButton) findViewById(R.id.location);
-        Location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                aMap.moveCamera(CameraUpdateFactory.zoomTo(17)); //设置缩放级别
-                aMap.moveCamera(CameraUpdateFactory.changeBearing(0));
-                aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(MyAmapLocation.getLatitude(), MyAmapLocation.getLongitude())));
+            public void onClick(View v) {
+                switch (resId){
+                    case R.id.zoom_in:
+                        aMap.animateCamera(CameraUpdateFactory.zoomIn());
+                        break;
+                    case R.id.zoom_out:
+                        aMap.animateCamera(CameraUpdateFactory.zoomOut());
+                        break;
+                    case R.id.location:
+                        aMap.moveCamera(CameraUpdateFactory.zoomTo(17)); //设置缩放级别
+                        aMap.moveCamera(CameraUpdateFactory.changeBearing(0));
+                        aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(MyAmapLocation.getLatitude(), MyAmapLocation.getLongitude())));
+                        break;
+                    case R.id.map_mode_normal_button:
+                        map_mode_normal_button.setImageResource(R.drawable.map_mode_normal_selector);
+                        map_mode_bus_button.setImageResource(R.drawable.map_mode_bus);
+                        map_mode_satellite_button.setImageResource(R.drawable.map_mode_satellite);
+                        break;
+                    case R.id.map_mode_satellite_button:
+                        map_mode_normal_button.setImageResource(R.drawable.map_mode_normal);
+                        map_mode_bus_button.setImageResource(R.drawable.map_mode_bus);
+                        map_mode_satellite_button.setImageResource(R.drawable.map_mode_satellite_selector);
+                        break;
+                    case R.id.map_mode_bus_button:
+                        map_mode_bus_button.setImageResource(R.drawable.map_mode_bus_selector);
+                        map_mode_normal_button.setImageResource(R.drawable.map_mode_normal);
+                        map_mode_satellite_button.setImageResource(R.drawable.map_mode_satellite);
+                        break;
+                    case R.id.map_mode_button:
+                        drawerLayout.openDrawer(Gravity.END);
+                        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                        break;
+                    case (R.id.traffic_accident_button):
+                        if(traffic_accident_button_status == 1)
+                            traffic_accident_button.setImageResource(R.drawable.traffic_accident_checked);
+                        else
+                            traffic_accident_button.setImageResource(R.drawable.traffic_accident);
+                        traffic_accident_button_status = Math.abs(traffic_accident_button_status - 1);
+                        break;
+                    case R.id.my_collection_button:
+                        if(my_collection_button_status == 1)
+                            my_collection_button.setImageResource(R.drawable.my_collection_checked);
+                        else
+                            my_collection_button.setImageResource(R.drawable.my_collection);
+                        my_collection_button_status = Math.abs(my_collection_button_status - 1);
+                        break;
+                    case R.id.fog_haze_button:
+                        Toast.makeText(MainActivity.this, "你点击了雾霾地图", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.pond_map:
+                        Toast.makeText(MainActivity.this, "你点击了积水地图", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.map_setting:
+                        Toast.makeText(MainActivity.this, "你点击了地图设置", Toast.LENGTH_SHORT).show();
+                        break;
+
+                }
             }
         });
     }
@@ -277,5 +357,4 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         });
 
     }
-
 }
