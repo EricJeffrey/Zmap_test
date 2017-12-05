@@ -295,37 +295,5 @@
 
         </LinearLayout>
     </FrameLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_gravity="end"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@color/colorRiceWhite">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common_margin"
-            android:text="主题"/>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageButton
-                android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin"
-                android:src="@drawable/std_map_button"/>
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin"
-                android:src="@drawable/satellite_map_button" />
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin"
-                android:src="@drawable/bus_map_button"/>
-        </LinearLayout>
-    </LinearLayout>
+
 </android.support.v4.widget.DrawerLayout>
