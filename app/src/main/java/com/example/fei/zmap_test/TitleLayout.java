@@ -29,7 +29,7 @@ public class TitleLayout extends LinearLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleLayout);
         title_text = typedArray.getString(R.styleable.TitleLayout_title_text);
         right_text = typedArray.getString(R.styleable.TitleLayout_right_text);
-        button_img = typedArray.getResourceId(R.styleable.TitleLayout_button_src, R.drawable.offline_back);
+        button_img = typedArray.getResourceId(R.styleable.TitleLayout_button_src, R.drawable.back_button_blue_pressed_gray);
         typedArray.recycle();
 
         setSrc();
