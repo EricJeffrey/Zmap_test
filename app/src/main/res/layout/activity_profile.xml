@@ -18,10 +18,11 @@
             android:src="@drawable/back_button_white_pressed_gray"/>
 
         <ImageButton
+            android:id="@+id/profile_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
             android:background="@null"
             android:src="@drawable/setting_button_pressed_gray" />
     </RelativeLayout>
@@ -196,7 +197,7 @@
                 app:sub_column_title_text2="驾车头条"
                 app:sub_column_title_text3="扫一扫"
                 app:sub_column_detail_text1="专项贴心服务"
-                app:sub_column_detail_text2="雨天行车不开灯是不是违法？"
+                app:sub_column_detail_text2="雨天行车不开灯是不是..."
                 app:sub_column_detail_text3="车机版本扫码登录"
                 app:sub_column_img1="@drawable/car"
                 app:sub_column_img2="@drawable/head_line"

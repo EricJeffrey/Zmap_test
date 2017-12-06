@@ -363,11 +363,14 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         Toast.makeText(MainActivity.this, "你点击了消息中心", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.instant_route_status_button:
-                        Toast.makeText(MainActivity.this, "你点击了实时路况", Toast.LENGTH_SHORT).show();
-                        if(aMap.isTrafficEnabled())
+                        if(aMap.isTrafficEnabled()){
+                            Toast.makeText(MainActivity.this, "实时路况已关闭", Toast.LENGTH_SHORT).show();
                             aMap.setTrafficEnabled(false);       //显示实时路况图层，aMap是地图控制器对象。
-                        else
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "实时路况已开启", Toast.LENGTH_SHORT).show();
                             aMap.setTrafficEnabled(true);        //显示实时路况图层，aMap是地图控制器对象。
+                        }
                         break;
                     case R.id.take_taxi_button:
                         Toast.makeText(MainActivity.this, "你点击了叫车", Toast.LENGTH_SHORT).show();

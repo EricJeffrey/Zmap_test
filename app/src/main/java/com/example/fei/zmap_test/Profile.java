@@ -19,6 +19,7 @@ public class Profile extends AppCompatActivity {
         addListener(R.id.back);
         addListener(R.id.login_register_text);
         addListener(R.id.show_me);
+        addListener(R.id.profile_setting);
 
         ProfileColumnLayout tmp =((ProfileColumnLayout) findViewById(R.id.sub_column_mine));
         for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //向“我的”子项添加监听器
@@ -34,9 +35,15 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 switch (res){
-                    case R.id.back:finish();break;
-                    case R.id.login_register_text:login();break;
-                    case R.id.show_me:login();break;
+                    case R.id.back:
+                        finish();break;
+                    case R.id.login_register_text:
+                        login();break;
+                    case R.id.show_me:
+                        login();break;
+                    case R.id.profile_setting:
+                        Toast.makeText(Profile.this, "你点击了设置", Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
         });
@@ -48,16 +55,16 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 switch (id) {
                     case 1:
-                        Toast.makeText(Profile.this, "you clicked " + tmp.getSub_column_title_text1(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Profile.this, "你点击了" + tmp.getSub_column_title_text1(), Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        Toast.makeText(Profile.this, "you clicked " + tmp.getSub_column_title_text2(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Profile.this, "你点击了" + tmp.getSub_column_title_text2(), Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
-                        Toast.makeText(Profile.this, "you clicked " + tmp.getSub_column_title_text3(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Profile.this, "你点击了" + tmp.getSub_column_title_text3(), Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
-                        Toast.makeText(Profile.this, "you clicked " + tmp.getSub_column_title_text4(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Profile.this, "你点击了" + tmp.getSub_column_title_text4(), Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
