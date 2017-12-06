@@ -27,15 +27,22 @@ import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.AMapCameraInfo;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.traffic.TrafficSearch;
 import com.amap.api.services.traffic.TrafficStatusResult;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AMapLocationListener,LocationSource {
+public class MainActivity extends AppCompatActivity implements AMapLocationListener,LocationSource,PoiSearch.OnPoiSearchListener {
     private LinearLayout top;
     private static final String TAG = "MainActivity";
     private MapView mapView;
@@ -55,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private ImageButton my_collection_button;
     private int traffic_accident_button_status;
     private int my_collection_button_status;
+
+    Marker marker =null;
+    LatLng POILatlng =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         SetEdgeBar();       //显示&隐藏地图功能按钮
         SetUI();            //地图原始UI布局设置
         SetTraffic();       //设置交通态势信息
+        SetPOIMarker();     //设置点击地图POI
     }
     @Override
     protected void onDestroy() {
@@ -407,6 +418,56 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
             }
         });
+    }
+
+    //设置点击地图POI
+    public void SetPOIMarker(){
+        aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                POILatlng =latLng;
+                SearchPOI(latLng);
+            }
+        });
+    }
+
+    public void SearchPOI(LatLng latLng){
+
+        PoiSearch.Query query = new PoiSearch.Query("郑州","","");
+        query.setPageSize(1);// 设置每页最多返回多少条poiitem
+        query.setPageNum(1);//设置查询页码
+        PoiSearch poiSearch = new PoiSearch(this, query);
+        poiSearch =new PoiSearch(this,query);
+        List<LatLonPoint> points =new ArrayList<LatLonPoint>();
+        points.add(new LatLonPoint(latLng.latitude+0.0001,latLng.longitude+0.0001));
+        points.add(new LatLonPoint(latLng.latitude-0.0001,latLng.longitude-0.0001));
+        points.add(new LatLonPoint(latLng.latitude-0.0001,latLng.longitude+0.0001));
+        points.add(new LatLonPoint(latLng.latitude+0.0001,latLng.longitude-0.0001));
+        poiSearch.setBound(new PoiSearch.SearchBound(points));//设置多边形区域
+        poiSearch.setOnPoiSearchListener(this);
+        poiSearch.searchPOIAsyn();
+
+    }
+
+
+    @Override
+    public void onPoiSearched(PoiResult poiResult, int i) {
+        //Toast.makeText(MainActivity.this,"+"+poiResult.getPois().toString()+poiResult.getPageCount(), Toast.LENGTH_SHORT).show();
+        if(poiResult.getPageCount()!=0){
+            if(marker==null){
+                marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(poiResult.getPois().toString().substring(1,poiResult.getPois().toString().length()-1)));
+            }
+
+            if( marker.getPosition()!=POILatlng) {
+                marker.remove();
+                marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(poiResult.getPois().toString().substring(1,poiResult.getPois().toString().length()-1)));
+            }
+        }
+    }
+
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
+        Toast.makeText(MainActivity.this, " ", Toast.LENGTH_SHORT).show();
 
     }
 }
