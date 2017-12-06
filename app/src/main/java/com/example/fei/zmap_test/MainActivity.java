@@ -245,11 +245,13 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     //地图原始UI布局设置
     public void SetUI(){
-        mUiSettings = aMap.getUiSettings();         //实例化UiSettings类对象
-        mUiSettings.setZoomControlsEnabled(false);  //不显示原始缩放按钮
-        mUiSettings.setCompassEnabled(true);        //显示指南针
-        mUiSettings.setScaleControlsEnabled(true);  //显示比例尺，默认右下角显示
-        mUiSettings.setMyLocationButtonEnabled(false); //隐藏默认的定位按钮
+        mUiSettings = aMap.getUiSettings();                     //实例化UiSettings类对象
+        mUiSettings.setZoomControlsEnabled(false);              //不显示原始缩放按钮
+        mUiSettings.setCompassEnabled(true);                    //显示指南针
+        mUiSettings.setScaleControlsEnabled(true);              //显示比例尺，默认右下角显示
+        mUiSettings.setMyLocationButtonEnabled(false);          //隐藏默认的定位按钮
+
+        aMap.showIndoorMap(true);                            //设置显示室内地图，默认为不显示
 
     }
     //为每个Button添加监听器
@@ -299,16 +301,19 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         map_mode_normal_button.setImageResource(R.drawable.map_mode_normal_selector);
                         map_mode_bus_button.setImageResource(R.drawable.map_mode_bus);
                         map_mode_satellite_button.setImageResource(R.drawable.map_mode_satellite);
+                        aMap.setMapType(aMap.MAP_TYPE_NORMAL);
                         break;
                     case R.id.map_mode_satellite_button:
                         map_mode_normal_button.setImageResource(R.drawable.map_mode_normal);
                         map_mode_bus_button.setImageResource(R.drawable.map_mode_bus);
                         map_mode_satellite_button.setImageResource(R.drawable.map_mode_satellite_selector);
+                        aMap.setMapType(AMap.MAP_TYPE_SATELLITE);
                         break;
                     case R.id.map_mode_bus_button:
                         map_mode_bus_button.setImageResource(R.drawable.map_mode_bus_selector);
                         map_mode_normal_button.setImageResource(R.drawable.map_mode_normal);
                         map_mode_satellite_button.setImageResource(R.drawable.map_mode_satellite);
+                        aMap.setMapType(AMap.MAP_TYPE_NAVI);
                         break;
                     case R.id.map_mode_button:
                         drawerLayout.openDrawer(Gravity.END);
@@ -348,6 +353,10 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         break;
                     case R.id.instant_route_status_button:
                         Toast.makeText(MainActivity.this, "你点击了实时路况", Toast.LENGTH_SHORT).show();
+                        if(aMap.isTrafficEnabled())
+                            aMap.setTrafficEnabled(false);       //显示实时路况图层，aMap是地图控制器对象。
+                        else
+                            aMap.setTrafficEnabled(true);        //显示实时路况图层，aMap是地图控制器对象。
                         break;
                     case R.id.take_taxi_button:
                         Toast.makeText(MainActivity.this, "你点击了叫车", Toast.LENGTH_SHORT).show();
