@@ -26,7 +26,12 @@ android {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64"
         }
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
+
+
 
 dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -37,4 +42,8 @@ dependencies {
     compile files('libs/AMap_Search_V5.5.0_20171107.jar')
     compile files('libs/Android_Map3D_SDK_V5.5.0_20171107.jar')
     implementation files('libs/AMap_Location_V3.6.1_20171012.jar')
+
+    implementation files('libs/httpclient-4.5.4.jar')
+    implementation files('libs/httpcore-4.4.7.jar')
+
 }

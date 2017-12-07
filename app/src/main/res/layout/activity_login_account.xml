@@ -20,6 +20,7 @@
         android:background="@color/colorWhite"
         android:layout_marginTop="@dimen/common_margin">
         <EditText
+            android:id="@+id/login_account_username"
             android:layout_margin="@dimen/common_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,11 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
+                android:id="@+id/login_account_password"
                 android:layout_margin="@dimen/common_margin"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:inputType="textPassword"
                 android:hint="密码"/>
         </LinearLayout>
     </LinearLayout>
@@ -42,13 +45,13 @@
     <!--按钮!-->
     <Button
         android:id="@+id/login_account_button"
-        android:layout_margin="@dimen/common_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/common_margin"
+        android:layout_margin="@dimen/common_margin"
         android:background="@drawable/round_rectangle"
-        android:textSize="20sp"
-        android:text="登录"/>
+        android:padding="@dimen/common_margin"
+        android:text="登录"
+        android:textSize="20sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

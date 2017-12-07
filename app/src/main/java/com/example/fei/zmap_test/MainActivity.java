@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         map_mode_normal_button.setImageResource(R.drawable.map_mode_normal_selector);
                         map_mode_bus_button.setImageResource(R.drawable.map_mode_bus);
                         map_mode_satellite_button.setImageResource(R.drawable.map_mode_satellite);
-                        aMap.setMapType(aMap.MAP_TYPE_NORMAL);
+                        aMap.setMapType(AMap.MAP_TYPE_NORMAL);
                         break;
                     case R.id.map_mode_satellite_button:
                         map_mode_normal_button.setImageResource(R.drawable.map_mode_normal);
