@@ -8,8 +8,7 @@
             <solid android:color="@color/colorWhite"/>
             <!--内容与该圆形的间距-->
             <padding android:bottom="3dp" android:left="3dp" android:right="3dp" android:top="3dp"/>
-            <corners
-                android:radius="8dp"/>
+            <corners android:radius="3dp"/>
         </shape>
     </item>
 </selector>

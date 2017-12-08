@@ -13,4 +13,5 @@
     <color name="colorRiceWhite">#EFF1F3</color>
     <color name="colorActionBar">#FAFAFA</color>
     <color name="colorLightBlue">#5593FF</color>
+    <color name="colorDarkGray">#777777</color>
 </resources>

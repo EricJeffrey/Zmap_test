@@ -20,7 +20,6 @@
             android:layout_height="match_parent">
         </com.amap.api.maps.MapView>
 
-
         <LinearLayout
             android:id="@+id/top_view"
             android:orientation="vertical"
@@ -54,7 +53,8 @@
                     android:background="@null"
                     android:textSize="20sp"
                     android:gravity="center_vertical"
-                    android:hint="查找地点、公交、地铁"
+                    android:textColor="@color/colorDarkGray"
+                    android:text="查找地点、公交、地铁"
                     android:layout_gravity="center"/>
                 <ImageButton
                     android:id="@+id/voice_search_button"
@@ -75,31 +75,15 @@
                 android:layout_height="wrap_content">
                 <ImageButton
                     android:id="@+id/msg_center_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="@dimen/common_margin"
-                    android:layout_marginStart="@dimen/common_margin"
-                    android:elevation="3dp"
+                    style="@style/MainActivityTopTwoButtonStyle"
                     android:src="@drawable/message"
                     android:background="@drawable/oval"/>
 
                 <ImageButton
                     android:id="@+id/map_mode_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/map"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="@dimen/common_margin"
-                    android:layout_marginStart="@dimen/common_margin"
-                    android:elevation="@dimen/elevation"
+                    style="@style/MainActivityTopTwoButtonStyle"
                     android:background="@drawable/round_rectangle"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
+                    android:src="@drawable/map"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
@@ -115,77 +99,41 @@
                 android:layout_gravity="end">
                 <ImageButton
                     android:id="@+id/instant_route_status_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
-                    android:src="@drawable/signlight"
+                    style="@style/MainActivityRightFiveButtonStyle"
+                    android:src="@drawable/sign_light"
                     android:background="@drawable/rectangle_top"
-                    android:layout_gravity="end"
                     />
                 <View
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="0.5dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/div38">
-                </View>
+                    style="@style/MainActivityRightFiveButtonDiverStyle"/>
                 <ImageButton
                     android:id="@+id/take_taxi_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
+                    style="@style/MainActivityRightFiveButtonStyle"
                     android:src="@drawable/car"
                     android:background="@drawable/rectangle"
-                    android:layout_gravity="end"
                     />
                 <View
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="0.5dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/div38">
-                </View>
+                    style="@style/MainActivityRightFiveButtonDiverStyle"/>
                 <ImageButton
                     android:id="@+id/shared_bike_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
+                    style="@style/MainActivityRightFiveButtonStyle"
                     android:src="@drawable/bike"
                     android:background="@drawable/rectangle"
-                    android:layout_gravity="end"
                     />
                 <View
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="0.5dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/div38">
-                </View>
+                    style="@style/MainActivityRightFiveButtonDiverStyle"/>
                 <ImageButton
                     android:id="@+id/team_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
-                    android:src="@drawable/walktogether"
+                    style="@style/MainActivityRightFiveButtonStyle"
+                    android:src="@drawable/walk_together"
                     android:background="@drawable/rectangle"
-                    android:layout_gravity="end"
                     />
                 <View
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="0.5dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/div38">
-                </View>
+                    style="@style/MainActivityRightFiveButtonDiverStyle"/>
                 <ImageButton
                     android:id="@+id/report_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
+                    style="@style/MainActivityRightFiveButtonStyle"
                     android:src="@drawable/report"
                     android:background="@drawable/rectangle_bottom"
-                    android:layout_gravity="end"
                     />
             </LinearLayout>
 
@@ -237,13 +185,8 @@
                 android:focusable="true">
                 <ImageButton
                     android:id="@+id/location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
-                    android:elevation="@dimen/elevation"
+                    style="@style/MainActivityBottomTwoButtonStyle"
                     android:src="@drawable/whereme"
-                    android:layout_margin="@dimen/common_margin"
                     android:background="@drawable/oval"/>
                 <ImageButton
                     android:id="@+id/route_plan_button"
@@ -260,14 +203,9 @@
                     android:src="@drawable/route"/>
                 <ImageButton
                     android:id="@+id/home_workplace_set_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/button_size"
-                    android:minWidth="@dimen/button_size"
+                    style="@style/MainActivityBottomTwoButtonStyle"
                     android:src="@drawable/target"
                     android:background="@drawable/oval"
-                    android:elevation="@dimen/elevation"
-                    android:layout_margin="@dimen/common_margin"
                     android:layout_alignParentEnd="true"/>
             </RelativeLayout>
             <!--搜索附近框!-->
@@ -308,6 +246,56 @@
                     android:text=" 搜索附近"/>
             </LinearLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_search_page_bar"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:background="@color/colorRiceWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin"
+                android:background="@null"
+                android:src="@drawable/back_button_gray_pressed_dark_gray"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/round_rectangle_not_selectable_small_radius"
+                android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin"
+                android:layout_marginEnd="@dimen/common_margin"
+                android:animateLayoutChanges="true"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/search_btn"/>
+                <EditText
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:layout_marginStart="5dp"
+                    android:textSize="13sp"
+                    android:hint="搜索"/>
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/microphone"/>
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
     <include layout="@layout/sliding_menu_layout"/>

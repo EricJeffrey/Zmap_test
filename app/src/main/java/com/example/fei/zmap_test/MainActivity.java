@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements AMapLocationListener,LocationSource,PoiSearch.OnPoiSearchListener {
     private LinearLayout top;
@@ -72,11 +74,11 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();   //隐藏标题栏
 
-        mapView = (MapView) findViewById(R.id.map);
+        mapView =  findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
 
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
@@ -85,11 +87,11 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             }
         });
-        map_mode_normal_button =(ImageButton) findViewById(R.id.map_mode_normal_button);
-        map_mode_bus_button = (ImageButton) findViewById(R.id.map_mode_bus_button);
-        map_mode_satellite_button = (ImageButton) findViewById(R.id.map_mode_satellite_button);
-        traffic_accident_button = (ImageButton) findViewById(R.id.traffic_accident_button);
-        my_collection_button = (ImageButton) findViewById(R.id.my_collection_button);
+        map_mode_normal_button = findViewById(R.id.map_mode_normal_button);
+        map_mode_bus_button =  findViewById(R.id.map_mode_bus_button);
+        map_mode_satellite_button =  findViewById(R.id.map_mode_satellite_button);
+        traffic_accident_button = findViewById(R.id.traffic_accident_button);
+        my_collection_button =  findViewById(R.id.my_collection_button);
         traffic_accident_button_status = 1;
         my_collection_button_status = 1;
 
@@ -114,6 +116,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mapView.onResume();
+        findViewById(R.id.main_search_page_bar).setVisibility(View.GONE);
+        findViewById(R.id.top_view).setVisibility(View.VISIBLE);
     }
     @Override
     protected void onPause() {
@@ -161,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 amapLocation.getLatitude();//获取纬度
                 amapLocation.getLongitude();//获取经度
                 amapLocation.getAccuracy();//获取精度信息
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
                 Date date = new Date(amapLocation.getTime());
                 df.format(date);//定位时间
                 amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
@@ -232,9 +236,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);//连续定位、蓝点不会移动到地图中心点，定位点依照设备方向旋转，并且蓝点会跟随设备移动。
-        myLocationStyle.strokeColor(Color.argb(80,00,00,205));//设置定位蓝点精度圆圈的边框颜色的方法。
-        myLocationStyle.radiusFillColor(Color.argb(50,00,191,255));//设置定位蓝点精度圆圈的填充颜色的方法。
-        BitmapDescriptorFactory mBipmapFactory =new BitmapDescriptorFactory();
+        myLocationStyle.strokeColor(Color.argb(80,0,0,205));//设置定位蓝点精度圆圈的边框颜色的方法。
+        myLocationStyle.radiusFillColor(Color.argb(50,0,191,255));//设置定位蓝点精度圆圈的填充颜色的方法。
+//        BitmapDescriptorFactory mBipmapFactory =new BitmapDescriptorFactory();
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.location64));//设置定位蓝点的icon图标方法，需要用到BitmapDescriptor类对象作为参数。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
         //aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
@@ -244,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     //个人信息
     public void Information(){
-        ImageButton me = (ImageButton) findViewById(R.id.me);
+        ImageButton me = findViewById(R.id.me);
         me.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -354,7 +358,11 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         Toast.makeText(MainActivity.this, "你点击了地图设置", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.search_box:
-                        Toast.makeText(MainActivity.this, "你点击了搜索", Toast.LENGTH_SHORT).show();
+                        findViewById(R.id.main_search_page_bar).setVisibility(View.VISIBLE);
+                        findViewById(R.id.top_view).setVisibility(View.GONE);
+                        Intent intent = new Intent(MainActivity.this, SearchPageActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(Animation.ABSOLUTE, Animation.ABSOLUTE);
                         break;
                     case R.id.voice_search_button:
                         Toast.makeText(MainActivity.this, "你点击了语音搜索", Toast.LENGTH_SHORT).show();
@@ -402,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     public void SetEdgeBar(){
         Log.d(TAG, "onCreate: Now Create");
         findViewById(R.id.search_box).clearFocus();
-        top = (LinearLayout) findViewById(R.id.top_view);
+        top =  findViewById(R.id.top_view);
         aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {

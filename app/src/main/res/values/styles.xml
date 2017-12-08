@@ -11,5 +11,44 @@
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-
+    <style name="SearchPageSearchTypeButtonStyle" parent="AppTheme">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/rectangle_light_gray</item>
+    </style>
+    <style name="MainActivityRightFiveButtonStyle" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minWidth">@dimen/button_size</item>
+        <item name="android:minHeight">@dimen/button_size</item>
+        <item name="android:layout_gravity">end</item>
+    </style>
+    <style name="MainActivityRightFiveButtonDiverStyle" parent="AppTheme">
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/colorLightGray</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginStart">@dimen/common_margin_small</item>
+        <item name="android:layout_marginEnd">@dimen/common_margin_small</item>
+    </style>
+    <style name="MainActivityTopTwoButtonStyle" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/button_size</item>
+        <item name="android:minWidth">@dimen/button_size</item>
+        <item name="android:layout_marginTop">@dimen/common_margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/common_margin_small</item>
+        <item name="android:layout_marginEnd">@dimen/common_margin</item>
+        <item name="android:layout_marginStart">@dimen/common_margin</item>
+        <item name="android:elevation">@dimen/elevation</item>
+    </style>
+    <style name="MainActivityBottomTwoButtonStyle" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/button_size</item>
+        <item name="android:minWidth">@dimen/button_size</item>
+        <item name="android:layout_margin">@dimen/common_margin</item>
+        <item name="android:elevation">@dimen/elevation</item>
+    </style>
 </resources>
