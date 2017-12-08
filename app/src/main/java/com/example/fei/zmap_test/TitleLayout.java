@@ -34,7 +34,7 @@ public class TitleLayout extends LinearLayout {
 
         setSrc();
         addListener(R.id.back);
-        if(!TextUtils.isEmpty(right_text) && right_text.equals("注册")) addListener(R.id.right_text);
+        addListener(R.id.right_text);
     }
     public void setSrc(){
         ((TextView) findViewById(R.id.title_text)).setText(title_text);
@@ -49,10 +49,19 @@ public class TitleLayout extends LinearLayout {
                     case R.id.back:
                         ((Activity) getContext()).finish();break;
                     case R.id.right_text:
-                        Context context = getContext();
-                        Intent intent = new Intent(context, RegisterByUsername.class);
-                        context.startActivity(intent);
-                        ((Activity) context).finish();break;
+                        if(!TextUtils.isEmpty(right_text) && right_text.equals("注册")){
+                            Context context = getContext();
+                            Intent intent = new Intent(context, RegisterByUsername.class);
+                            context.startActivity(intent);
+                            ((Activity) context).finish();
+                        }
+                        else if(right_text.equals("登录")){
+                            Context context = getContext();
+                            Intent intent = new Intent(context, LoginAccount.class);
+                            context.startActivity(intent);
+                            ((Activity) context).finish();
+                        }
+                        break;
                 }
             }
         });

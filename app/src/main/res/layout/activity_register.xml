@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title_text="注册"
+        app:right_text="登录"
         app:button_src="@drawable/back_button_blue_pressed_gray"/>
     <LinearLayout
         android:orientation="vertical"

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:button_src="@drawable/back_button_blue_pressed_gray"
         app:title_text="账号注册"
-        />
+        app:right_text="登录" />
     <!--账号密码框!-->
     <LinearLayout
         android:orientation="vertical"
