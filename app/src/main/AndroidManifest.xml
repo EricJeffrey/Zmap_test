@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fei.zmap_test">
 
@@ -23,18 +23,17 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="ad658669a3d6ce7a79e7c0a0b93c444a"
-            />
-        <service android:name="com.amap.api.location.APSService"/>
-        <activity android:name=".MainActivity">
-        </activity>
+            android:value="d75a03af5e5b6dd7d52cb0ae5437a718" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".Profile" />
-        <activity android:name=".LoginPhone" />
-        <activity android:name=".SearchPageActivity"/>
-        <activity android:name=".SearchResultPage"/>
+        <activity android:name=".LoginPhone"></activity>
         <activity android:name=".Register" />
         <activity android:name=".LoginAccount" />
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RegisterByUsername"></activity>
     </application>
 
 </manifest>

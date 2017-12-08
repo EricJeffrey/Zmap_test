@@ -50,7 +50,7 @@ public class TitleLayout extends LinearLayout {
                         ((Activity) getContext()).finish();break;
                     case R.id.right_text:
                         Context context = getContext();
-                        Intent intent = new Intent(context, Register.class);
+                        Intent intent = new Intent(context, RegisterByUsername.class);
                         context.startActivity(intent);
                         ((Activity) context).finish();break;
                 }
