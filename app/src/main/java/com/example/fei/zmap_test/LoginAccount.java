@@ -41,7 +41,7 @@ public class LoginAccount extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_account);
+        setContentView(R.layout.activity_login_account_layout);
         getSupportActionBar().hide();
 
         username=(EditText)findViewById(R.id.login_account_username);

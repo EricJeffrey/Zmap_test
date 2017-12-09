@@ -27,11 +27,11 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name=".SearchResultPage"/>
-        <activity android:name=".SearchPageActivity"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".SearchResultPage" />
+        <activity android:name=".SearchPageActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".Profile" />
-        <activity android:name=".LoginPhone"/>
+        <activity android:name=".LoginPhone" />
         <activity android:name=".Register" />
         <activity android:name=".LoginAccount" />
         <activity
@@ -43,7 +43,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterByUsername"/>
+        <activity android:name=".RegisterByUsername" />
+        <activity android:name=".SettingActivity"></activity>
     </application>
 
 </manifest>

@@ -22,7 +22,7 @@ public class SearchHistoryItemLayout extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.search_history_item_layout, this);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SearchHistoryItemLayout);
-        String itemText = typedArray.getString(R.styleable.SearchHistoryItemLayout_itemText);
+        String itemText = typedArray.getString(R.styleable.SearchHistoryItemLayout_item_text);
         typedArray.recycle();
 
         textView = findViewById(R.id.search_history_item_text);

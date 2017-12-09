@@ -25,6 +25,10 @@
         <attr name="column_img" format="reference"/>
     </declare-styleable>
     <declare-styleable name="SearchHistoryItemLayout">
-        <attr name="itemText" format="string"/>
+        <attr name="item_text" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="SettingItemLayout">
+        <attr name="setting_text" format="string"/>
+        <attr name="setting_detail_text" format="string"/>
     </declare-styleable>
 </resources>

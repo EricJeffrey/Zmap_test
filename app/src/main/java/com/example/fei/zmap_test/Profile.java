@@ -11,7 +11,7 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_layout);
         getSupportActionBar().hide();
 
         addListener(R.id.back);
@@ -40,7 +40,8 @@ public class Profile extends AppCompatActivity {
                     case R.id.show_me:
                         login();break;
                     case R.id.profile_setting:
-                        Toast.makeText(Profile.this, "你点击了设置", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Profile.this, SettingActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }

@@ -43,7 +43,7 @@ public class RegisterByUsername extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_by_username);
+        setContentView(R.layout.activity_register_by_username_layout);
         getSupportActionBar().hide();
 
 

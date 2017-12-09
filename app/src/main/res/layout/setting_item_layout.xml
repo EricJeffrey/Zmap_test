@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@drawable/rectangle_light_gray"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/setting_text"
+        android:clickable="false"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:layout_marginStart="@dimen/common_margin_large"
+        android:gravity="start|center_vertical"
+        android:textSize="17sp"
+        android:text="地图设置" />
+    <TextView
+        android:id="@+id/setting_detail_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorDarkGray"
+        android:layout_gravity="center_vertical"
+        android:textSize="14sp"
+        android:text=""/>
+    <ImageButton
+        android:clickable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@null"
+        android:layout_marginEnd="@dimen/common_margin"
+        android:src="@drawable/arrow_right_large"/>
+</LinearLayout>
