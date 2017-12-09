@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         SetEdgeBar();       //显示&隐藏地图功能按钮
         SetUI();            //地图原始UI布局设置
         SetTraffic();       //设置交通态势信息
-        SetPOIMarker();     //设置点击地图POI
     }
     @Override
     protected void onDestroy() {
@@ -404,14 +403,16 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         });
     }
 
-    //显示&隐藏地图功能按钮
+    //显示&隐藏地图功能按钮&设置点击地图POI
     public void SetEdgeBar(){
         Log.d(TAG, "onCreate: Now Create");
-        findViewById(R.id.search_box).clearFocus();
         top =  findViewById(R.id.top_view);
+        findViewById(R.id.search_box).clearFocus();
         aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                POILatlng =latLng;
+                SearchPOI(latLng);
                 if(top.getVisibility() == View.VISIBLE) top.setVisibility(View.INVISIBLE);
                 else top.setVisibility(View.VISIBLE);
             }
@@ -425,17 +426,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             @Override
             public void onRoadTrafficSearched(TrafficStatusResult trafficStatusResult, int i) {
 
-            }
-        });
-    }
-
-    //设置点击地图POI
-    public void SetPOIMarker(){
-        aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                POILatlng =latLng;
-                SearchPOI(latLng);
             }
         });
     }
