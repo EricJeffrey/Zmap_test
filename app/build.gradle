@@ -56,4 +56,5 @@ dependencies {
     implementation files('libs/AMap_Location_V3.6.1_20171012.jar')
     implementation files('libs/httpclient-4.5.4.jar')
     implementation files('libs/httpcore-4.4.7.jar')
+    implementation files('libs/gson-2.7.jar')
 }

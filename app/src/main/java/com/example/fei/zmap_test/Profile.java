@@ -4,9 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fei.zmap_test.db.users;
+import com.google.gson.Gson;
+
 public class Profile extends AppCompatActivity {
+    public boolean isLogin = false;
+    public users current_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,39 @@ public class Profile extends AppCompatActivity {
         for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //“驾车”
         tmp =((ProfileColumnLayout) findViewById(R.id.sub_column_others));
         for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //“其他”
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String userJson=getIntent().getStringExtra("resp_user");
+        if(userJson!=null) {
+            current_user = new Gson().fromJson(userJson, users.class);
+            if (current_user.getId() != 0) {
+                TextView username_textView = (TextView) findViewById(R.id.login_register_text);
+                username_textView.setText(current_user.getUsername());
+            }
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
     }
     //添加监听器

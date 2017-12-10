@@ -73,7 +73,7 @@ public class RegisterByUsername extends AppCompatActivity {
     }
     private void sendRequestWithHttpClient(){
         final String username_text = username.getText().toString().trim();
-        final String password_text = username.getText().toString().trim();
+        final String password_text = password.getText().toString().trim();
         new Thread(new Runnable() {
             @Override
             public void run() {

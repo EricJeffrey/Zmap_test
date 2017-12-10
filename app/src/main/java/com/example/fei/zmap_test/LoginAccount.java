@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.fei.zmap_test.db.users;
+import com.google.gson.Gson;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,28 +19,62 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.apache.http.util.TextUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginAccount extends AppCompatActivity {
+    private static final String TAG = "LoginAccount";
     private String url="http://www.idooooo.tk";//服务器接口地址
     private EditText username;
     private EditText password;//用户名和密码
+    private String username_text;
+    private String password_text;
     private String Response;
+    private String success;
+    private int statusCode =0;
     public static final int SHOW_RESPONSE = 0;
+    public users resp_user;
 
-   private Handler handler = new Handler() {
-         @Override
-         public void handleMessage(Message msg) {
-             super.handleMessage(msg);
-                switch (msg.what) {
-                    case SHOW_RESPONSE:
-                        Response=new String(msg.obj.toString());
-                        Toast.makeText(LoginAccount.this,Response,Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
-                           }
-                  }
-           };
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case SHOW_RESPONSE:
+                    Response=new String(msg.obj.toString());
+                    if(!TextUtils.isEmpty(Response)){
+                        resp_user=new users();
+                        try {
+                            JSONObject userObject = new JSONObject(Response);
+                            Log.e(TAG, Response.toString());
+                            resp_user.setId(userObject.getInt("id"));
+                            resp_user.setUsername(userObject.getString("username"));
+                            resp_user.setId_head(userObject.getInt("id_head"));
+                            resp_user.setSearchHistory(userObject.getString("searchHistory"));
+                            resp_user.setStatusCode(userObject.getInt("statusCode"));
+                            Log.e(TAG, userObject.getInt("statusCode")+"*");
+                            if(resp_user.getId()!=0){
+                                Log.e(TAG, "s"+resp_user.getStatusCode());
+                                Toast.makeText(LoginAccount.this,"登陆成功",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginAccount.this,Profile.class);
+                                intent.putExtra("resp_user",new Gson().toJson(resp_user));
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginAccount.this,"账号密码错误",Toast.LENGTH_SHORT).show();
+                                password.setText("");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +103,6 @@ public class LoginAccount extends AppCompatActivity {
                         break;
                     case R.id.login_account_button:
                         sendRequestWithHttpClient();
-                        finish();
                         break;
                 }
             }
@@ -73,8 +110,8 @@ public class LoginAccount extends AppCompatActivity {
     }
 
     private void sendRequestWithHttpClient(){
-        final String username_text = username.getText().toString().trim();
-        final String password_text = username.getText().toString().trim();
+        username_text = username.getText().toString().trim();
+        password_text = password.getText().toString().trim();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -85,7 +122,6 @@ public class LoginAccount extends AppCompatActivity {
                     if((httpResponse.getEntity())!=null){
                         HttpEntity entity =httpResponse.getEntity();
                         String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
-
                         Message message = new Message();//在子线程中将Message对象发出去
                         message.what = SHOW_RESPONSE;
                         message.obj =response;
