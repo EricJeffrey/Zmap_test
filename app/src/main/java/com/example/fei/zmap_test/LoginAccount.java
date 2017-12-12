@@ -30,36 +30,30 @@ public class LoginAccount extends AppCompatActivity {
     private EditText password;//用户名和密码
     private String username_text;
     private String password_text;
-    private String Response;
-    private String success;
-    private int statusCode =0;
     public static final int SHOW_RESPONSE = 0;
     public users resp_user;
 
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case SHOW_RESPONSE:
-                    Response=new String(msg.obj.toString());
+                    String Response=msg.obj.toString();
                     if(!TextUtils.isEmpty(Response)){
                         resp_user=new users();
                         try {
                             JSONObject userObject = new JSONObject(Response);
-                            Log.e(TAG, Response.toString());
                             resp_user.setId(userObject.getInt("id"));
                             resp_user.setUsername(userObject.getString("username"));
                             resp_user.setId_head(userObject.getInt("id_head"));
                             resp_user.setSearchHistory(userObject.getString("searchHistory"));
                             resp_user.setStatusCode(userObject.getInt("statusCode"));
-                            Log.e(TAG, userObject.getInt("statusCode")+"*");
                             if(resp_user.getId()!=0){
-                                Log.e(TAG, "s"+resp_user.getStatusCode());
                                 Toast.makeText(LoginAccount.this,"登陆成功",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginAccount.this,Profile.class);
                                 intent.putExtra("resp_user",new Gson().toJson(resp_user));
-                                startActivity(intent);
+                                setResult(RESULT_OK,intent);
+                                finish();
                             } else {
                                 Toast.makeText(LoginAccount.this,"账号密码错误",Toast.LENGTH_SHORT).show();
                                 password.setText("");
@@ -72,8 +66,19 @@ public class LoginAccount extends AppCompatActivity {
                 default:
                     break;
             }
+            return true;
         }
-    };
+    });
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        Log.e(TAG,"!=null");
+        intent.putExtra("nothing",0);
+        setResult(RESULT_CANCELED);
+        finish();
+
+    }
 
 
     @Override

@@ -21,24 +21,23 @@ public class RegisterByUsername extends AppCompatActivity {
     private String url="http://www.idooooo.tk";//服务器接口地址
     private EditText username;
     private EditText password;//用户名和密码
-    private String Response;
     public static final int SHOW_RESPONSE = 0;
 
 
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case SHOW_RESPONSE:
-                    Response=new String(msg.obj.toString());
+                    String Response=msg.obj.toString();
                     Toast.makeText(RegisterByUsername.this,Response,Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;
             }
+            return true;
         }
-    };
+    }) ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -3,6 +3,7 @@ package com.example.fei.zmap_test;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,12 +14,21 @@ import com.google.gson.Gson;
 public class Profile extends AppCompatActivity {
     public boolean isLogin = false;
     public users current_user;
+    public TextView username_textView;
+    private static final String TAG = "Profile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_layout);
         getSupportActionBar().hide();
+
+        username_textView = (TextView) findViewById(R.id.login_register_text);
+        if(savedInstanceState != null){
+            Log.e(TAG,"!=null");
+            current_user=new Gson().fromJson(savedInstanceState.getString("current_user"),users.class);
+            if (current_user.getId() != 0)  username_textView.setText(current_user.getUsername());  //修改用户名显示
+        }else Log.e(TAG,"=null");
 
         addListener(R.id.back);
         addListener(R.id.login_register_text);
@@ -41,14 +51,7 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String userJson=getIntent().getStringExtra("resp_user");
-        if(userJson!=null) {
-            current_user = new Gson().fromJson(userJson, users.class);
-            if (current_user.getId() != 0) {
-                TextView username_textView = (TextView) findViewById(R.id.login_register_text);
-                username_textView.setText(current_user.getUsername());
-            }
-        }
+
     }
     @Override
     protected void onPause() {
@@ -57,15 +60,35 @@ public class Profile extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("current_user",new Gson().toJson(current_user));
+        Log.e(TAG,"onSaveInstanceState");
+        super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
     protected void onStop() {
         super.onStop();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                if(resultCode == RESULT_OK){
+                    String userJson=data.getStringExtra("resp_user");
+                    if(userJson!=null) {
+                        current_user = new Gson().fromJson(userJson, users.class);
+                        if (current_user.getId() != 0)  username_textView.setText(current_user.getUsername());  //修改用户名显示
+                    }
+                }
+                break;
+            default: break;
+        }
     }
+
     //添加监听器
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new View.OnClickListener() {
@@ -124,6 +147,6 @@ public class Profile extends AppCompatActivity {
     }
     public void login(){
         Intent intent = new Intent(Profile.this, LoginAccount.class);
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
 }
