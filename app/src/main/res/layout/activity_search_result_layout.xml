@@ -2,18 +2,20 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/colorRiceWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.example.fei.zmap_test.TitleLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title_text="搜索结果" />
     <TextView
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="很抱歉"/>
-    <TextView
-        android:id="@+id/result_text"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"/>
+        android:text="(。・＿・。)很抱歉，我们什么也没找到"/>
+
 </LinearLayout>

@@ -140,7 +140,6 @@ public class SearchPageActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(text)) return;
         putSearchRecordToSharedPreference(text);
         Intent intent = new Intent(SearchPageActivity.this, SearchResultPage.class);
-        intent.putExtra("search_text", editText.getText().toString());
         startActivity(intent);
     }
     //清除ScrollView以及SharedPreference中的历史记录
