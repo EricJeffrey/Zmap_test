@@ -1,33 +1,34 @@
-package com.example.fei.zmap_test;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
+         package com.example.fei.zmap_test;
 
-import com.example.fei.zmap_test.db.users;
-import com.google.gson.Gson;
+         import android.content.Intent;
+         import android.os.Bundle;
+         import android.os.Handler;
+         import android.os.Message;
+         import android.support.v7.app.AppCompatActivity;
+         import android.util.Log;
+         import android.view.View;
+         import android.widget.EditText;
+         import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.apache.http.util.TextUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
+         import com.example.fei.zmap_test.db.users;
+         import com.google.gson.Gson;
+
+         import org.apache.http.HttpEntity;
+         import org.apache.http.HttpResponse;
+         import org.apache.http.client.HttpClient;
+         import org.apache.http.client.methods.HttpGet;
+         import org.apache.http.impl.client.DefaultHttpClient;
+         import org.apache.http.util.EntityUtils;
+         import org.apache.http.util.TextUtils;
+         import org.json.JSONException;
+         import org.json.JSONObject;
 
 public class LoginAccount extends AppCompatActivity {
     private static final String TAG = "LoginAccount";
-    private String url="http://www.idooooo.tk";//æœåŠ¡å™¨æ¥å£åœ°å€
+    private String url="http://www.idooooo.tk";//·şÎñÆ÷½Ó¿ÚµØÖ·
     private EditText username;
-    private EditText password;//ç”¨æˆ·åå’Œå¯†ç 
+    private EditText password;//ÓÃ»§ÃûºÍÃÜÂë
     private String username_text;
     private String password_text;
     public static final int SHOW_RESPONSE = 0;
@@ -49,13 +50,13 @@ public class LoginAccount extends AppCompatActivity {
                             resp_user.setSearchHistory(userObject.getString("searchHistory"));
                             resp_user.setStatusCode(userObject.getInt("statusCode"));
                             if(resp_user.getId()!=0){
-                                Toast.makeText(LoginAccount.this,"ç™»é™†æˆåŠŸ",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginAccount.this,"µÇÂ½³É¹¦",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginAccount.this,Profile.class);
                                 intent.putExtra("resp_user",new Gson().toJson(resp_user));
                                 setResult(RESULT_OK,intent);
                                 finish();
                             } else {
-                                Toast.makeText(LoginAccount.this,"è´¦å·å¯†ç é”™è¯¯",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginAccount.this,"ÕËºÅÃÜÂë´íÎó",Toast.LENGTH_SHORT).show();
                                 password.setText("");
                             }
                         } catch (JSONException e) {
@@ -91,7 +92,7 @@ public class LoginAccount extends AppCompatActivity {
         password=(EditText)findViewById(R.id.login_account_password);
 
         addListener(R.id.go_login_phone_text);
-        addListener(R.id.find_password);                    //æŒ‰é’®ç›®å‰åªæœ‰è¿”å›åŠŸèƒ½
+        addListener(R.id.find_password);                    //°´Å¥Ä¿Ç°Ö»ÓĞ·µ»Ø¹¦ÄÜ
         addListener(R.id.login_account_button);
     }
     public void addListener(final int res){
@@ -104,7 +105,7 @@ public class LoginAccount extends AppCompatActivity {
                         startActivity(intent);
                         finish();break;
                     case R.id.find_password:
-                        Toast.makeText(LoginAccount.this, "åˆ«æ‹…å¿ƒ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginAccount.this, "±ğµ£ĞÄ", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.login_account_button:
                         sendRequestWithHttpClient();
@@ -120,14 +121,14 @@ public class LoginAccount extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpClient httpCient = new DefaultHttpClient();  //åˆ›å»ºHttpClientå¯¹è±¡
+                HttpClient httpCient = new DefaultHttpClient();  //´´½¨HttpClient¶ÔÏó
                 HttpGet httpGet = new HttpGet(url+"/?action=login&username="+username_text+"&password="+password_text);
                 try {
-                    HttpResponse httpResponse = httpCient.execute(httpGet);//ç¬¬ä¸‰æ­¥ï¼šæ‰§è¡Œè¯·æ±‚ï¼Œè·å–æœåŠ¡å™¨å‘è¿˜çš„ç›¸åº”å¯¹è±¡
+                    HttpResponse httpResponse = httpCient.execute(httpGet);//µÚÈı²½£ºÖ´ĞĞÇëÇó£¬»ñÈ¡·şÎñÆ÷·¢»¹µÄÏàÓ¦¶ÔÏó
                     if((httpResponse.getEntity())!=null){
                         HttpEntity entity =httpResponse.getEntity();
-                        String response = EntityUtils.toString(entity,"utf-8");//å°†entityå½“ä¸­çš„æ•°æ®è½¬æ¢ä¸ºå­—ç¬¦ä¸²
-                        Message message = new Message();//åœ¨å­çº¿ç¨‹ä¸­å°†Messageå¯¹è±¡å‘å‡ºå»
+                        String response = EntityUtils.toString(entity,"utf-8");//½«entityµ±ÖĞµÄÊı¾İ×ª»»Îª×Ö·û´®
+                        Message message = new Message();//ÔÚ×ÓÏß³ÌÖĞ½«Message¶ÔÏó·¢³öÈ¥
                         message.what = SHOW_RESPONSE;
                         message.obj =response;
                         handler.sendMessage(message);
