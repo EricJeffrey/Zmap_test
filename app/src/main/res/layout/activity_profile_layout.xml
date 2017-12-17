@@ -53,6 +53,7 @@
                         android:id="@+id/show_me"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/common_margin"
                         android:background="@null"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/profile_head"/>
@@ -63,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="@dimen/common_margin"
                         android:textSize="20sp"
                         android:textColor="@color/colorWhite"
                         android:text="登录/注册"/>

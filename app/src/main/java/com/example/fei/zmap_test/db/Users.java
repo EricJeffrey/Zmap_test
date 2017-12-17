@@ -1,10 +1,13 @@
 package com.example.fei.zmap_test.db;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by do_pc on 2017/12/10.
  */
 
-public class user {
+public class Users extends DataSupport {
+    private int statusCode;
 
     private int id = 0;
     private String username;
@@ -44,6 +47,12 @@ public class user {
     public void setSearchHistory(String searchHistory) {
         this.searchHistory = searchHistory;
     }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
 }
-
-

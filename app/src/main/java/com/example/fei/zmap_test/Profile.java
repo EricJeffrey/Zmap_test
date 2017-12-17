@@ -5,16 +5,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fei.zmap_test.db.users;
+import com.example.fei.zmap_test.db.Users;
 import com.google.gson.Gson;
+
+import org.litepal.crud.DataSupport;
 
 public class Profile extends AppCompatActivity {
     public boolean isLogin = false;
-    public users current_user;
+    public Users current_user =null;
     public TextView username_textView;
+    public ImageButton user_head_icon_btn;
     private static final String TAG = "Profile";
 
     @Override
@@ -23,12 +27,24 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile_layout);
         getSupportActionBar().hide();
 
-        username_textView =  findViewById(R.id.login_register_text);
-        if(savedInstanceState != null){
+        username_textView = findViewById(R.id.login_register_text);
+        user_head_icon_btn = findViewById(R.id.show_me);
+        current_user = DataSupport.findLast(Users.class);
+        if(current_user !=null){
+            if (current_user.getId() != 0) {
+                username_textView.setText(current_user.getUsername());  //修改用户名显示
+                //TODO set user head icon
+                user_head_icon_btn.setImageResource(R.drawable.avatar_1);
+            }
+            Log.e(TAG, "onCreate: get user");
+        }else {
+            Log.e(TAG, "onCreate: lose user");
+        }
+/*        if(savedInstanceState != null){
             Log.e(TAG,"!=null");
-            current_user=new Gson().fromJson(savedInstanceState.getString("current_user"),users.class);
+            current_user=new Gson().fromJson(savedInstanceState.getString("current_user"),Users.class);
             if (current_user.getId() != 0)  username_textView.setText(current_user.getUsername());  //修改用户名显示
-        }else Log.e(TAG,"=null");
+        }else Log.e(TAG,"=null");*/
 
         addListener(R.id.back);
         addListener(R.id.login_register_text);
@@ -49,8 +65,27 @@ public class Profile extends AppCompatActivity {
 
     }
     @Override
+    public void onRestart(){
+        super.onRestart();
+        current_user = DataSupport.findLast(Users.class);
+        if(current_user !=null){
+            if (current_user.getId() != 0) {
+                username_textView.setText(current_user.getUsername());  //修改用户名显示
+                //TODO set user head icon
+                user_head_icon_btn.setImageResource(R.drawable.avatar_1);
+            }
+
+            Log.e(TAG, "onCreate: get user");
+        }else {
+            Log.e(TAG, "onCreate: lose user");
+        }
+
+    }
+    @Override
     protected void onResume() {
+
         super.onResume();
+
 
     }
     @Override
@@ -80,7 +115,7 @@ public class Profile extends AppCompatActivity {
                 if(resultCode == RESULT_OK){
                     String userJson=data.getStringExtra("resp_user");
                     if(userJson!=null) {
-                        current_user = new Gson().fromJson(userJson, users.class);
+                        current_user = new Gson().fromJson(userJson, Users.class);
                         if (current_user.getId() != 0)  username_textView.setText(current_user.getUsername());  //修改用户名显示
                     }
                 }
@@ -98,9 +133,15 @@ public class Profile extends AppCompatActivity {
                     case R.id.back:
                         finish();break;
                     case R.id.login_register_text:
-                        login();break;
                     case R.id.show_me:
-                        login();break;
+                        if(current_user !=null){
+                            if (current_user.getId() != 0)  {
+                                Intent intent = new Intent(Profile.this, AccountProfile.class);
+                                startActivity(intent);
+                            }
+                        }else {
+                            login();
+                        }break;
                     case R.id.profile_setting:
                         Intent intent = new Intent(Profile.this, SettingActivity.class);
                         startActivity(intent);
