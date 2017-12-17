@@ -63,6 +63,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
                         android:textSize="20sp"
                         android:textColor="@color/colorWhite"
                         android:text="登录/注册"/>

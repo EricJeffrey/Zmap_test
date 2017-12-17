@@ -23,7 +23,7 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile_layout);
         getSupportActionBar().hide();
 
-        username_textView = (TextView) findViewById(R.id.login_register_text);
+        username_textView =  findViewById(R.id.login_register_text);
         if(savedInstanceState != null){
             Log.e(TAG,"!=null");
             current_user=new Gson().fromJson(savedInstanceState.getString("current_user"),users.class);
@@ -35,11 +35,11 @@ public class Profile extends AppCompatActivity {
         addListener(R.id.show_me);
         addListener(R.id.profile_setting);
 
-        ProfileColumnLayout tmp =((ProfileColumnLayout) findViewById(R.id.sub_column_mine));
+        ProfileColumnLayout tmp = findViewById(R.id.sub_column_mine);
         for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //向“我的”子项添加监听器
-        tmp =((ProfileColumnLayout) findViewById(R.id.sub_column_drive_car));
+        tmp = findViewById(R.id.sub_column_drive_car);
         for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //“驾车”
-        tmp =((ProfileColumnLayout) findViewById(R.id.sub_column_others));
+        tmp = findViewById(R.id.sub_column_others);
         for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //“其他”
 
     }
