@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -49,11 +48,6 @@ public class LoginAccount extends AppCompatActivity {
                             resp_user.setStatusCode(userObject.getInt("statusCode"));
                             if(resp_user.getId()!=0){
                                 Toast.makeText(LoginAccount.this,"登陆成功",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginAccount.this,Profile.class);
-                                intent.putExtra("nothing",0);
-                                //intent.putExtra("resp_user",new Gson().toJson(resp_user));
-                                //setResult(RESULT_OK,intent);
-                                setResult(RESULT_CANCELED);
                                 resp_user.save();
                                 finish();
                             } else {
@@ -72,15 +66,6 @@ public class LoginAccount extends AppCompatActivity {
         }
     });
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        Log.e(TAG,"!=null");
-        intent.putExtra("nothing",0);
-        setResult(RESULT_CANCELED);
-        finish();
-
-    }
 
 
     @Override

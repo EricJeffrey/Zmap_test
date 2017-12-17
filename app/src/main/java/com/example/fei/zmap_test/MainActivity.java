@@ -33,9 +33,6 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.traffic.TrafficSearch;
 import com.amap.api.services.traffic.TrafficStatusResult;
-import com.example.fei.zmap_test.db.Users;
-
-import org.litepal.crud.DataSupport;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -107,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     protected void onDestroy() {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        DataSupport.deleteAll(Users.class);
         mapView.onDestroy();
     }
     @Override
