@@ -1,11 +1,10 @@
 package com.example.fei.zmap_test;
 
 import android.content.Intent;
-
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -35,6 +33,9 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.traffic.TrafficSearch;
 import com.amap.api.services.traffic.TrafficStatusResult;
+import com.example.fei.zmap_test.db.Users;
+
+import org.litepal.crud.DataSupport;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     protected void onDestroy() {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
+        DataSupport.deleteAll(Users.class);
         mapView.onDestroy();
     }
     @Override
@@ -134,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
         mapView.onSaveInstanceState(outState);
     }
+
+
 
     //定位服务
     private void InitLoc() {

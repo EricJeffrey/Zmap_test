@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fei.zmap_test.db.users;
+import com.example.fei.zmap_test.db.Users;
 import com.google.gson.Gson;
+
+import org.litepal.crud.DataSupport;
 
 public class Profile extends AppCompatActivity {
     public boolean isLogin = false;
-    public users current_user;
+    public Users current_user =null;
     public TextView username_textView;
     private static final String TAG = "Profile";
 
@@ -23,12 +25,20 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile_layout);
         getSupportActionBar().hide();
 
+
         username_textView = (TextView) findViewById(R.id.login_register_text);
-        if(savedInstanceState != null){
-            Log.e(TAG,"!=null");
-            current_user=new Gson().fromJson(savedInstanceState.getString("current_user"),users.class);
+        current_user = DataSupport.findLast(Users.class);
+        if(current_user !=null){
             if (current_user.getId() != 0)  username_textView.setText(current_user.getUsername());  //修改用户名显示
-        }else Log.e(TAG,"=null");
+            Log.e(TAG, "onCreate: get user");
+        }else {
+            Log.e(TAG, "onCreate: lose user");
+        }
+/*        if(savedInstanceState != null){
+            Log.e(TAG,"!=null");
+            current_user=new Gson().fromJson(savedInstanceState.getString("current_user"),Users.class);
+            if (current_user.getId() != 0)  username_textView.setText(current_user.getUsername());  //修改用户名显示
+        }else Log.e(TAG,"=null");*/
 
         addListener(R.id.back);
         addListener(R.id.login_register_text);
@@ -49,8 +59,22 @@ public class Profile extends AppCompatActivity {
 
     }
     @Override
+    public void onRestart(){
+        super.onRestart();
+        current_user = DataSupport.findLast(Users.class);
+        if(current_user !=null){
+            if (current_user.getId() != 0)  username_textView.setText(current_user.getUsername());  //修改用户名显示
+            Log.e(TAG, "onCreate: get user");
+        }else {
+            Log.e(TAG, "onCreate: lose user");
+        }
+
+    }
+    @Override
     protected void onResume() {
+
         super.onResume();
+
 
     }
     @Override
@@ -80,7 +104,7 @@ public class Profile extends AppCompatActivity {
                 if(resultCode == RESULT_OK){
                     String userJson=data.getStringExtra("resp_user");
                     if(userJson!=null) {
-                        current_user = new Gson().fromJson(userJson, users.class);
+                        current_user = new Gson().fromJson(userJson, Users.class);
                         if (current_user.getId() != 0)  username_textView.setText(current_user.getUsername());  //修改用户名显示
                     }
                 }

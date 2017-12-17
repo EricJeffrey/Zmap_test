@@ -10,8 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.fei.zmap_test.db.users;
-import com.google.gson.Gson;
+import com.example.fei.zmap_test.db.Users;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -31,7 +30,7 @@ public class LoginAccount extends AppCompatActivity {
     private String username_text;
     private String password_text;
     public static final int SHOW_RESPONSE = 0;
-    public users resp_user;
+    public Users resp_user;
 
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -40,7 +39,7 @@ public class LoginAccount extends AppCompatActivity {
                 case SHOW_RESPONSE:
                     String Response=msg.obj.toString();
                     if(!TextUtils.isEmpty(Response)){
-                        resp_user=new users();
+                        resp_user=new Users();
                         try {
                             JSONObject userObject = new JSONObject(Response);
                             resp_user.setId(userObject.getInt("id"));
@@ -51,8 +50,11 @@ public class LoginAccount extends AppCompatActivity {
                             if(resp_user.getId()!=0){
                                 Toast.makeText(LoginAccount.this,"登陆成功",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginAccount.this,Profile.class);
-                                intent.putExtra("resp_user",new Gson().toJson(resp_user));
-                                setResult(RESULT_OK,intent);
+                                intent.putExtra("nothing",0);
+                                //intent.putExtra("resp_user",new Gson().toJson(resp_user));
+                                //setResult(RESULT_OK,intent);
+                                setResult(RESULT_CANCELED);
+                                resp_user.save();
                                 finish();
                             } else {
                                 Toast.makeText(LoginAccount.this,"账号密码错误",Toast.LENGTH_SHORT).show();
