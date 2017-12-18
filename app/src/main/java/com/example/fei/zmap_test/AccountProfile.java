@@ -44,28 +44,7 @@ public class AccountProfile extends AppCompatActivity {
 
         current_user = DataSupport.findLast(Users.class);  //从数据库读出当前登陆的用户
         username_view.setText( current_user.getUsername());
-        switch (current_user.getId_head()){
-            case 1:user_head_icon_btn.setImageResource(R.drawable.avatar_1);break;
-            case 2:user_head_icon_btn.setImageResource(R.drawable.avatar_10);break;
-            case 3:user_head_icon_btn.setImageResource(R.drawable.avatar_11);break;
-            case 4:user_head_icon_btn.setImageResource(R.drawable.avatar_12);break;
-            case 5:user_head_icon_btn.setImageResource(R.drawable.avatar_13);break;
-            case 6:user_head_icon_btn.setImageResource(R.drawable.avatar_14);break;
-            case 7:user_head_icon_btn.setImageResource(R.drawable.avatar_15);break;
-            case 8:user_head_icon_btn.setImageResource(R.drawable.avatar_16);break;
-            case 9:user_head_icon_btn.setImageResource(R.drawable.avatar_17);break;
-            case 10:user_head_icon_btn.setImageResource(R.drawable.avatar_18);break;
-            case 11:user_head_icon_btn.setImageResource(R.drawable.avatar_2);break;
-            case 12:user_head_icon_btn.setImageResource(R.drawable.avatar_3);break;
-            case 13:user_head_icon_btn.setImageResource(R.drawable.avatar_4);break;
-            case 14:user_head_icon_btn.setImageResource(R.drawable.avatar_5);break;
-            case 15:user_head_icon_btn.setImageResource(R.drawable.avatar_6);break;
-            case 16:user_head_icon_btn.setImageResource(R.drawable.avatar_7);break;
-            case 17:user_head_icon_btn.setImageResource(R.drawable.avatar_8);break;
-            case 18:user_head_icon_btn.setImageResource(R.drawable.avatar_9);break;
-            default:
-                break;
-        }
+        user_head_icon_btn.setImageResource(getHeadIconResourceFromId(current_user.getId_head()));
 
 
 
@@ -91,7 +70,7 @@ public class AccountProfile extends AppCompatActivity {
                         dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //TODO log out
+
                                 DataSupport.deleteAll(Users.class);
                                 Toast.makeText(AccountProfile.this, "这里应该退出登录", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -100,7 +79,7 @@ public class AccountProfile extends AppCompatActivity {
                         dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //TODO cancel
+
                                 Toast.makeText(AccountProfile.this, "这里应该取消退出", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -125,40 +104,17 @@ public class AccountProfile extends AppCompatActivity {
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getResources();
-                //TODO reset user head icon and update
-                //那只有更过分了
-                switch (((int)v.getId())-2131165185){
-                    case 1:user_head_icon_btn.setImageResource(R.drawable.avatar_1);break;
-                    case 2:user_head_icon_btn.setImageResource(R.drawable.avatar_10);break;
-                    case 3:user_head_icon_btn.setImageResource(R.drawable.avatar_11);break;
-                    case 4:user_head_icon_btn.setImageResource(R.drawable.avatar_12);break;
-                    case 5:user_head_icon_btn.setImageResource(R.drawable.avatar_13);break;
-                    case 6:user_head_icon_btn.setImageResource(R.drawable.avatar_14);break;
-                    case 7:user_head_icon_btn.setImageResource(R.drawable.avatar_15);break;
-                    case 8:user_head_icon_btn.setImageResource(R.drawable.avatar_16);break;
-                    case 9:user_head_icon_btn.setImageResource(R.drawable.avatar_17);break;
-                    case 10:user_head_icon_btn.setImageResource(R.drawable.avatar_18);break;
-                    case 11:user_head_icon_btn.setImageResource(R.drawable.avatar_2);break;
-                    case 12:user_head_icon_btn.setImageResource(R.drawable.avatar_3);break;
-                    case 13:user_head_icon_btn.setImageResource(R.drawable.avatar_4);break;
-                    case 14:user_head_icon_btn.setImageResource(R.drawable.avatar_5);break;
-                    case 15:user_head_icon_btn.setImageResource(R.drawable.avatar_6);break;
-                    case 16:user_head_icon_btn.setImageResource(R.drawable.avatar_7);break;
-                    case 17:user_head_icon_btn.setImageResource(R.drawable.avatar_8);break;
-                    case 18:user_head_icon_btn.setImageResource(R.drawable.avatar_9);break;
-                    default:break;
-                }
-                Toast.makeText(AccountProfile.this, "设置你的头像为" + ((int)v.getId()-2131165185), Toast.LENGTH_SHORT).show();
-                sendRequestWithHttpClient((int)v.getId()-2131165185);
+                int id_head= Integer.parseInt((String)v.getTag());
+                user_head_icon_btn.setImageResource(getHeadIconResourceFromId(id_head));
+                sendRequestWithHttpClient(id_head);
                 Users users= new Users();
-                users.setId_head((int)v.getId()-2131165185);
+                users.setId_head(id_head);
                 users.updateAll();
                 topViewAnimDisappear();
 
             }
         };
-        findViewById(R.id.Account_profile_head_icon_choose_btn_1).setOnClickListener(onClickListener);  //有点过分
+        findViewById(R.id.Account_profile_head_icon_choose_btn_1).setOnClickListener(onClickListener);
         findViewById(R.id.Account_profile_head_icon_choose_btn_2).setOnClickListener(onClickListener);
         findViewById(R.id.Account_profile_head_icon_choose_btn_3).setOnClickListener(onClickListener);
         findViewById(R.id.Account_profile_head_icon_choose_btn_4).setOnClickListener(onClickListener);
@@ -223,6 +179,8 @@ public class AccountProfile extends AppCompatActivity {
             }
         }).start();
     }
+
+    //通过ID获得View
     public static int getHeadIconResourceFromId(int id){
         switch (id){
             case 1:return R.drawable.avatar_1;
