@@ -79,7 +79,6 @@ public class Profile extends AppCompatActivity {
                     case 16:user_head_icon_btn.setImageResource(R.drawable.avatar_7);break;
                     case 17:user_head_icon_btn.setImageResource(R.drawable.avatar_8);break;
                     case 18:user_head_icon_btn.setImageResource(R.drawable.avatar_9);break;
-                    default:Log.e(TAG, "onCreate: lose ID_head");;
                 }
             }
             Log.e(TAG, "onCreate: get user");

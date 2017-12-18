@@ -23,7 +23,7 @@ import org.json.JSONObject;
 
 public class LoginAccount extends AppCompatActivity {
     private static final String TAG = "LoginAccount";
-    private String url="http://www.idooooo.tk";//服务器接口地址
+    private String url;
     private EditText username;
     private EditText password;//用户名和密码
     private String username_text;
@@ -50,6 +50,7 @@ public class LoginAccount extends AppCompatActivity {
                                 Toast.makeText(LoginAccount.this,"登陆成功",Toast.LENGTH_SHORT).show();
                                 resp_user.save();
                                 finish();
+                                //TODO 中文用户名登陆异常
                             } else {
                                 Toast.makeText(LoginAccount.this,"账号密码错误",Toast.LENGTH_SHORT).show();
                                 password.setText("");
@@ -73,6 +74,7 @@ public class LoginAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_account_layout);
         getSupportActionBar().hide();
+        url=getString(R.string.URl); //服务器接口地址
 
         username=(EditText)findViewById(R.id.login_account_username);
         password=(EditText)findViewById(R.id.login_account_password);

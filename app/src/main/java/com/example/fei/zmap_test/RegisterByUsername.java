@@ -18,7 +18,7 @@ import org.apache.http.util.EntityUtils;
 
 public class RegisterByUsername extends AppCompatActivity {
 
-    private String url="http://www.idooooo.tk";//服务器接口地址
+    private String url;
     private EditText username;
     private EditText password;//用户名和密码
     public static final int SHOW_RESPONSE = 0;
@@ -44,6 +44,7 @@ public class RegisterByUsername extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_by_username_layout);
         getSupportActionBar().hide();
+        url=getString(R.string.URl); //服务器接口地址
 
 
         username=(EditText)findViewById(R.id.register_account_username);
