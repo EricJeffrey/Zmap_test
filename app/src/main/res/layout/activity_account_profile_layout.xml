@@ -105,14 +105,17 @@
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_1"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="1"
                 android:src="@drawable/avatar_1"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_2"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="2"
                 android:src="@drawable/avatar_2"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_3"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="3"
                 android:src="@drawable/avatar_3"/>
         </LinearLayout>
         <LinearLayout
@@ -123,14 +126,17 @@
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_4"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="4"
                 android:src="@drawable/avatar_4"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_5"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="5"
                 android:src="@drawable/avatar_5"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_6"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="6"
                 android:src="@drawable/avatar_6"/>
         </LinearLayout>
         <LinearLayout
@@ -141,14 +147,17 @@
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_7"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="7"
                 android:src="@drawable/avatar_7"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_8"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="8"
                 android:src="@drawable/avatar_8"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_9"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="9"
                 android:src="@drawable/avatar_9"/>
         </LinearLayout>
         <LinearLayout
@@ -159,14 +168,17 @@
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_10"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="10"
                 android:src="@drawable/avatar_10"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_11"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="11"
                 android:src="@drawable/avatar_11"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_12"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="12"
                 android:src="@drawable/avatar_12"/>
         </LinearLayout>
         <LinearLayout
@@ -177,14 +189,17 @@
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_13"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="13"
                 android:src="@drawable/avatar_13"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_14"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="14"
                 android:src="@drawable/avatar_14"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_15"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="15"
                 android:src="@drawable/avatar_15"/>
         </LinearLayout>
         <LinearLayout
@@ -195,14 +210,17 @@
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_16"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="16"
                 android:src="@drawable/avatar_16"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_17"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="17"
                 android:src="@drawable/avatar_17"/>
             <ImageButton
                 android:id="@+id/Account_profile_head_icon_choose_btn_18"
                 style="@style/AccountProfileHeadIconChooseButtonStyle"
+                android:tag="18"
                 android:src="@drawable/avatar_18"/>
         </LinearLayout>
     </LinearLayout>
