@@ -22,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginAccount extends AppCompatActivity {
-    private static final String TAG = "LoginAccount";
     private String url;
     private EditText username;
     private EditText password;//用户名和密码
@@ -30,6 +29,7 @@ public class LoginAccount extends AppCompatActivity {
     private String password_text;
     public static final int SHOW_RESPONSE = 0;
     public Users resp_user;
+    private static final String TAG = "LoginAccount";
 
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -44,13 +44,13 @@ public class LoginAccount extends AppCompatActivity {
                             resp_user.setId(userObject.getInt("id"));
                             resp_user.setUsername(userObject.getString("username"));
                             resp_user.setId_head(userObject.getInt("id_head"));
-                            resp_user.setSearchHistory(userObject.getString("searchHistory"));
                             resp_user.setStatusCode(userObject.getInt("statusCode"));
                             if(resp_user.getId()!=0){
                                 Toast.makeText(LoginAccount.this,"登陆成功",Toast.LENGTH_SHORT).show();
                                 resp_user.save();
+
                                 finish();
-                                //TODO 中文用户名登陆异常
+
                             } else {
                                 Toast.makeText(LoginAccount.this,"账号密码错误",Toast.LENGTH_SHORT).show();
                                 password.setText("");

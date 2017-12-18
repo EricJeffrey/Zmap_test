@@ -183,6 +183,7 @@ public class AccountProfile extends AppCompatActivity {
     //通过ID获得View
     public static int getHeadIconResourceFromId(int id){
         switch (id){
+            case 0:return R.drawable.profile_head;
             case 1:return R.drawable.avatar_1;
             case 2:return R.drawable.avatar_2;
             case 3:return R.drawable.avatar_3;

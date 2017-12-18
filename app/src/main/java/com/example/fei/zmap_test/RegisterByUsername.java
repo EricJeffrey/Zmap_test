@@ -9,19 +9,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fei.zmap_test.db.Users;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.apache.http.util.TextUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterByUsername extends AppCompatActivity {
-
+    public Users resp_user;
     private String url;
     private EditText username;
     private EditText password;//用户名和密码
     public static final int SHOW_RESPONSE = 0;
+    private static final String TAG = "RegisterByUsername";
 
 
     private Handler handler = new Handler(new Handler.Callback() {
@@ -30,14 +36,36 @@ public class RegisterByUsername extends AppCompatActivity {
             switch (msg.what) {
                 case SHOW_RESPONSE:
                     String Response=msg.obj.toString();
-                    Toast.makeText(RegisterByUsername.this,Response,Toast.LENGTH_SHORT).show();
+                    if(!TextUtils.isEmpty(Response)){
+                        resp_user=new Users();
+                        try {
+                            JSONObject userObject = new JSONObject(Response);
+                            resp_user.setId(userObject.getInt("id"));
+                            resp_user.setUsername(userObject.getString("username"));
+                            resp_user.setId_head(userObject.getInt("id_head"));
+                            resp_user.setStatusCode(userObject.getInt("statusCode"));
+                            if(resp_user.getId()!=0){
+                                Toast.makeText(RegisterByUsername.this,"注册成功",Toast.LENGTH_SHORT).show();
+                                resp_user.save();
+                                finish();
+                            } else {
+                                Toast.makeText(RegisterByUsername.this,"返回错误，请自行登陆",Toast.LENGTH_SHORT).show();
+                                finish();
+                                Intent intent = new Intent(RegisterByUsername.this,LoginAccount.class);
+                                startActivity(intent);
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     break;
                 default:
                     break;
             }
             return true;
         }
-    }) ;
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +93,6 @@ public class RegisterByUsername extends AppCompatActivity {
                         break;
                     case R.id.register_account_button:
                         sendRequestWithHttpClient();
-                        finish();
                         break;
                 }
             }

@@ -54,7 +54,9 @@ public class Profile extends AppCompatActivity {
 
     @Override
     protected void onStart(){
+        Log.e(TAG,"onStart");
         super.onStart();
+        // TODO  獲取數據庫用戶對象
         current_user = DataSupport.findLast(Users.class);
         if(current_user !=null){
             if (current_user.getId() != 0) {
@@ -73,28 +75,32 @@ public class Profile extends AppCompatActivity {
     @Override
     public void onRestart(){
         super.onRestart();
+        //Log.e(TAG,"onRestart");
 
     }
     @Override
     protected void onResume() {
-
+        //Log.e(TAG,"onResume");
         super.onResume();
 
 
     }
     @Override
     protected void onPause() {
+        //Log.e(TAG,"onPause");
         super.onPause();
 
     }
 
     @Override
     protected void onStop(){
+        //Log.e(TAG,"onStop");
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
+        //Log.e(TAG,"onResume");
         super.onDestroy();
 
     }
