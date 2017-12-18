@@ -82,7 +82,7 @@ public class AccountProfile extends AppCompatActivity {
                     case R.id.Account_profile_view:
                         break;
                     case R.id.Account_profile_head_icon_choose_view:
-                        topViewAnimDisapper();
+                        topViewAnimDisappear();
                         break;
                     case R.id.Account_profile_head_icon_choose_btn_1:
                         break;
@@ -150,7 +150,7 @@ public class AccountProfile extends AppCompatActivity {
     public void onBackPressed() {
         if(top_view.getVisibility() == View.GONE) finish();
         else {
-            topViewAnimDisapper();
+            topViewAnimDisappear();
         }
     }
 
@@ -163,7 +163,7 @@ public class AccountProfile extends AppCompatActivity {
     }
 
     //头像选择界面动画消失，同时激活底层界面
-    public void topViewAnimDisapper(){
+    public void topViewAnimDisappear(){
         Animation pop_down_anim = AnimationUtils.loadAnimation(AccountProfile.this, R.anim.activity_account_profile_head_icon_pop_down);
         top_view.startAnimation(pop_down_anim);
         top_view.setVisibility(View.GONE);
@@ -189,5 +189,28 @@ public class AccountProfile extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+    public static int getHeadIconResourceFromId(int id){
+        switch (id){
+            case 1:return R.drawable.avatar_1;
+            case 2:return R.drawable.avatar_2;
+            case 3:return R.drawable.avatar_3;
+            case 4:return R.drawable.avatar_4;
+            case 5:return R.drawable.avatar_5;
+            case 6:return R.drawable.avatar_6;
+            case 7:return R.drawable.avatar_7;
+            case 8:return R.drawable.avatar_8;
+            case 9:return R.drawable.avatar_9;
+            case 10:return R.drawable.avatar_10;
+            case 11:return R.drawable.avatar_11;
+            case 12:return R.drawable.avatar_12;
+            case 13:return R.drawable.avatar_13;
+            case 14:return R.drawable.avatar_14;
+            case 15:return R.drawable.avatar_15;
+            case 16:return R.drawable.avatar_16;
+            case 17:return R.drawable.avatar_17;
+            case 18:return R.drawable.avatar_18;
+            default:return 0;
+        }
     }
 }
