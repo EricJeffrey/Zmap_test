@@ -59,27 +59,7 @@ public class Profile extends AppCompatActivity {
         if(current_user !=null){
             if (current_user.getId() != 0) {
                 username_textView.setText(current_user.getUsername());  //修改用户名显示
-                //TODO set user head icon
-                switch (current_user.getId_head()){
-                    case 1:user_head_icon_btn.setImageResource(R.drawable.avatar_1);break;
-                    case 2:user_head_icon_btn.setImageResource(R.drawable.avatar_10);break;
-                    case 3:user_head_icon_btn.setImageResource(R.drawable.avatar_11);break;
-                    case 4:user_head_icon_btn.setImageResource(R.drawable.avatar_12);break;
-                    case 5:user_head_icon_btn.setImageResource(R.drawable.avatar_13);break;
-                    case 6:user_head_icon_btn.setImageResource(R.drawable.avatar_14);break;
-                    case 7:user_head_icon_btn.setImageResource(R.drawable.avatar_15);break;
-                    case 8:user_head_icon_btn.setImageResource(R.drawable.avatar_16);break;
-                    case 9:user_head_icon_btn.setImageResource(R.drawable.avatar_17);break;
-                    case 10:user_head_icon_btn.setImageResource(R.drawable.avatar_18);break;
-                    case 11:user_head_icon_btn.setImageResource(R.drawable.avatar_2);break;
-                    case 12:user_head_icon_btn.setImageResource(R.drawable.avatar_3);break;
-                    case 13:user_head_icon_btn.setImageResource(R.drawable.avatar_4);break;
-                    case 14:user_head_icon_btn.setImageResource(R.drawable.avatar_5);break;
-                    case 15:user_head_icon_btn.setImageResource(R.drawable.avatar_6);break;
-                    case 16:user_head_icon_btn.setImageResource(R.drawable.avatar_7);break;
-                    case 17:user_head_icon_btn.setImageResource(R.drawable.avatar_8);break;
-                    case 18:user_head_icon_btn.setImageResource(R.drawable.avatar_9);break;
-                }
+                user_head_icon_btn.setImageResource(AccountProfile.getHeadIconResourceFromId(current_user.getId_head()));
             }
             Log.e(TAG, "onCreate: get user");
         }else {
