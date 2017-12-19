@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fei.zmap_test.db.Users;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,12 +30,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.litepal.crud.DataSupport;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class SearchPageActivity extends AppCompatActivity {
     private static final String TAG = "SearchPageActivity";
     public Users current_user =null;
     private String url;
+    private Gson gson;
     private ArrayList <String> historyList;
 //    private SharedPreferences searchHistorySharedPreference;
 //    private Map map;
@@ -72,7 +76,7 @@ public class SearchPageActivity extends AppCompatActivity {
         url=getString(R.string.URl); //服务器接口地址
 
 
-
+        gson = new Gson();
         searchButton = (Button) findViewById(R.id.SearchPageActivity_search_button);
         cancelInputButton = (ImageButton) findViewById(R.id.SearchPageActivity_cancel_input_button);
         voiceButton = (ImageButton) findViewById(R.id.SearchPageActivity_voice_search);
@@ -137,9 +141,10 @@ public class SearchPageActivity extends AppCompatActivity {
     public void putSearchRecordToDatabase(String text){
         if(TextUtils.isEmpty(text)) return;
         current_user= DataSupport.findLast(Users.class);
-        historyList =current_user.getSearchHistory();
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        historyList=gson.fromJson(current_user.getSearchHistory(), type);
         historyList.add(text);
-        current_user.setSearchHistory(historyList);
+        current_user.setSearchHistory(gson.toJson(historyList));
         current_user.updateAll();
         putSearchRecordToOrigin(text);
     }
@@ -172,7 +177,9 @@ public class SearchPageActivity extends AppCompatActivity {
     public void getAndShowSearchHistoryRecord(){
 
         current_user= DataSupport.findLast(Users.class);
-        historyList =current_user.getSearchHistory();
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        historyList=gson.fromJson(current_user.getSearchHistory(), type);
+        Log.e(TAG, "getAndShowSearchHistoryRecord:item 个数"+historyList.size());
         //TODO BUG 网络请求线程处理速度慢于渲染，导致第一次点击无法加载出相应历史记录
 /*        if(historyList.isEmpty()){
             sendRequestWithHttpClient();
@@ -195,7 +202,7 @@ public class SearchPageActivity extends AppCompatActivity {
     //删除所有记录
     public void clearHistory(){
         historyList.clear();
-        current_user.setSearchHistory(historyList);
+        current_user.setSearchHistory(gson.toJson(historyList));
         current_user.updateAll();
         getAndShowSearchHistoryRecord();
     }

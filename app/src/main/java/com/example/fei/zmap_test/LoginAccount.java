@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.fei.zmap_test.db.Users;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,9 +20,6 @@ import org.apache.http.util.EntityUtils;
 import org.apache.http.util.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 public class LoginAccount extends AppCompatActivity {
     private String url;
@@ -146,10 +141,7 @@ public class LoginAccount extends AppCompatActivity {
                     if((httpResponse.getEntity())!=null){
                         HttpEntity entity =httpResponse.getEntity();
                         String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
-                        Gson gson =new Gson();
-                        Type type = new TypeToken<ArrayList<String>>() {}.getType();
-                        ArrayList<String> sList=gson.fromJson(response, type);
-                        resp_user.setSearchHistory(sList);
+                        resp_user.setSearchHistory(response);
                         resp_user.updateAll();
                     }
                 }catch (Exception e){

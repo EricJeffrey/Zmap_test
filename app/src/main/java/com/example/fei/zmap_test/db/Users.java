@@ -2,8 +2,6 @@ package com.example.fei.zmap_test.db;
 
 import org.litepal.crud.DataSupport;
 
-import java.util.ArrayList;
-
 /**
  * Created by do_pc on 2017/12/10.
  */
@@ -14,13 +12,13 @@ public class Users extends DataSupport {
     private int User_id = 0;
     private String username;
     private int id_head;
-    private ArrayList<String> searchHistory = new ArrayList<String>();
+    private String searchHistory;
 
-    public ArrayList<String> getSearchHistory() {
+    public String getSearchHistory() {
         return searchHistory;
     }
 
-    public void setSearchHistory(ArrayList<String> searchHistory) {
+    public void setSearchHistory(String searchHistory) {
         this.searchHistory = searchHistory;
     }
 
