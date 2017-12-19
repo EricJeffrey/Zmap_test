@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private MapView mapView;
     private AMap aMap;
     private UiSettings mUiSettings;
+    private boolean isGetPOI =false;
 
     private AMapLocationClient mLocationClient = null;//定位发起端
     private AMapLocationClientOption mLocationOption = null;//定位参数
@@ -307,6 +308,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     case R.id.location:
                         aMap.moveCamera(CameraUpdateFactory.zoomTo(17)); //设置缩放级别
                         aMap.moveCamera(CameraUpdateFactory.changeBearing(0));
+
                         aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(MyAmapLocation.getLatitude(), MyAmapLocation.getLongitude())));
                         break;
                     case R.id.map_mode_normal_button:
@@ -414,8 +416,10 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             public void onMapClick(LatLng latLng) {
                 POILatlng =latLng;
                 SearchPOI(latLng);
-                if(top.getVisibility() == View.VISIBLE) top.setVisibility(View.INVISIBLE);
-                else top.setVisibility(View.VISIBLE);
+ /*               if(!isGetPOI){
+                    if(top.getVisibility() == View.VISIBLE) top.setVisibility(View.INVISIBLE); else top.setVisibility(View.VISIBLE);
+                }*/
+
             }
         });
     }
@@ -437,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         query.setPageSize(1);// 设置每页最多返回多少条poiitem
         query.setPageNum(1);//设置查询页码
         PoiSearch poiSearch = new PoiSearch(this, query);
-        poiSearch =new PoiSearch(this,query);
+
         List<LatLonPoint> points =new ArrayList<LatLonPoint>();
         points.add(new LatLonPoint(latLng.latitude+0.0001,latLng.longitude+0.0001));
         points.add(new LatLonPoint(latLng.latitude-0.0001,latLng.longitude-0.0001));
@@ -446,7 +450,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         poiSearch.setBound(new PoiSearch.SearchBound(points));//设置多边形区域
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
-
     }
 
 
@@ -454,6 +457,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     public void onPoiSearched(PoiResult poiResult, int i) {
         //Toast.makeText(MainActivity.this,"+"+poiResult.getPois().toString()+poiResult.getPageCount(), Toast.LENGTH_SHORT).show();
         if(poiResult.getPageCount()!=0){
+            isGetPOI =true;
             if(marker==null){
                 marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(poiResult.getPois().toString().substring(1,poiResult.getPois().toString().length()-1)));
             }
@@ -462,6 +466,13 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 marker.remove();
                 marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(poiResult.getPois().toString().substring(1,poiResult.getPois().toString().length()-1)));
             }
+        }else {
+        isGetPOI =false;
+        }
+        if(!isGetPOI){
+            if(top.getVisibility() == View.VISIBLE) top.setVisibility(View.INVISIBLE); else top.setVisibility(View.VISIBLE);
+        }else {
+            top.setVisibility(View.VISIBLE);
         }
     }
 
