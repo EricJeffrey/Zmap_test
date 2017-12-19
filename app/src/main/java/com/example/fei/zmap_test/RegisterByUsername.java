@@ -40,11 +40,11 @@ public class RegisterByUsername extends AppCompatActivity {
                         resp_user=new Users();
                         try {
                             JSONObject userObject = new JSONObject(Response);
-                            resp_user.setId(userObject.getInt("id"));
+                            resp_user.setUser_id(userObject.getInt("id"));
                             resp_user.setUsername(userObject.getString("username"));
                             resp_user.setId_head(userObject.getInt("id_head"));
                             resp_user.setStatusCode(userObject.getInt("statusCode"));
-                            if(resp_user.getId()!=0){
+                            if(resp_user.getUser_id()!=0){
                                 Toast.makeText(RegisterByUsername.this,"注册成功",Toast.LENGTH_SHORT).show();
                                 resp_user.save();
                                 finish();

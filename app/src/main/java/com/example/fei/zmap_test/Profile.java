@@ -59,11 +59,11 @@ public class Profile extends AppCompatActivity {
         // TODO  獲取數據庫用戶對象
         current_user = DataSupport.findLast(Users.class);
         if(current_user !=null){
-            if (current_user.getId() != 0) {
+            if (current_user.getUser_id() != 0) {
                 username_textView.setText(current_user.getUsername());  //修改用户名显示
                 user_head_icon_btn.setImageResource(AccountProfile.getHeadIconResourceFromId(current_user.getId_head()));
             }
-            Log.e(TAG, "onCreate: get user");
+            Log.e(TAG, "onCreate: get user"+current_user.getUser_id());
         }else {
             username_textView.setText("登录/注册");
             user_head_icon_btn.setImageResource(R.drawable.profile_head);
@@ -128,7 +128,7 @@ public class Profile extends AppCompatActivity {
                     case R.id.login_register_text:
                     case R.id.show_me:
                         if(current_user !=null){
-                            if (current_user.getId() != 0)  {
+                            if (current_user.getUser_id() != 0)  {
                                 Intent intent = new Intent(Profile.this, AccountProfile.class);
                                 startActivity(intent);
                             }
