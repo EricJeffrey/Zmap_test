@@ -2,16 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable="false"
+    android:clickable="false"
     android:orientation="vertical">
     <LinearLayout
         android:id="@+id/search_history_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:focusable="true"
-        android:clickable="true"
+        android:focusable="false"
+        android:clickable="false"
         android:background="@drawable/rectangle_light_gray">
         <ImageView
+            android:focusable="false"
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/common_margin_middle"
@@ -19,7 +23,9 @@
             android:layout_gravity="center_vertical"
             android:src="@drawable/search_btn_associate_history"/>
         <TextView
-            android:id="@+id/search_history_item_text"
+            android:focusable="false"
+            android:clickable="false"
+            android:id="@+id/search_history_result_item_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_margin"
@@ -31,6 +37,8 @@
             android:text="历史记录"/>
     </LinearLayout>
     <View
+        android:focusable="false"
+        android:clickable="false"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/colorLightGray"

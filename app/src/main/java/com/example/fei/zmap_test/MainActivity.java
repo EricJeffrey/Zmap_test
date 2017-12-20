@@ -463,7 +463,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     case R.id.MainActivity_search_box:
                         top_view.setVisibility(View.GONE);
                         Intent intent2 = new Intent(MainActivity.this, SearchPageActivity.class);
-                        startActivity(intent2);
+                        startActivityForResult(intent2, 1);
                         overridePendingTransition(Animation.ABSOLUTE, Animation.ABSOLUTE);
                         break;
                     case R.id.MainActivity_voice_search_button:
@@ -591,7 +591,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(poiResult.getPois().toString().substring(1,poiResult.getPois().toString().length()-1)));
             }
         }else {
-        isGetPOI =false;
+            isGetPOI =false;
         }
         if(!isGetPOI){
             if(top_view.getVisibility() == View.VISIBLE) top_view.setVisibility(View.INVISIBLE); else top_view.setVisibility(View.VISIBLE);
@@ -632,7 +632,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 导航播报信息回调函数。
-     * @param text 语音播报文字
+     * @param s 语音播报文字
      **/
     @Override
     public void onGetNavigationText(String s) {
@@ -641,7 +641,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 当GPS位置有更新时的回调函数。
-     *@param location 当前自车坐标位置
+     *@param aMapNaviLocation 当前自车坐标位置
      **/
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
@@ -664,9 +664,27 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                if(resultCode == RESULT_OK){
+                    SearchResultItem item = data.getParcelableExtra("poiData");
+                    if(!item.getItemDetail().equals("NONE")){
+                        //TODO zoom map and add mark
+                        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(item.getItemLatLng(), 17f));
+                        aMap.addMarker(new MarkerOptions().position(item.getItemLatLng()));
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     /**
      * 算路成功回调
-     * @param routeIds 路线id数组
+     * @param ints 路线id数组
      */
     @Override
     public void onCalculateRouteSuccess(int[] ints) {

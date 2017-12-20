@@ -34,7 +34,7 @@ public class Profile extends AppCompatActivity {
         if(savedInstanceState != null){
             Log.e(TAG,"!=null");
             current_user=new Gson().fromJson(savedInstanceState.getString("current_user"),Users.class);
-            if (current_user.getId() != 0)  username_textView.setText(current_user.getUsername());  //修改用户名显示
+            if (current_user.getId() != 0)  username_textView.setItemText(current_user.getUsername());  //修改用户名显示
         }else Log.e(TAG,"=null");
         */
 

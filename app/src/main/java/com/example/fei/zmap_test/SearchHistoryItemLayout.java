@@ -17,26 +17,29 @@ import android.widget.Toast;
 public class SearchHistoryItemLayout extends LinearLayout {
     private TextView textView;
 
+    public SearchHistoryItemLayout(Context context, AttributeSet attrs){
+        super(context, attrs);
+    }
     public SearchHistoryItemLayout(final Context context, AttributeSet attrs, String text){
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.search_history_item_layout, this);
+        LayoutInflater.from(context).inflate(R.layout.search_history_result_item_layout, this);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SearchHistoryItemLayout);
         String itemText = typedArray.getString(R.styleable.SearchHistoryItemLayout_item_text);
         typedArray.recycle();
 
-        textView = findViewById(R.id.search_history_item_text);
+        textView = findViewById(R.id.search_history_result_item_text);
         textView.setText(itemText);
         textView.setText(text);
 
-        findViewById(R.id.search_history_item).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "正在全力开发中...", Toast.LENGTH_SHORT).show();
-            }
-        });
+        View view = findViewById(R.id.search_history_item);
+        view.setFocusable(true);
+        view.setClickable(true);
     }
-    public void setText(String text){
-        textView.setText(text);
+    public void setOnItemClickListener(View.OnClickListener onClickListener){
+        findViewById(R.id.search_history_item).setOnClickListener(onClickListener);
+    }
+    public String getItemText(){
+        return textView.getText().toString();
     }
 }
