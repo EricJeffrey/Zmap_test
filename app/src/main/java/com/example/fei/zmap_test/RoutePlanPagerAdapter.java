@@ -36,8 +36,9 @@ public class RoutePlanPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        container.addView(viewList.get(position));
-        return viewList.get(position);
+        View view = viewList.get(position);
+        container.addView(view);
+        return view;
     }
 
     @Override
