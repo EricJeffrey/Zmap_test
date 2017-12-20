@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/common_margin"
-        android:background="@drawable/round_rectangle"
+        android:background="@drawable/round_rectangle_white_pressed_gray"
         android:textSize="20sp"
         android:text="确认"/>
 </LinearLayout>

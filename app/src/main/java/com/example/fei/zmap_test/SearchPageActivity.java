@@ -1,7 +1,9 @@
 package com.example.fei.zmap_test;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -121,7 +123,22 @@ public class SearchPageActivity extends AppCompatActivity {
                         Toast.makeText(SearchPageActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.SearchPageActivity_clear_all_history:
-                        clearHistory();
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(SearchPageActivity.this);
+                        dialog.setCancelable(true);
+                        dialog.setTitle("清空历史记录？");
+                        dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                clearHistory();
+                            }
+                        });
+                        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        dialog.show();
                         break;
                 }
             }

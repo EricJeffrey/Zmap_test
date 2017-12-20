@@ -37,7 +37,7 @@
                 android:clickable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/oval"
+                android:background="@drawable/rectangle_light_gray"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/common_margin_middle"
                 android:src="@drawable/avatar_1"/>
