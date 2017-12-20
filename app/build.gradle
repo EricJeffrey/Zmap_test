@@ -34,7 +34,7 @@ android {
     defaultConfig {
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
     }
     packagingOptions {
@@ -54,9 +54,10 @@ dependencies {
     compile 'org.litepal.android:core:1.4.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/AMap_Search_V5.5.0_20171107.jar')
-    compile files('libs/Android_Map3D_SDK_V5.5.0_20171107.jar')
+    //compile files('libs/Android_Map3D_SDK_V5.5.0_20171107.jar')   //
     implementation files('libs/AMap_Location_V3.6.1_20171012.jar')
     implementation files('libs/httpclient-4.5.4.jar')
     implementation files('libs/httpcore-4.4.7.jar')
     implementation files('libs/gson-2.7.jar')
+    implementation files('libs/AMap3DMap_5.6.0_AMapNavi_5.5.0_20171130.jar')
 }

@@ -40,9 +40,6 @@ public class SearchPageActivity extends AppCompatActivity {
     private String url;
     private Gson gson;
     private ArrayList <String> historyList;
-//    private SharedPreferences searchHistorySharedPreference;
-//    private Map map;
-//    private Integer mapSize;
     private LinearLayout searchHistoryHolder;
     private Button searchButton;
     private ImageButton cancelInputButton;

@@ -14,6 +14,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -27,7 +30,9 @@
             android:value="d75a03af5e5b6dd7d52cb0ae5437a718" />
 
         <service android:name="com.amap.api.location.APSService" />
-
+        <activity android:name="com.amap.api.navi.AmapRouteActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".SearchResultPage" />
         <activity android:name=".SearchPageActivity" />
         <activity android:name=".MainActivity" />
@@ -44,6 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".RegisterByUsername" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".AccountProfile" />
