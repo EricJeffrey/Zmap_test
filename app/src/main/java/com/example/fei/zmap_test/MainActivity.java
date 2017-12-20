@@ -3,10 +3,14 @@ package com.example.fei.zmap_test;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
@@ -41,7 +45,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements AMapLocationListener,LocationSource,PoiSearch.OnPoiSearchListener {
-    private LinearLayout top;
+    private LinearLayout top_view;
     private static final String TAG = "MainActivity";
     private MapView mapView;
     private AMap aMap;
@@ -62,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private int traffic_accident_button_status;
     private int my_collection_button_status;
 
+    private TabLayout tabLayout;
+    private ViewPagerNoSlide viewPager;
+    private LinearLayout routePlanLayout;
+
     Marker marker =null;
     LatLng POILatlng =null;
 
@@ -71,10 +79,11 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         setContentView(R.layout.activity_main_layout);
         getSupportActionBar().hide();   //隐藏标题栏
 
-        mapView =  findViewById(R.id.map);
+        mapView =  findViewById(R.id.MainActivity_map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
 
+        top_view = findViewById(R.id.MainActivity_top_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
@@ -92,14 +101,45 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         traffic_accident_button_status = 1;
         my_collection_button_status = 1;
 
+        tabLayout = findViewById(R.id.route_plan_tab_layout);
+        viewPager = findViewById(R.id.route_plan_view_pager);
+        routePlanLayout = findViewById(R.id.MainActivity_route_plan_layout);
+
         AddListener();      //为每个Button添加监听器
         Init();             //初始化地图view
-        Information();      //个人信息
         InitLocIcon();      //定义蓝色按钮
         InitLoc();          //定位服务
         SetEdgeBar();       //显示&隐藏地图功能按钮
         SetUI();            //地图原始UI布局设置
         SetTraffic();       //设置交通态势信息
+        setUpRoutePlanView();//配置tab layout
+    }
+
+    //初始化并配置路线规划页面的资源--ViewPager的适配器
+    public void setUpRoutePlanView(){
+        //TODO 配置tab layout
+
+        ArrayList<String> title_list = new ArrayList<>();
+        title_list.add("叫车");
+        title_list.add("驾车");
+        title_list.add("公交");
+        title_list.add("骑行");
+        title_list.add("步行");
+        title_list.add("火车");
+        title_list.add("客车");
+        title_list.add("货车");
+        ArrayList<View> view_list = new ArrayList<>();
+        LayoutInflater layoutInflater = getLayoutInflater();
+        view_list.add(layoutInflater.inflate(R.layout.route_plan_call_car_view, null, false));
+        view_list.add(layoutInflater.inflate(R.layout.route_plan_drive_car_view, null, false));
+        view_list.add(layoutInflater.inflate(R.layout.route_plan_take_bus_view, null, false));
+        view_list.add(layoutInflater.inflate(R.layout.route_plan_ride_etc_view, null, false));
+        view_list.add(layoutInflater.inflate(R.layout.route_plan_ride_etc_view, null, false));
+        view_list.add(layoutInflater.inflate(R.layout.route_plan_ride_etc_view, null, false));
+        view_list.add(layoutInflater.inflate(R.layout.route_plan_ride_etc_view, null, false));
+        view_list.add(layoutInflater.inflate(R.layout.route_plan_ride_etc_view, null, false));
+        viewPager.setAdapter(new RoutePlanPagerAdapter(view_list, title_list));
+        tabLayout.setupWithViewPager(viewPager);
     }
     @Override
     protected void onDestroy() {
@@ -113,13 +153,21 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mapView.onResume();
         findViewById(R.id.main_search_page_bar).setVisibility(View.GONE);
-        findViewById(R.id.top_view).setVisibility(View.VISIBLE);
+        top_view.setVisibility(View.VISIBLE);
     }
     @Override
     protected void onPause() {
         super.onPause();
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
         mapView.onPause();
+    }
+    @Override
+    public void onBackPressed() {
+        if(routePlanLayout == null || routePlanLayout.getVisibility() == View.GONE) finish();
+        else {
+            top_view.setVisibility(View.VISIBLE);
+            routePlanLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -133,8 +181,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
         mapView.onSaveInstanceState(outState);
     }
-
-
 
     //定位服务
     private void InitLoc() {
@@ -195,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         }
     }
 
-
     /**
      * 激活定位
      */
@@ -243,19 +288,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
     }
 
-
-    //个人信息
-    public void Information(){
-        ImageButton me = findViewById(R.id.me);
-        me.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Profile.class);
-                startActivity(intent);
-            }
-        });
-    }
-
     //地图原始UI布局设置
     public void SetUI(){
         mUiSettings = aMap.getUiSettings();                     //实例化UiSettings类对象
@@ -267,11 +299,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         aMap.showIndoorMap(true);                            //设置显示室内地图，默认为不显示
 
     }
+
     //为每个Button添加监听器
     public void AddListener(){
-        AddListenerById(R.id.zoom_in);
-        AddListenerById(R.id.zoom_out);
-        AddListenerById(R.id.location);
+        AddListenerById(R.id.MainActivity_zoom_in);
+        AddListenerById(R.id.MainActivity_zoom_out);
+        AddListenerById(R.id.MainActivity_location);
         AddListenerById(R.id.map_mode_bus_button);
         AddListenerById(R.id.map_mode_normal_button);
         AddListenerById(R.id.map_mode_satellite_button);
@@ -280,18 +313,20 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         AddListenerById(R.id.fog_haze_button);
         AddListenerById(R.id.pond_map);
         AddListenerById(R.id.map_setting);
-        AddListenerById(R.id.map_mode_button);
-        AddListenerById(R.id.search_box);
-        AddListenerById(R.id.voice_search_button);
-        AddListenerById(R.id.msg_center_button);
-        AddListenerById(R.id.instant_route_status_button);
-        AddListenerById(R.id.take_taxi_button);
-        AddListenerById(R.id.shared_bike_button);
-        AddListenerById(R.id.team_button);
-        AddListenerById(R.id.home_workplace_set_button);
-        AddListenerById(R.id.route_plan_button);
-        AddListenerById(R.id.near_search_box);
-        AddListenerById(R.id.report_button);
+        AddListenerById(R.id.MainActivity_map_mode_button);
+        AddListenerById(R.id.MainActivity_search_box);
+        AddListenerById(R.id.MainActivity_voice_search_button);
+        AddListenerById(R.id.MainActivity_msg_center_button);
+        AddListenerById(R.id.MainActivity_instant_route_status_button);
+        AddListenerById(R.id.MainActivity_take_taxi_button);
+        AddListenerById(R.id.MainActivity_shared_bike_button);
+        AddListenerById(R.id.MainActivity_team_button);
+        AddListenerById(R.id.MainActivity_home_workplace_set_button);
+        AddListenerById(R.id.MainActivity_route_plan_button);
+        AddListenerById(R.id.MainActivity_near_search_box);
+        AddListenerById(R.id.MainActivity_report_button);
+        AddListenerById(R.id.MainActivity_me);
+        AddListenerById(R.id.route_plan_back_button);
     }
     //依照ID添加监听器
     public void AddListenerById(final int resId){
@@ -299,13 +334,17 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             @Override
             public void onClick(View v) {
                 switch (resId){
-                    case R.id.zoom_in:
+                    case R.id.MainActivity_me:
+                        Intent intent = new Intent(MainActivity.this, Profile.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.MainActivity_zoom_in:
                         aMap.animateCamera(CameraUpdateFactory.zoomIn());
                         break;
-                    case R.id.zoom_out:
+                    case R.id.MainActivity_zoom_out:
                         aMap.animateCamera(CameraUpdateFactory.zoomOut());
                         break;
-                    case R.id.location:
+                    case R.id.MainActivity_location:
                         aMap.moveCamera(CameraUpdateFactory.zoomTo(17)); //设置缩放级别
                         aMap.moveCamera(CameraUpdateFactory.changeBearing(0));
 
@@ -329,7 +368,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         map_mode_satellite_button.setImageResource(R.drawable.map_mode_satellite);
                         aMap.setMapType(AMap.MAP_TYPE_NAVI);
                         break;
-                    case R.id.map_mode_button:
+                    case R.id.MainActivity_map_mode_button:
                         drawerLayout.openDrawer(Gravity.END);
                         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         break;
@@ -356,21 +395,21 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     case R.id.map_setting:
                         Toast.makeText(MainActivity.this, "你点击了地图设置", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.search_box:
+                    case R.id.MainActivity_search_box:
                         findViewById(R.id.main_search_page_bar).setVisibility(View.VISIBLE);
-                        findViewById(R.id.top_view).setVisibility(View.GONE);
-                        Intent intent = new Intent(MainActivity.this, SearchPageActivity.class);
-                        startActivity(intent);
+                        top_view.setVisibility(View.GONE);
+                        Intent intent2 = new Intent(MainActivity.this, SearchPageActivity.class);
+                        startActivity(intent2);
                         overridePendingTransition(Animation.ABSOLUTE, Animation.ABSOLUTE);
                         break;
-                    case R.id.voice_search_button:
+                    case R.id.MainActivity_voice_search_button:
                         Toast.makeText(MainActivity.this, "你点击了语音搜索", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.msg_center_button:
+                    case R.id.MainActivity_msg_center_button:
                         Intent intent1 = new Intent(MainActivity.this, MessageCenter.class);
                         startActivity(intent1);
                         break;
-                    case R.id.instant_route_status_button:
+                    case R.id.MainActivity_instant_route_status_button:
                         if(aMap.isTrafficEnabled()){
                             Toast.makeText(MainActivity.this, "实时路况已关闭", Toast.LENGTH_SHORT).show();
                             aMap.setTrafficEnabled(false);       //显示实时路况图层，aMap是地图控制器对象。
@@ -380,26 +419,33 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                             aMap.setTrafficEnabled(true);        //显示实时路况图层，aMap是地图控制器对象。
                         }
                         break;
-                    case R.id.take_taxi_button:
+                    case R.id.MainActivity_take_taxi_button:
                         Toast.makeText(MainActivity.this, "你点击了叫车", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.shared_bike_button:
+                    case R.id.MainActivity_shared_bike_button:
                         Toast.makeText(MainActivity.this, "你点击了共享单车", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.team_button:
+                    case R.id.MainActivity_team_button:
                         Toast.makeText(MainActivity.this, "你点击了组队出行", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.home_workplace_set_button:
+                    case R.id.MainActivity_home_workplace_set_button:
                         Toast.makeText(MainActivity.this, "你点击了家，公司位置设置", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.route_plan_button:
-                        Toast.makeText(MainActivity.this, "你点击了路线规划", Toast.LENGTH_SHORT).show();
+                    case R.id.MainActivity_route_plan_button:
+                        //TODO 动画出现。。。
+                        top_view.setVisibility(View.GONE);
+                        routePlanLayout.setVisibility(View.VISIBLE);
+//                        Toast.makeText(MainActivity.this, "你点击了路线规划", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.near_search_box:
+                    case R.id.MainActivity_near_search_box:
                         Toast.makeText(MainActivity.this, "你点击了搜索附近", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.report_button:
+                    case R.id.MainActivity_report_button:
                         Toast.makeText(MainActivity.this, "你点击了上报", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.route_plan_back_button:
+                        routePlanLayout.setVisibility(View.GONE);
+                        top_view.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -409,15 +455,16 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     //显示&隐藏地图功能按钮&设置点击地图POI
     public void SetEdgeBar(){
         Log.d(TAG, "onCreate: Now Create");
-        top =  findViewById(R.id.top_view);
-        findViewById(R.id.search_box).clearFocus();
+        findViewById(R.id.MainActivity_search_box).clearFocus();
         aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                POILatlng =latLng;
-                SearchPOI(latLng);
+                if(routePlanLayout == null || routePlanLayout.getVisibility() == View.GONE){
+                    POILatlng =latLng;
+                    SearchPOI(latLng);
+                }
  /*               if(!isGetPOI){
-                    if(top.getVisibility() == View.VISIBLE) top.setVisibility(View.INVISIBLE); else top.setVisibility(View.VISIBLE);
+                    if(top_view.getVisibility() == View.VISIBLE) top_view.setVisibility(View.INVISIBLE); else top_view.setVisibility(View.VISIBLE);
                 }*/
 
             }
@@ -452,7 +499,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         poiSearch.searchPOIAsyn();
     }
 
-
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
         //Toast.makeText(MainActivity.this,"+"+poiResult.getPois().toString()+poiResult.getPageCount(), Toast.LENGTH_SHORT).show();
@@ -470,9 +516,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         isGetPOI =false;
         }
         if(!isGetPOI){
-            if(top.getVisibility() == View.VISIBLE) top.setVisibility(View.INVISIBLE); else top.setVisibility(View.VISIBLE);
+            if(top_view.getVisibility() == View.VISIBLE) top_view.setVisibility(View.INVISIBLE); else top_view.setVisibility(View.VISIBLE);
         }else {
-            top.setVisibility(View.VISIBLE);
+            top_view.setVisibility(View.VISIBLE);
         }
     }
 

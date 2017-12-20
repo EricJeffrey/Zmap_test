@@ -14,4 +14,5 @@
     <color name="colorActionBar">#FAFAFA</color>
     <color name="colorLightBlue">#5593FF</color>
     <color name="colorDarkGray">#777777</color>
+    <color name="colorHalfTransparentWhite">#33FFFFFF</color>
 </resources>

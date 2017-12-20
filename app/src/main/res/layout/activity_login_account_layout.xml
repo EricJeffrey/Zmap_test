@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common_margin"
-        android:background="@drawable/round_rectangle"
+        android:background="@drawable/round_rectangle_white_pressed_gray"
         android:padding="@dimen/common_margin"
         android:text="登录"
         android:textSize="20sp" />
