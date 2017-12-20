@@ -100,7 +100,7 @@
                 <ImageButton
                     android:id="@+id/MainActivity_instant_route_status_button"
                     style="@style/MainActivityRightFiveButtonStyle"
-                    android:src="@drawable/sign_light"
+                    android:src="@drawable/route_status_off_route_plan"
                     android:background="@drawable/rectangle_top"
                     />
                 <View
@@ -248,56 +248,6 @@
                     android:text=" 搜索附近"/>
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/main_search_page_bar"
-            android:visibility="gone"
-            android:orientation="horizontal"
-            android:background="@color/colorRiceWhite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin"
-                android:layout_marginBottom="@dimen/common_margin"
-                android:background="@null"
-                android:src="@drawable/back_button_gray_pressed_dark_gray"/>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/round_rectangle_not_selectable_small_radius"
-                android:layout_marginTop="@dimen/common_margin"
-                android:layout_marginBottom="@dimen/common_margin"
-                android:layout_marginEnd="@dimen/common_margin"
-                android:animateLayoutChanges="true"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:layout_marginStart="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/search_btn"/>
-                <EditText
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:layout_marginStart="5dp"
-                    android:textSize="13sp"
-                    android:hint="搜索"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/microphone"/>
-            </LinearLayout>
         </LinearLayout>
 
         <include layout="@layout/route_plan_layout"

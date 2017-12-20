@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     public void setUpRoutePlanView(){
         //TODO 配置tab layout
         ArrayList<String> title_list = new ArrayList<>();
-        title_list.add("叫车");
         title_list.add("驾车");
         title_list.add("公交");
         title_list.add("骑行");
@@ -136,9 +135,51 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         title_list.add("客车");
         title_list.add("货车");
         ArrayList<View> view_list = new ArrayList<>();
+
+
         LayoutInflater layoutInflater = getLayoutInflater();
-        view_list.add(layoutInflater.inflate(R.layout.route_plan_call_car_view, null, false));
-        view_list.add(layoutInflater.inflate(R.layout.route_plan_drive_car_view, null, false));
+        View view = layoutInflater.inflate(R.layout.route_plan_drive_car_view, null, false);
+        view.findViewById(R.id.drive_car_discount_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.drive_car_me).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.drive_car_location_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aMap.moveCamera(CameraUpdateFactory.zoomTo(17)); //设置缩放级别
+                aMap.moveCamera(CameraUpdateFactory.changeBearing(0));
+
+                aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(MyAmapLocation.getLatitude(), MyAmapLocation.getLongitude())));
+            }
+        });
+        view.findViewById(R.id.drive_car_zoom_in_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aMap.animateCamera(CameraUpdateFactory.zoomIn());
+            }
+        });
+        view.findViewById(R.id.drive_car_zoom_out_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aMap.animateCamera(CameraUpdateFactory.zoomOut());
+            }
+        });
+        final ImageButton tmp = view.findViewById(R.id.drive_car_route_status);
+        tmp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeRouteStatus();
+            }
+        });
+        view_list.add(view);
         view_list.add(layoutInflater.inflate(R.layout.route_plan_take_bus_view, null, false));
         view_list.add(layoutInflater.inflate(R.layout.route_plan_ride_etc_view, null, false));
         view_list.add(layoutInflater.inflate(R.layout.route_plan_ride_etc_view, null, false));
@@ -147,6 +188,25 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         view_list.add(layoutInflater.inflate(R.layout.route_plan_ride_etc_view, null, false));
         viewPager.setAdapter(new RoutePlanPagerAdapter(view_list, title_list));
         tabLayout.setupWithViewPager(viewPager);
+    }
+    //开启实时路况
+    public void changeRouteStatus(){
+        if(aMap.isTrafficEnabled()){
+            aMap.setTrafficEnabled(false);       //显示实时路况图层，aMap是地图控制器对象。
+            Toast.makeText(MainActivity.this, "实时路况已关闭", Toast.LENGTH_SHORT).show();
+            ImageButton button = findViewById(R.id.drive_car_route_status);
+            if(button != null) button.setImageResource(R.drawable.route_status_off_route_plan);
+            button = findViewById(R.id.MainActivity_instant_route_status_button);
+            if(button != null) button.setImageResource(R.drawable.route_status_off_route_plan);
+        }
+        else{
+            aMap.setTrafficEnabled(true);        //显示实时路况图层，aMap是地图控制器对象。
+            Toast.makeText(MainActivity.this, "实时路况已开启", Toast.LENGTH_SHORT).show();
+            ImageButton button = findViewById(R.id.drive_car_route_status);
+            if(button != null) button.setImageResource(R.drawable.route_status_on_route_plan);
+            button = findViewById(R.id.MainActivity_instant_route_status_button);
+            if(button != null) button.setImageResource(R.drawable.route_status_on_route_plan);
+        }
     }
     @Override
     protected void onDestroy() {
@@ -159,7 +219,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mapView.onResume();
-        findViewById(R.id.main_search_page_bar).setVisibility(View.GONE);
         top_view.setVisibility(View.VISIBLE);
     }
     @Override
@@ -333,7 +392,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         AddListenerById(R.id.MainActivity_near_search_box);
         AddListenerById(R.id.MainActivity_report_button);
         AddListenerById(R.id.MainActivity_me);
-        AddListenerById(R.id.route_plan_back_button);
     }
     //依照ID添加监听器
     public void AddListenerById(final int resId){
@@ -403,7 +461,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         Toast.makeText(MainActivity.this, "你点击了地图设置", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.MainActivity_search_box:
-                        findViewById(R.id.main_search_page_bar).setVisibility(View.VISIBLE);
                         top_view.setVisibility(View.GONE);
                         Intent intent2 = new Intent(MainActivity.this, SearchPageActivity.class);
                         startActivity(intent2);
@@ -417,14 +474,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         startActivity(intent1);
                         break;
                     case R.id.MainActivity_instant_route_status_button:
-                        if(aMap.isTrafficEnabled()){
-                            Toast.makeText(MainActivity.this, "实时路况已关闭", Toast.LENGTH_SHORT).show();
-                            aMap.setTrafficEnabled(false);       //显示实时路况图层，aMap是地图控制器对象。
-                        }
-                        else{
-                            Toast.makeText(MainActivity.this, "实时路况已开启", Toast.LENGTH_SHORT).show();
-                            aMap.setTrafficEnabled(true);        //显示实时路况图层，aMap是地图控制器对象。
-                        }
+                        changeRouteStatus();
                         break;
                     case R.id.MainActivity_take_taxi_button:
                         Toast.makeText(MainActivity.this, "你点击了叫车", Toast.LENGTH_SHORT).show();
@@ -439,6 +489,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         Toast.makeText(MainActivity.this, "你点击了家，公司位置设置", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.MainActivity_route_plan_button:
+
                         //TODO 导航组件
                        /* Poi start = new Poi("三元桥", new LatLng(39.96087,116.45798), "");
                         *//**终点传入的是北京站坐标,但是POI的ID "B000A83M61"对应的是北京西站，所以实际算路以北京西站作为终点**//*
@@ -447,9 +498,19 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         AmapNaviPage.getInstance().showRouteActivity(MainActivity.this, new AmapNaviParams(null), MainActivity.this);
 
 /*                      //自定义方法
+
                         top_view.setVisibility(View.GONE);
+                        AddListenerById(R.id.route_plan_back_button);
+                        TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f,
+                                Animation.RELATIVE_TO_PARENT, -1f, Animation.RELATIVE_TO_PARENT, 0f);
+                        AlphaAnimation alpha = new AlphaAnimation(0f, 1f);
+                        AnimationSet anim = new AnimationSet(false);
+                        anim.addAnimation(translate); anim.addAnimation(alpha);
+                        anim.setDuration(300);
                         routePlanLayout.setVisibility(View.VISIBLE);
-                        Toast.makeText(MainActivity.this, "你点击了路线规划", Toast.LENGTH_SHORT).show();*/
+                        Toast.makeText(MainActivity.this, "你点击了路线规划", Toast.LENGTH_SHORT).show();
+                        routePlanLayout.startAnimation(anim);*/
+
                         break;
                     case R.id.MainActivity_near_search_box:
                         Toast.makeText(MainActivity.this, "你点击了搜索附近", Toast.LENGTH_SHORT).show();
@@ -461,6 +522,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         routePlanLayout.setVisibility(View.GONE);
                         top_view.setVisibility(View.VISIBLE);
                         break;
+                    case R.id.route_plan_exchange_button:
+                        break;
+
                 }
             }
         });
@@ -515,6 +579,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
+        //Toast.makeText(MainActivity.this,"+"+poiResult.getPois().toString()+poiResult.getPageCount(), Toast.LENGTH_SHORT).show();
         if(poiResult.getPageCount()!=0){
             isGetPOI =true;
             if(marker==null){
