@@ -56,13 +56,10 @@ public class Profile extends AppCompatActivity {
     protected void onStart(){
         Log.e(TAG,"onStart");
         super.onStart();
-        // TODO  獲取數據庫用戶對象
         current_user = DataSupport.findLast(Users.class);
-        if(current_user !=null){
-            if (current_user.getUser_id() != 0) {
-                username_textView.setText(current_user.getUsername());  //修改用户名显示
-                user_head_icon_btn.setImageResource(AccountProfile.getHeadIconResourceFromId(current_user.getId_head()));
-            }
+        if(current_user !=null && current_user.getUser_id() != 0){
+            username_textView.setText(current_user.getUsername());  //修改用户名显示
+            user_head_icon_btn.setImageResource(AccountProfile.getHeadIconResourceFromId(current_user.getId_head()));
             Log.e(TAG, "onCreate: get user"+current_user.getUser_id());
         }else {
             username_textView.setText("登录/注册");
@@ -70,7 +67,6 @@ public class Profile extends AppCompatActivity {
             Log.e(TAG, "onCreate: lose user");
         }
     }
-
 
     @Override
     public void onRestart(){
@@ -131,6 +127,8 @@ public class Profile extends AppCompatActivity {
                             if (current_user.getUser_id() != 0)  {
                                 Intent intent = new Intent(Profile.this, AccountProfile.class);
                                 startActivity(intent);
+                            }else {
+                                login();
                             }
                         }else {
                             login();

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -138,6 +137,7 @@ public class SearchPageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //将记录保存到本地以及远程数据库
     public void putSearchRecordToDatabase(String text){
         if(TextUtils.isEmpty(text)) return;
         current_user= DataSupport.findLast(Users.class);
@@ -145,8 +145,9 @@ public class SearchPageActivity extends AppCompatActivity {
         historyList=gson.fromJson(current_user.getSearchHistory(), type);
         historyList.add(text);
         current_user.setSearchHistory(gson.toJson(historyList));
-        current_user.updateAll();
-        putSearchRecordToOrigin(text);
+
+        current_user.updateAll("User_id = ?",""+current_user.getUser_id());
+        putSearchRecordToOrigin(text); //上传到远程数据库
     }
 
     //发送远端存储
@@ -178,17 +179,10 @@ public class SearchPageActivity extends AppCompatActivity {
 
         current_user= DataSupport.findLast(Users.class);
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
-        historyList=gson.fromJson(current_user.getSearchHistory(), type);
-        Log.e(TAG, "getAndShowSearchHistoryRecord:item 个数"+historyList.size());
-        //TODO BUG 网络请求线程处理速度慢于渲染，导致第一次点击无法加载出相应历史记录
-/*        if(historyList.isEmpty()){
-            sendRequestWithHttpClient();
-            Log.e(TAG, "getAndShowSearchHistoryRecord: 获得数据");
-        }*/
+        historyList=gson.fromJson(current_user.getSearchHistory(), type);  //解析获得的字符串为json
 
         searchHistoryHolder.removeAllViews();
         int listSize =historyList.size();
-
         TextView tmp = (TextView) findViewById(R.id.SearchPageActivity_clear_all_history);
         if(listSize > 0) tmp.setVisibility(View.VISIBLE);
         else tmp.setVisibility(View.GONE);
@@ -196,99 +190,53 @@ public class SearchPageActivity extends AppCompatActivity {
             SearchHistoryItemLayout item = new SearchHistoryItemLayout(this, null, text);
             searchHistoryHolder.addView(item);
         }
-        Log.e(TAG, "getAndShowSearchHistoryRecord: 界面完成渲染");
     }
 
     //删除所有记录
     public void clearHistory(){
         historyList.clear();
         current_user.setSearchHistory(gson.toJson(historyList));
-        current_user.updateAll();
+        current_user.updateAll("User_id = ?",""+current_user.getUser_id());
+        sendRequestWithHttpClient_clearHistory();
         getAndShowSearchHistoryRecord();
     }
 
-    /*    //获取历史记录
-        public void getAndShowSearchHistoryRecord(){
-            searchHistoryHolder.removeAllViews();
-            map = searchHistorySharedPreference.getAll();
-            mapSize = map.size();
-
-            TextView tmp = (TextView) findViewById(R.id.SearchPageActivity_clear_all_history);
-            if(mapSize > 0) tmp.setVisibility(View.VISIBLE);
-            else tmp.setVisibility(View.GONE);
-
-            for(Object temp : map.entrySet()){
-                Map.Entry entry = (Map.Entry<String, ?>) temp;
-                if(entry.getKey().equals("mapSize")) continue;
-                String text = (String) entry.getValue();
-                SearchHistoryItemLayout item = new SearchHistoryItemLayout(this, null, text);
-                searchHistoryHolder.addView(item);
-            }
-        }
-        //将此条记录存放入SharedPreference中，重复的不再放入，不记录时间戳（即优先级）
-        public void putSearchRecordToSharedPreference(String text){
-            if(TextUtils.isEmpty(text)) return;
-            if(map.containsValue(text)) return;
-            SharedPreferences.Editor editor = searchHistorySharedPreference.edit();
-            mapSize += 1;
-            editor.putString(mapSize.toString(), text);
-            editor.apply();
-        }
-        //搜索内容，打开搜索结果页面，并将该记录放入SharedPreference里面
-        public void goSearch(){
-            String text = editText.getText().toString();
-            if(TextUtils.isEmpty(text)) return;
-            putSearchRecordToSharedPreference(text);
-            Intent intent = new Intent(SearchPageActivity.this, SearchResultPage.class);
-            startActivity(intent);
-        }
-        //清除ScrollView以及SharedPreference中的历史记录
-        public void clearHistory(){
-            mapSize = 0;
-            map.clear();
-            SharedPreferences.Editor editor = searchHistorySharedPreference.edit();
-            editor.clear();
-            editor.apply();
-            getAndShowSearchHistoryRecord();
-        }*/
     public void finish(){
         super.finish();
         overridePendingTransition(Animation.ABSOLUTE, Animation.ABSOLUTE);
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
+
     public void onResume(){
         super.onResume();
         getAndShowSearchHistoryRecord();
         editText.setText("");
     }
 
-/*    private void sendRequestWithHttpClient(){
+    //清除远端搜索数据
+    private void sendRequestWithHttpClient_clearHistory() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
-                HttpGet httpGet = new HttpGet(url+"/history.php?action=getSearchHistory&id="+current_user.getUser_id()
-                        +"&username="+current_user.getUsername());
+                HttpGet httpGet = new HttpGet(url + "/history.php?action=clearSearchHistory&id=" + current_user.getUser_id()
+                        + "&username=" + current_user.getUsername());
                 try {
                     HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
-                    if((httpResponse.getEntity())!=null){
-                        HttpEntity entity =httpResponse.getEntity();
-                        String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
-                        Gson gson =new Gson();
-                        Type type = new TypeToken<ArrayList<String>>() {}.getType();
-                        ArrayList<String> sList=gson.fromJson(response, type);
-                        current_user.setSearchHistory(sList);
-                        current_user.updateAll();
-                        Log.e(TAG,"------->json convert List:"+sList);
+                    if ((httpResponse.getEntity()) != null) {
+                        HttpEntity entity = httpResponse.getEntity();
+                        //TODO 处理返回值
+                        String response = EntityUtils.toString(entity, "utf-8");//将entity当中的数据转换为字符串
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-    }*/
+    }
 }
