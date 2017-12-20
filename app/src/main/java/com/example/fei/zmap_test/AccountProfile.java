@@ -23,6 +23,7 @@ import org.apache.http.util.EntityUtils;
 import org.litepal.crud.DataSupport;
 
 public class AccountProfile extends AppCompatActivity {
+    private static final String TAG = "AccountProfile";
     public Users current_user;
     private LinearLayout top_view;
     private ImageButton user_head_icon_btn;
@@ -70,17 +71,14 @@ public class AccountProfile extends AppCompatActivity {
                         dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
-                                DataSupport.deleteAll(Users.class);
-                                Toast.makeText(AccountProfile.this, "这里应该退出登录", Toast.LENGTH_SHORT).show();
+                                current_user=DataSupport.findLast(Users.class);
+                                DataSupport.deleteAll(Users.class,"User_id > ?","0");
                                 finish();
                             }
                         });
                         dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
-                                Toast.makeText(AccountProfile.this, "这里应该取消退出", Toast.LENGTH_SHORT).show();
                             }
                         });
                         dialog.show();
@@ -109,7 +107,7 @@ public class AccountProfile extends AppCompatActivity {
                 sendRequestWithHttpClient(id_head);
                 Users users= new Users();
                 users.setId_head(id_head);
-                users.updateAll();
+                users.updateAll("User_id > ?","0");
                 topViewAnimDisappear();
 
             }

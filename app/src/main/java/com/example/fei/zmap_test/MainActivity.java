@@ -38,6 +38,10 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.traffic.TrafficSearch;
 import com.amap.api.services.traffic.TrafficStatusResult;
+import com.example.fei.zmap_test.db.Users;
+import com.google.gson.Gson;
+
+import org.litepal.crud.DataSupport;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -106,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         viewPager = findViewById(R.id.route_plan_view_pager);
         routePlanLayout = findViewById(R.id.MainActivity_route_plan_layout);
 
+
+        unLoginAccount();   //为未登录用户统一账号
         AddListener();      //为每个Button添加监听器
         Init();             //初始化地图view
         InitLocIcon();      //定义蓝色按钮
@@ -586,5 +592,21 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     public void onPoiItemSearched(PoiItem poiItem, int i) {
         Toast.makeText(MainActivity.this, " ", Toast.LENGTH_SHORT).show();
 
+    }
+
+
+    //初始化未登录用户
+    private void unLoginAccount(){
+        Users users;
+        users=DataSupport.findLast(Users.class);
+        if(users==null){
+            Gson gson =new Gson();
+            users =new Users();
+            users.setUsername("noName");
+            users.setSearchHistory(gson.toJson(new ArrayList<String>()));
+            users.setUser_id(0);
+            users.setStatusCode(0);
+            users.save();
+        }
     }
 }

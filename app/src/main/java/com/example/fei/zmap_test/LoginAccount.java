@@ -49,6 +49,7 @@ public class LoginAccount extends AppCompatActivity {
                                 Toast.makeText(LoginAccount.this,"登陆成功",Toast.LENGTH_SHORT).show();
                                 resp_user.save();
                                 sendRequestWithHttpClient_history();
+
                                 finish();
 
                             } else {
@@ -142,7 +143,7 @@ public class LoginAccount extends AppCompatActivity {
                         HttpEntity entity =httpResponse.getEntity();
                         String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
                         resp_user.setSearchHistory(response);
-                        resp_user.updateAll();
+                        resp_user.updateAll("User_id > ?","0");
                     }
                 }catch (Exception e){
                     e.printStackTrace();
