@@ -3,7 +3,6 @@ package com.example.fei.zmap_test;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +43,7 @@ import org.litepal.crud.DataSupport;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SearchPageActivity extends AppCompatActivity {
@@ -274,6 +274,7 @@ public class SearchPageActivity extends AppCompatActivity {
         current_user= DataSupport.findLast(Users.class);
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
         historyList=gson.fromJson(current_user.getSearchHistory(), type);
+        if(historyList.contains(text)) return;
         historyList.add(text);
         current_user.setSearchHistory(gson.toJson(historyList));
 
@@ -322,7 +323,8 @@ public class SearchPageActivity extends AppCompatActivity {
         TextView tmp = (TextView) findViewById(R.id.SearchPageActivity_clear_all_history);
         if(listSize > 0) tmp.setVisibility(View.VISIBLE);
         else tmp.setVisibility(View.GONE);
-        for(String text : historyList){
+        Collections.reverse(historyList);
+        for(String text : historyList ){
             final SearchHistoryItemLayout item = new SearchHistoryItemLayout(this, null, text);
             item.setOnItemClickListener(new View.OnClickListener() {
                 @Override
@@ -333,6 +335,7 @@ public class SearchPageActivity extends AppCompatActivity {
             });
             searchHistoryHolder.addView(item);
         }
+        Collections.reverse(historyList);
     }
 
     /**
