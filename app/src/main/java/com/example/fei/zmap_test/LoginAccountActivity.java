@@ -21,7 +21,7 @@ import org.apache.http.util.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginAccount extends AppCompatActivity {
+public class LoginAccountActivity extends AppCompatActivity {
     private String url;
     private EditText username;
     private EditText password;//用户名和密码
@@ -29,7 +29,7 @@ public class LoginAccount extends AppCompatActivity {
     private String password_text;
     public static final int SHOW_RESPONSE = 0;
     public Users resp_user;
-    private static final String TAG = "LoginAccount";
+    private static final String TAG = "LoginAccountActivity";
 
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -46,14 +46,14 @@ public class LoginAccount extends AppCompatActivity {
                             resp_user.setId_head(userObject.getInt("id_head"));
                             resp_user.setStatusCode(userObject.getInt("statusCode"));
                             if(resp_user.getUser_id() !=0){
-                                Toast.makeText(LoginAccount.this,"登陆成功",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginAccountActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
                                 resp_user.save();
                                 sendRequestWithHttpClient_history();
 
                                 finish();
 
                             } else {
-                                Toast.makeText(LoginAccount.this,"账号密码错误",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginAccountActivity.this,"账号密码错误",Toast.LENGTH_SHORT).show();
                                 password.setText("");
                             }
                         } catch (JSONException e) {
@@ -90,11 +90,11 @@ public class LoginAccount extends AppCompatActivity {
             public void onClick(View v) {
                 switch (res){
                     case R.id.go_login_phone_text:
-                        Intent intent = new Intent(LoginAccount.this, LoginPhone.class);
+                        Intent intent = new Intent(LoginAccountActivity.this, LoginPhoneActivity.class);
                         startActivity(intent);
                         finish();break;
                     case R.id.find_password:
-                        Toast.makeText(LoginAccount.this, "别担心", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginAccountActivity.this, "别担心", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.login_account_button:
                         sendRequestWithHttpClient();

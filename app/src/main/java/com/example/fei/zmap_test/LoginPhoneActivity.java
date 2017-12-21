@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-public class LoginPhone extends AppCompatActivity {
-    private final static String TAG = "LoginPhone";
+public class LoginPhoneActivity extends AppCompatActivity {
+    private final static String TAG = "LoginPhoneActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +25,7 @@ public class LoginPhone extends AppCompatActivity {
             public void onClick(View view) {
                 switch (res){
                     case R.id.go_login_account_text:
-                        Intent intent = new Intent(LoginPhone.this, LoginAccount.class);
+                        Intent intent = new Intent(LoginPhoneActivity.this, LoginAccountActivity.class);
                         startActivity(intent);
                         finish();
                         break;

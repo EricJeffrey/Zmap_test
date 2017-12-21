@@ -1,18 +1,16 @@
-package com.example.fei.zmap_test;
+package com.example.fei.zmap_test.commonJavaClass;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.amap.api.maps.model.LatLng;
 
-import java.io.Serializable;
-
 /**
  * Created by FEI on 2017/12/20.
  * 搜索得到的结果项
  */
 
-class SearchResultItem implements Parcelable {
+public class SearchResultItem implements Parcelable {
     private LatLng itemLatLng;
     private String itemDetail;
 

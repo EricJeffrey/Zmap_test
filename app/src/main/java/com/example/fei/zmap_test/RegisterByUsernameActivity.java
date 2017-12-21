@@ -21,13 +21,13 @@ import org.apache.http.util.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterByUsername extends AppCompatActivity {
+public class RegisterByUsernameActivity extends AppCompatActivity {
     public Users resp_user;
     private String url;
     private EditText username;
     private EditText password;//用户名和密码
     public static final int SHOW_RESPONSE = 0;
-    private static final String TAG = "RegisterByUsername";
+    private static final String TAG = "RegisterByUsernameActivity";
 
 
     private Handler handler = new Handler(new Handler.Callback() {
@@ -45,13 +45,13 @@ public class RegisterByUsername extends AppCompatActivity {
                             resp_user.setId_head(userObject.getInt("id_head"));
                             resp_user.setStatusCode(userObject.getInt("statusCode"));
                             if(resp_user.getUser_id()!=0){
-                                Toast.makeText(RegisterByUsername.this,"注册成功",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterByUsernameActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
                                 resp_user.save();
                                 finish();
                             } else {
-                                Toast.makeText(RegisterByUsername.this,"返回错误，请自行登陆",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterByUsernameActivity.this,"返回错误，请自行登陆",Toast.LENGTH_SHORT).show();
                                 finish();
-                                Intent intent = new Intent(RegisterByUsername.this,LoginAccount.class);
+                                Intent intent = new Intent(RegisterByUsernameActivity.this,LoginAccountActivity.class);
                                 startActivity(intent);
 
                             }
@@ -87,7 +87,7 @@ public class RegisterByUsername extends AppCompatActivity {
             public void onClick(View v) {
                 switch (res){
                     case R.id.go_register_phone_text:
-                        Intent intent = new Intent(RegisterByUsername.this, Register.class);
+                        Intent intent = new Intent(RegisterByUsernameActivity.this, RegisterActivity.class);
                         startActivity(intent);
                         finish();
                         break;

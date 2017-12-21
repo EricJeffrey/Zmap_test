@@ -22,8 +22,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.litepal.crud.DataSupport;
 
-public class AccountProfile extends AppCompatActivity {
-    private static final String TAG = "AccountProfile";
+public class AccountProfileActivity extends AppCompatActivity {
+    private static final String TAG = "AccountProfileActivity";
     public Users current_user;
     private LinearLayout top_view;
     private ImageButton user_head_icon_btn;
@@ -65,7 +65,7 @@ public class AccountProfile extends AppCompatActivity {
                         topViewAnimShow();
                         break;
                     case R.id.Account_profile_logout:
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(AccountProfile.this);
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(AccountProfileActivity.this);
                         dialog.setTitle("退出登录？");
                         dialog.setCancelable(true);
                         dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -84,7 +84,7 @@ public class AccountProfile extends AppCompatActivity {
                         dialog.show();
                         break;
                     case R.id.Account_profile_user_name_setting:
-                        Toast.makeText(AccountProfile.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AccountProfileActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.Account_profile_head_icon_choose_view:
                         topViewAnimDisappear();
@@ -142,7 +142,7 @@ public class AccountProfile extends AppCompatActivity {
 
     //头像选择界面动画出现，同时取消底层界面激活状态
     public void topViewAnimShow(){
-        Animation pop_up_anim = AnimationUtils.loadAnimation(AccountProfile.this, R.anim.activity_account_profile_head_icon_choose_pop_up);
+        Animation pop_up_anim = AnimationUtils.loadAnimation(AccountProfileActivity.this, R.anim.activity_account_profile_head_icon_choose_pop_up);
         top_view.startAnimation(pop_up_anim);
         top_view.setVisibility(View.VISIBLE);
         bottom_view.setActivated(false);
@@ -150,7 +150,7 @@ public class AccountProfile extends AppCompatActivity {
 
     //头像选择界面动画消失，同时激活底层界面
     public void topViewAnimDisappear(){
-        Animation pop_down_anim = AnimationUtils.loadAnimation(AccountProfile.this, R.anim.activity_account_profile_head_icon_pop_down);
+        Animation pop_down_anim = AnimationUtils.loadAnimation(AccountProfileActivity.this, R.anim.activity_account_profile_head_icon_pop_down);
         top_view.startAnimation(pop_down_anim);
         top_view.setVisibility(View.GONE);
         bottom_view.setActivated(true);

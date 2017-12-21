@@ -1,4 +1,4 @@
-package com.example.fei.zmap_test;
+package com.example.fei.zmap_test.customLayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,9 +9,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.fei.zmap_test.R;
+
 /**
  * Created by FEI on 2017/12/3.
- * Profile middle four column
+ * ProfileActivity middle four column
  */
 
 public class ProfileMidColumn extends LinearLayout{

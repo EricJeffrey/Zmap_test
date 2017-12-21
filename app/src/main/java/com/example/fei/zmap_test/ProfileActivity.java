@@ -9,15 +9,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fei.zmap_test.customLayout.ProfileColumnLayout;
 import com.example.fei.zmap_test.db.Users;
 
 import org.litepal.crud.DataSupport;
 
-public class Profile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
     public Users current_user =null;
     public TextView username_textView;
     public ImageButton user_head_icon_btn;
-    private static final String TAG = "Profile";
+    private static final String TAG = "ProfileActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class Profile extends AppCompatActivity {
         current_user = DataSupport.findLast(Users.class);
         if(current_user !=null && current_user.getUser_id() != 0){
             username_textView.setText(current_user.getUsername());  //修改用户名显示
-            user_head_icon_btn.setImageResource(AccountProfile.getHeadIconResourceFromId(current_user.getId_head()));
+            user_head_icon_btn.setImageResource(AccountProfileActivity.getHeadIconResourceFromId(current_user.getId_head()));
             Log.e(TAG, "onCreate: get user"+current_user.getUser_id());
         }else {
             username_textView.setText("登录/注册");
@@ -125,7 +126,7 @@ public class Profile extends AppCompatActivity {
                     case R.id.show_me:
                         if(current_user !=null){
                             if (current_user.getUser_id() != 0)  {
-                                Intent intent = new Intent(Profile.this, AccountProfile.class);
+                                Intent intent = new Intent(ProfileActivity.this, AccountProfileActivity.class);
                                 startActivity(intent);
                             }else {
                                 login();
@@ -134,7 +135,7 @@ public class Profile extends AppCompatActivity {
                             login();
                         }break;
                     case R.id.profile_setting:
-                        Intent intent = new Intent(Profile.this, SettingActivity.class);
+                        Intent intent = new Intent(ProfileActivity.this, SettingActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -148,16 +149,16 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 switch (id) {
                     case 1:
-                        Toast.makeText(Profile.this, "你点击了" + tmp.getSub_column_title_text1(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "你点击了" + tmp.getSub_column_title_text1(), Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        Toast.makeText(Profile.this, "你点击了" + tmp.getSub_column_title_text2(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "你点击了" + tmp.getSub_column_title_text2(), Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
-                        Toast.makeText(Profile.this, "你点击了" + tmp.getSub_column_title_text3(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "你点击了" + tmp.getSub_column_title_text3(), Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
-                        Toast.makeText(Profile.this, "你点击了" + tmp.getSub_column_title_text4(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "你点击了" + tmp.getSub_column_title_text4(), Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -178,7 +179,7 @@ public class Profile extends AppCompatActivity {
         }
     }
     public void login(){
-        Intent intent = new Intent(Profile.this, LoginAccount.class);
+        Intent intent = new Intent(ProfileActivity.this, LoginAccountActivity.class);
         startActivity(intent);
     }
 }

@@ -1,17 +1,14 @@
 package com.example.fei.zmap_test;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.widget.TextView;
+import android.os.Bundle;
 
-public class SearchResultPage extends AppCompatActivity {
+public class MessageCenterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_result_layout);
+        setContentView(R.layout.activity_message_center_layout);
         getSupportActionBar().hide();
     }
 }

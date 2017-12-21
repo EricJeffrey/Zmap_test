@@ -1,4 +1,4 @@
-package com.example.fei.zmap_test;
+package com.example.fei.zmap_test.customLayout;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.fei.zmap_test.LoginAccountActivity;
+import com.example.fei.zmap_test.R;
+import com.example.fei.zmap_test.RegisterByUsernameActivity;
 
 /**
  * Created by FEI on 2017/12/1.
@@ -51,13 +55,13 @@ public class TitleLayout extends LinearLayout {
                     case R.id.right_text:
                         if(!TextUtils.isEmpty(right_text) && right_text.equals("注册")){
                             Context context = getContext();
-                            Intent intent = new Intent(context, RegisterByUsername.class);
+                            Intent intent = new Intent(context, RegisterByUsernameActivity.class);
                             context.startActivity(intent);
                             ((Activity) context).finish();
                         }
                         else if(right_text.equals("登录")){
                             Context context = getContext();
-                            Intent intent = new Intent(context, LoginAccount.class);
+                            Intent intent = new Intent(context, LoginAccountActivity.class);
                             context.startActivity(intent);
                             ((Activity) context).finish();
                         }

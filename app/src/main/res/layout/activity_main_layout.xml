@@ -250,9 +250,6 @@
 
         </LinearLayout>
 
-        <include layout="@layout/route_plan_layout"
-            android:id="@+id/MainActivity_route_plan_layout"
-            android:visibility="gone"/>
     </FrameLayout>
     <include layout="@layout/sliding_menu_layout"/>
 </android.support.v4.widget.DrawerLayout>

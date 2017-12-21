@@ -4,17 +4,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +36,8 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.example.fei.zmap_test.commonJavaClass.SearchResultItem;
+import com.example.fei.zmap_test.customLayout.SearchHistoryItemLayout;
 import com.example.fei.zmap_test.db.Users;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -86,7 +95,8 @@ public class SearchPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page_layout);
-        getSupportActionBar().hide();
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) actionBar.hide();
         url=getString(R.string.URl); //服务器接口地址
 
 
@@ -300,6 +310,7 @@ public class SearchPageActivity extends AppCompatActivity {
                     if((httpResponse.getEntity())!=null){
                         HttpEntity entity =httpResponse.getEntity();
                         String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
+                        Log.d(TAG, "run: " + response.charAt(3));
                         //TODO ido 处理增加搜索记录的返回结果，规范化验证逻辑
                     }
                 }catch (Exception e){
@@ -320,7 +331,7 @@ public class SearchPageActivity extends AppCompatActivity {
 
         searchHistoryHolder.removeAllViews();
         int listSize =historyList.size();
-        TextView tmp = (TextView) findViewById(R.id.SearchPageActivity_clear_all_history);
+        TextView tmp =  findViewById(R.id.SearchPageActivity_clear_all_history);
         if(listSize > 0) tmp.setVisibility(View.VISIBLE);
         else tmp.setVisibility(View.GONE);
         Collections.reverse(historyList);
@@ -397,6 +408,7 @@ public class SearchPageActivity extends AppCompatActivity {
                         HttpEntity entity = httpResponse.getEntity();
                         //TODO 处理返回值
                         String response = EntityUtils.toString(entity, "utf-8");//将entity当中的数据转换为字符串
+                        Log.d(TAG, "run: " + response);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -404,4 +416,39 @@ public class SearchPageActivity extends AppCompatActivity {
             }
         }).start();
     }
+    class SearchResultListAdapter extends ArrayAdapter<SearchResultItem> {
+        private int resourceId;
+
+        SearchResultListAdapter(Context context, int resourceId, List<SearchResultItem> objects){
+            super(context, resourceId, objects);
+            this.resourceId = resourceId;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            SearchResultItem item = getItem(position);
+            View view;
+            ViewHolder viewHolder;
+            if(convertView == null){
+                view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+                view.findViewById(R.id.search_history_item).setFocusable(false);
+                viewHolder = new ViewHolder();
+                viewHolder.result_text = view.findViewById(R.id.search_history_result_item_text);
+                view.setTag(viewHolder);
+            }
+            else{
+                view = convertView;
+                viewHolder = (ViewHolder) view.getTag();
+            }
+            if(item != null) viewHolder.result_text.setText(item.getItemDetail());
+            else viewHolder.result_text.setText("");
+            return view;
+
+        }
+        class ViewHolder {
+            TextView result_text;
+        }
+    }
+
 }

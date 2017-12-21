@@ -33,13 +33,12 @@
         <activity android:name="com.amap.api.navi.AmapRouteActivity"
             android:theme="@android:style/Theme.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity android:name=".SearchResultPage" />
         <activity android:name=".SearchPageActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Profile" />
-        <activity android:name=".LoginPhone" />
-        <activity android:name=".Register" />
-        <activity android:name=".LoginAccount" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".LoginPhoneActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginAccountActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -50,10 +49,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".RegisterByUsername" />
+        <activity android:name=".RegisterByUsernameActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".AccountProfile" />
-        <activity android:name=".MessageCenter"></activity>
+        <activity android:name=".AccountProfileActivity" />
+        <activity android:name=".MessageCenterActivity"></activity>
     </application>
 
 </manifest>

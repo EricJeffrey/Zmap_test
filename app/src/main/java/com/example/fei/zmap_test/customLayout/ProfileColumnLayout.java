@@ -1,4 +1,4 @@
-package com.example.fei.zmap_test;
+package com.example.fei.zmap_test.customLayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,6 +12,8 @@ import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.fei.zmap_test.R;
 
 /**
  * Created by FEI on 2017/12/3.

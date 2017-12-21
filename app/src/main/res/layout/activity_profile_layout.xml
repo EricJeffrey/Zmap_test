@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.example.fei.zmap_test.ProfileMidColumn
+                <com.example.fei.zmap_test.customLayout.ProfileMidColumn
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                     app:column_text="离线地图"
                     app:column_img="@drawable/download"/>
 
-                <com.example.fei.zmap_test.ProfileMidColumn
+                <com.example.fei.zmap_test.customLayout.ProfileMidColumn
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -138,7 +138,7 @@
                     app:column_text="导航语音包"
                     app:column_img="@drawable/navi_sound"/>
 
-                <com.example.fei.zmap_test.ProfileMidColumn
+                <com.example.fei.zmap_test.customLayout.ProfileMidColumn
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -152,7 +152,7 @@
                     app:column_text="收藏夹"
                     app:column_img="@drawable/star"/>
 
-                <com.example.fei.zmap_test.ProfileMidColumn
+                <com.example.fei.zmap_test.customLayout.ProfileMidColumn
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -169,7 +169,7 @@
             </LinearLayout>
 
             <!--我的栏!-->
-            <com.example.fei.zmap_test.ProfileColumnLayout
+            <com.example.fei.zmap_test.customLayout.ProfileColumnLayout
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/sub_column_mine"
                 android:layout_width="match_parent"
@@ -189,7 +189,7 @@
                 app:sub_column_img4="@drawable/money" />
 
             <!--驾车栏!-->
-            <com.example.fei.zmap_test.ProfileColumnLayout
+            <com.example.fei.zmap_test.customLayout.ProfileColumnLayout
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/sub_column_drive_car"
                 android:layout_width="match_parent"
@@ -206,7 +206,7 @@
                 app:sub_column_img3="@drawable/scan" />
 
             <!--其他栏!-->
-            <com.example.fei.zmap_test.ProfileColumnLayout
+            <com.example.fei.zmap_test.customLayout.ProfileColumnLayout
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/sub_column_others"
                 android:layout_width="match_parent"
