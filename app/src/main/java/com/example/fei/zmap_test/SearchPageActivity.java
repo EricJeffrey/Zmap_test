@@ -99,7 +99,6 @@ public class SearchPageActivity extends AppCompatActivity {
         if(actionBar != null) actionBar.hide();
         url=getString(R.string.URl); //服务器接口地址
 
-
         gson = new Gson();
         searchButton =  findViewById(R.id.SearchPageActivity_search_button);
         cancelInputButton =  findViewById(R.id.SearchPageActivity_cancel_input_button);

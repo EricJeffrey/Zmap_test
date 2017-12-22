@@ -1,7 +1,9 @@
 package com.example.fei.zmap_test;
 
 import android.content.Intent;
+import android.drm.DrmStore;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -24,20 +26,11 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_layout);
-        getSupportActionBar().hide();
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) actionBar.hide();
 
         username_textView = findViewById(R.id.login_register_text);
         user_head_icon_btn = findViewById(R.id.show_me);
-
-
-
-/*
-        if(savedInstanceState != null){
-            Log.e(TAG,"!=null");
-            current_user=new Gson().fromJson(savedInstanceState.getString("current_user"),Users.class);
-            if (current_user.getId() != 0)  username_textView.setItemText(current_user.getUsername());  //修改用户名显示
-        }else Log.e(TAG,"=null");
-        */
 
         addListener(R.id.back);
         addListener(R.id.login_register_text);
@@ -47,15 +40,14 @@ public class ProfileActivity extends AppCompatActivity {
         ProfileColumnLayout tmp = findViewById(R.id.sub_column_mine);
         for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //向“我的”子项添加监听器
         tmp = findViewById(R.id.sub_column_drive_car);
-        for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //“驾车”
+        for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //向“驾车”子项添加监听器
         tmp = findViewById(R.id.sub_column_others);
-        for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //“其他”
+        for(int i = 1; i <= 4; i++) addListenerForSubColumn(tmp, i);            //向“其他”子项添加监听器
 
     }
 
     @Override
     protected void onStart(){
-        Log.e(TAG,"onStart");
         super.onStart();
         current_user = DataSupport.findLast(Users.class);
         if(current_user !=null && current_user.getUser_id() != 0){
@@ -69,51 +61,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRestart(){
-        super.onRestart();
-        //Log.e(TAG,"onRestart");
-
-    }
-    @Override
-    protected void onResume() {
-        //Log.e(TAG,"onResume");
-        super.onResume();
-
-
-    }
-    @Override
-    protected void onPause() {
-        //Log.e(TAG,"onPause");
-        super.onPause();
-
-    }
-
-    @Override
-    protected void onStop(){
-        //Log.e(TAG,"onStop");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        //Log.e(TAG,"onResume");
-        super.onDestroy();
-
-    }
-
-    //使用数据库对用户对象进行更新，不需要继续保存用户对象到暂存
-/*    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("current_user",new Gson().toJson(current_user));
-        Log.e(TAG,"onSaveInstanceState");
-        super.onSaveInstanceState(outState);
-    }*/
-
-
-
-
-
     //添加监听器
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new View.OnClickListener() {
@@ -121,7 +68,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch (res){
                     case R.id.back:
-                        finish();break;
+                        finish();
+                        break;
                     case R.id.login_register_text:
                     case R.id.show_me:
                         if(current_user !=null){
@@ -133,7 +81,8 @@ public class ProfileActivity extends AppCompatActivity {
                             }
                         }else {
                             login();
-                        }break;
+                        }
+                        break;
                     case R.id.profile_setting:
                         Intent intent = new Intent(ProfileActivity.this, SettingActivity.class);
                         startActivity(intent);
@@ -142,23 +91,22 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-    //向我的，驾车，其他三栏中某一栏的每个子项添加监听器
+
+    /**
+     * 向我的，驾车，其他三栏中某一栏的每个子项添加监听器
+     * @param tmp：我的，驾车，其他三栏中的某一栏
+     * @param id：表示某一栏中第几个子项
+     */
     public void addListenerForSubColumn(final ProfileColumnLayout tmp, final int id){
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (id) {
                     case 1:
-                        Toast.makeText(ProfileActivity.this, "你点击了" + tmp.getSub_column_title_text1(), Toast.LENGTH_SHORT).show();
-                        break;
                     case 2:
-                        Toast.makeText(ProfileActivity.this, "你点击了" + tmp.getSub_column_title_text2(), Toast.LENGTH_SHORT).show();
-                        break;
                     case 3:
-                        Toast.makeText(ProfileActivity.this, "你点击了" + tmp.getSub_column_title_text3(), Toast.LENGTH_SHORT).show();
-                        break;
                     case 4:
-                        Toast.makeText(ProfileActivity.this, "你点击了" + tmp.getSub_column_title_text4(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }

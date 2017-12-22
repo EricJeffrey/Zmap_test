@@ -28,26 +28,12 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (res){
                     case R.id.SettingActivity_about_zmap:
-                        Toast.makeText(SettingActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
-                        break;
                     case R.id.SettingActivity_check_update:
-                        Toast.makeText(SettingActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
-                        break;
                     case R.id.SettingActivity_city_switch:
-                        Toast.makeText(SettingActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
-                        break;
                     case R.id.SettingActivity_clear_cache:
-                        Toast.makeText(SettingActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
-                        break;
                     case R.id.SettingActivity_map_setting:
-                        Toast.makeText(SettingActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
-                        break;
                     case R.id.SettingActivity_message_notify:
-                        Toast.makeText(SettingActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
-                        break;
                     case R.id.SettingActivity_navigation_setting:
-                        Toast.makeText(SettingActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
-                        break;
                     case R.id.SettingActivity_wifi_auto_download:
                         Toast.makeText(SettingActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                         break;

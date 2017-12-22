@@ -550,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     if(!item.getItemDetail().equals("NONE")){
                         //TODO zoom map and add mark
                         aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(item.getItemLatLng(), 17f));
-                        aMap.addMarker(new MarkerOptions().position(item.getItemLatLng()));
+                        //aMap.addMarker(new MarkerOptions().position(item.getItemLatLng()));
                     }
                 }
                 break;
