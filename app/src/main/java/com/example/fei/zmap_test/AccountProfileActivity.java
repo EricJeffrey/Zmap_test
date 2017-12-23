@@ -12,17 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fei.zmap_test.HTTP.HTTPCallback;
+import com.example.fei.zmap_test.HTTP.HTTPRequest;
 import com.example.fei.zmap_test.db.Users;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.litepal.crud.DataSupport;
 
-public class AccountProfileActivity extends AppCompatActivity {
+public class AccountProfileActivity extends AppCompatActivity implements HTTPCallback{
     private static final String TAG = "AccountProfileActivity";
     public Users current_user;
     private LinearLayout top_view;
@@ -104,7 +100,7 @@ public class AccountProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int id_head= Integer.parseInt((String)v.getTag());
                 user_head_icon_btn.setImageResource(getHeadIconResourceFromId(id_head));
-                sendRequestWithHttpClient(id_head);
+                HTTPRequest.getOurInstance().changeHeadIcon(AccountProfileActivity.this,current_user.getUsername(),id_head,AccountProfileActivity.this);
                 Users users= new Users();
                 users.setId_head(id_head);
                 users.updateAll("User_id > ?","0");
@@ -156,27 +152,6 @@ public class AccountProfileActivity extends AppCompatActivity {
         bottom_view.setActivated(true);
     }
 
-    //发送远程更换头像数据
-    private void sendRequestWithHttpClient(final int id_head){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
-                HttpGet httpGet = new HttpGet(url+"/?action=modifyheadid&username="+current_user.getUsername()+"&id_head="+id_head);
-                try {
-                    HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
-                    if((httpResponse.getEntity())!=null){
-                        HttpEntity entity =httpResponse.getEntity();
-                        String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
-
-                        //TODO 数据根据返回值设置需要才更加严谨
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
     //通过ID获得View
     public static int getHeadIconResourceFromId(int id){
@@ -202,5 +177,15 @@ public class AccountProfileActivity extends AppCompatActivity {
             case 18:return R.drawable.avatar_18;
             default:return 0;
         }
+    }
+
+    /**
+     * 回调处理返回数据
+     *
+     * @param status ：返回状态
+     */
+    @Override
+    public void onFinish(int status) {
+
     }
 }

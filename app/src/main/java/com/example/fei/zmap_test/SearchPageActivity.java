@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,18 +35,14 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.example.fei.zmap_test.HTTP.HTTPCallback;
+import com.example.fei.zmap_test.HTTP.HTTPRequest;
 import com.example.fei.zmap_test.commonJavaClass.SearchResultItem;
 import com.example.fei.zmap_test.customLayout.SearchHistoryItemLayout;
 import com.example.fei.zmap_test.db.Users;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.litepal.crud.DataSupport;
 
 import java.lang.reflect.Type;
@@ -55,7 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SearchPageActivity extends AppCompatActivity {
+public class SearchPageActivity extends AppCompatActivity implements HTTPCallback{
     private static final String TAG = "SearchPageActivity";
     public Users current_user =null;
     private String url;
@@ -66,7 +61,6 @@ public class SearchPageActivity extends AppCompatActivity {
     private ImageButton cancelInputButton;
     private ImageButton voiceButton;
     private EditText editText;
-
     private List<SearchResultItem> itemList;
     private SearchResultListAdapter resultListAdapter;
     private ListView searchResultListView;
@@ -286,38 +280,10 @@ public class SearchPageActivity extends AppCompatActivity {
         if(historyList.contains(text)) return;
         historyList.add(text);
         current_user.setSearchHistory(gson.toJson(historyList));
-
         current_user.updateAll("User_id = ?",""+current_user.getUser_id());
-        putSearchRecordToOrigin(text); //上传到远程数据库
+        HTTPRequest.getOurInstance().setHistory(SearchPageActivity.this,current_user.getUser_id(),current_user.getUsername(),text,SearchPageActivity.this);//上传到远程数据库
     }
 
-    /**
-     * 将搜索内容发送远端存储
-     * @param text：搜索内容
-     */
-    public void putSearchRecordToOrigin(final String text){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
-                HttpGet httpGet = new HttpGet(url+"/history.php?action=setHistory" +
-                        "&id="+current_user.getUser_id()
-                        +"&username="+current_user.getUsername()
-                        +"&searchHistory="+text);
-                try {
-                    HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
-                    if((httpResponse.getEntity())!=null){
-                        HttpEntity entity =httpResponse.getEntity();
-                        String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
-                        Log.d(TAG, "run: " + response.charAt(3));
-                        //TODO ido 处理增加搜索记录的返回结果，规范化验证逻辑
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
     /**
      * 从数据库获取历史记录
@@ -327,7 +293,6 @@ public class SearchPageActivity extends AppCompatActivity {
         current_user= DataSupport.findLast(Users.class);
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
         historyList=gson.fromJson(current_user.getSearchHistory(), type);  //解析获得的字符串为json
-
         searchHistoryHolder.removeAllViews();
         int listSize =historyList.size();
         TextView tmp =  findViewById(R.id.SearchPageActivity_clear_all_history);
@@ -355,7 +320,7 @@ public class SearchPageActivity extends AppCompatActivity {
         historyList.clear();
         current_user.setSearchHistory(gson.toJson(historyList));
         current_user.updateAll("User_id = ?",""+current_user.getUser_id());
-        sendRequestWithHttpClient_clearHistory();
+        HTTPRequest.getOurInstance().clearHistory(SearchPageActivity.this,current_user.getUser_id(),current_user.getUsername(),SearchPageActivity.this);
         getAndShowSearchHistoryRecord();
     }
 
@@ -392,29 +357,15 @@ public class SearchPageActivity extends AppCompatActivity {
     }
 
     /**
-     * 清除远端搜索数据
+     * 回调处理返回数据
+     *
+     * @param status ：返回状态
      */
-    private void sendRequestWithHttpClient_clearHistory() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
-                HttpGet httpGet = new HttpGet(url + "/history.php?action=clearSearchHistory&id=" + current_user.getUser_id()
-                        + "&username=" + current_user.getUsername());
-                try {
-                    HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
-                    if ((httpResponse.getEntity()) != null) {
-                        HttpEntity entity = httpResponse.getEntity();
-                        //TODO 处理返回值
-                        String response = EntityUtils.toString(entity, "utf-8");//将entity当中的数据转换为字符串
-                        Log.d(TAG, "run: " + response);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+    @Override
+    public void onFinish(int status) {
+
     }
+
     class SearchResultListAdapter extends ArrayAdapter<SearchResultItem> {
         private int resourceId;
 

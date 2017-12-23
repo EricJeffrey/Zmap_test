@@ -9,19 +9,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fei.zmap_test.HTTP.HTTPCallback;
+import com.example.fei.zmap_test.HTTP.HTTPRequest;
 import com.example.fei.zmap_test.db.Users;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.apache.http.util.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterByUsernameActivity extends AppCompatActivity {
+public class RegisterByUsernameActivity extends AppCompatActivity implements HTTPCallback {
     public Users resp_user;
     private String url;
     private EditText username;
@@ -92,35 +88,57 @@ public class RegisterByUsernameActivity extends AppCompatActivity {
                         finish();
                         break;
                     case R.id.register_account_button:
-                        sendRequestWithHttpClient();
+                        String username_text = username.getText().toString().trim();
+                        String password_text = password.getText().toString().trim();
+                        if( username_text.length()>0 && password_text.length()>0){
+                            HTTPRequest.getOurInstance().register(RegisterByUsernameActivity.this,username_text,password_text,RegisterByUsernameActivity.this);
+//                        sendRequestWithHttpClient();
+                        }else {
+                            Toast.makeText(RegisterByUsernameActivity.this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                 }
             }
         });
     }
-    private void sendRequestWithHttpClient(){
-        final String username_text = username.getText().toString().trim();
-        final String password_text = password.getText().toString().trim();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
-                HttpGet httpGet = new HttpGet(url+"/?action=register&username="+username_text+"&password="+password_text);
-                try {
-                    HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
-                    if((httpResponse.getEntity())!=null){
-                        HttpEntity entity =httpResponse.getEntity();
-                        String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
 
-                        Message message = new Message();//在子线程中将Message对象发出去
-                        message.what = SHOW_RESPONSE;
-                        message.obj =response;
-                        handler.sendMessage(message);
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+    /**
+     * 回调处理返回数据
+     *
+     * @param status ：返回状态
+     */
+    @Override
+    public void onFinish(int status) {
+        if(status==1){
+            Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }else {
+            Toast.makeText(this, "注册失败，请稍后重试", Toast.LENGTH_SHORT).show();
+        }
     }
+//    private void sendRequestWithHttpClient(){
+//        final String username_text = username.getText().toString().trim();
+//        final String password_text = password.getText().toString().trim();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
+//                HttpGet httpGet = new HttpGet(url+"/?action=register&username="+username_text+"&password="+password_text);
+//                try {
+//                    HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+//                    if((httpResponse.getEntity())!=null){
+//                        HttpEntity entity =httpResponse.getEntity();
+//                        String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
+//
+//                        Message message = new Message();//在子线程中将Message对象发出去
+//                        message.what = SHOW_RESPONSE;
+//                        message.obj =response;
+//                        handler.sendMessage(message);
+//                    }
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+//    }
 }

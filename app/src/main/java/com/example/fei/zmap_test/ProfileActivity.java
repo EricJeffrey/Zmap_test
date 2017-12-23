@@ -1,7 +1,6 @@
 package com.example.fei.zmap_test;
 
 import android.content.Intent;
-import android.drm.DrmStore;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -50,10 +49,14 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         current_user = DataSupport.findLast(Users.class);
+        Log.e(TAG, "onCreate: all user:"+DataSupport.count(Users.class));
+//        for(Users users:DataSupport.findAll(Users.class)){
+//            Log.e(TAG, "onCreate: every user:"+users.getUsername());
+//        }
         if(current_user !=null && current_user.getUser_id() != 0){
             username_textView.setText(current_user.getUsername());  //修改用户名显示
             user_head_icon_btn.setImageResource(AccountProfileActivity.getHeadIconResourceFromId(current_user.getId_head()));
-            Log.e(TAG, "onCreate: get user"+current_user.getUser_id());
+            Log.e(TAG, "onCreate: get user:"+current_user.getUser_id());
         }else {
             username_textView.setText("登录/注册");
             user_head_icon_btn.setImageResource(R.drawable.profile_head);

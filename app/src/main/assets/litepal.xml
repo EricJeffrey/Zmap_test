@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="User" />
-    <version value="4" />
+    <version value="7" />
     <list>
         <mapping class="com.example.fei.zmap_test.db.Users"/>
     </list>
