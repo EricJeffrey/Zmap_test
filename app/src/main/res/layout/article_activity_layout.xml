@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <com.example.fei.zmap_test.customlayout.TitleLayout
+        android:id="@+id/article_detail_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app = "http://schemas.android.com/apk/res-auto"
+        app:button_src="@drawable/back_button_blue_pressed_gray"
+        app:title_text="文章详情"/>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/article_detail_title">
+        <LinearLayout
+            android:id="@+id/article_holder_view"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+    </ScrollView>
+    <ProgressBar
+        android:id="@+id/article_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/article_error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:text="ε=(´ο｀*)))连接超时啊啊啊！"/>
+</RelativeLayout>

@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title_text="今日新闻"
-            app:button_src="@drawable/back_button_white_pressed_gray"/>
+            app:button_src="@drawable/back_button_blue_pressed_gray"/>
         <ListView
             android:id="@+id/MessageCenter_list_view"
             android:layout_width="match_parent"

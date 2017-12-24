@@ -1,32 +1,51 @@
 package com.example.fei.zmap_test;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.fei.zmap_test.customlayout.MessageCenterAdapter;
+import com.example.fei.zmap_test.common.MessageCenterMyAdapter;
+import com.example.fei.zmap_test.http.MyWebCrawler;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MessageCenterActivity extends AppCompatActivity {
-    private TextView errorText;
-    private ListView listView;
-    private MessageCenterAdapter adapter;
+    public static final int ERROR_ON_GET_TITLE = -1;
+    public static final int GET_TITLE_START = 1;
+    public static final int GETTING_TITLE = 2;
+    public static final int GET_TITLE_DOWN = 3;
+    TextView errorText;
+    ListView listView;
+    MessageCenterMyAdapter adapter;
     ProgressBar progressBar;
+    public Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch(msg.what){
+                case GET_TITLE_START:
+                    onGetTitleStart();
+                    break;
+                case GETTING_TITLE:
+                    break;
+                case GET_TITLE_DOWN:
+                    onGetTitleDown();
+                    break;
+                case ERROR_ON_GET_TITLE:
+                    onGetTitleError();
+                    break;
+            }
+            return true;
+        }
+    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,61 +54,48 @@ public class MessageCenterActivity extends AppCompatActivity {
         if(actionBar != null) actionBar.hide();
 
         errorText = findViewById(R.id.MessageCenter_error_text);
-        listView = findViewById(R.id.MessageCenter_list_view);
         progressBar = findViewById(R.id.MessageCenter_progress_bar);
+        listView = findViewById(R.id.MessageCenter_list_view);
         ArrayList<String> list = new ArrayList<>();
-        ArrayList<String> href = new ArrayList<>();
-        adapter = new MessageCenterAdapter(MessageCenterActivity.this, R.layout.messages_item_layout, list);
+        final ArrayList<String> hrefs = new ArrayList<>();
+        adapter = new MessageCenterMyAdapter(MessageCenterActivity.this, R.layout.messages_item_layout, list);
         listView.setAdapter(adapter);
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        //noinspection unchecked
-        myAsyncTask.execute(list, href);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MessageCenterActivity.this, ArticleActivity.class);
+                intent.putExtra("href", hrefs.get(position));
+                startActivity(intent);
+            }
+        });
+        MyWebCrawler.getInstance(handler).getTitleAndHref(list, hrefs);
     }
-    @SuppressLint("StaticFieldLeak")
-    class MyAsyncTask extends AsyncTask< ArrayList<String>, Integer, Boolean> {
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            progressBar.setVisibility(View.GONE);
-            if(!aBoolean) {
-                errorText.setVisibility(View.VISIBLE);
-                listView.setVisibility(View.GONE);
-                return;
-            }
-            adapter.notifyDataSetChanged();
-        }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-        }
+    /**
+     * 成功获取今日新闻的标题及链接
+     */
+    public void onGetTitleDown(){
+        progressBar.setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
+        errorText.setVisibility(View.GONE);
+        adapter.notifyDataSetChanged();
+    }
 
+    /**
+     * 获取今日新闻标题链接出错
+     */
+    public void onGetTitleError(){
+        listView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        errorText.setVisibility(View.VISIBLE);
+    }
 
-        @Override
-        protected Boolean doInBackground(ArrayList<String>[] arrayLists) {
-            ArrayList<String> titleResults = arrayLists[0];
-            ArrayList<String> hrefResults = arrayLists[1];
-            Document doc;
-            try {
-                String url = "https://www.ithome.com";
-                doc = Jsoup.connect(url)
-                        .userAgent("Mozilla")
-                        .timeout(5000)
-                        .header("Accept-Language", "zh-CN")
-                        .cookie("auth", "token")
-                        .get();
-                Elements elements =Jsoup.parse(doc.toString()).select("li");
-                for(Element element:elements) {
-                    if(element.text().contains("今日")){
-                        titleResults.add(element.select("a").text());
-                        hrefResults.add(element.select("a").attr("href"));
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
-            return true;
-        }
+    /**
+     * 开始获取今日新闻标题及链接
+     */
+    public void onGetTitleStart(){
+        listView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        errorText.setVisibility(View.GONE);
     }
 }
