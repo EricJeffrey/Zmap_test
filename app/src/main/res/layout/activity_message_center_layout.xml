@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@color/colorRiceWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.example.fei.zmap_test.customLayout.TitleLayout
-        xmlns:app = "http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.example.fei.zmap_test.customlayout.TitleLayout
+            xmlns:app = "http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title_text="今日新闻"
+            app:button_src="@drawable/back_button_white_pressed_gray"/>
+        <ListView
+            android:id="@+id/MessageCenter_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/MessageCenter_progress_bar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        app:title_text="消息中心" />
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
     <TextView
+        android:id="@+id/MessageCenter_error_text"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="ε=(´ο｀*)))这儿什么都没有"/>
+        android:text="ε=(´ο｀*)))连接超时啊啊啊！"/>
 
-</LinearLayout>
+</RelativeLayout>

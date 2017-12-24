@@ -52,7 +52,7 @@
         <activity android:name=".RegisterByUsernameActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".AccountProfileActivity" />
-        <activity android:name=".MessageCenterActivity"></activity>
+        <activity android:name=".MessageCenterActivity"/>
     </application>
 
 </manifest>

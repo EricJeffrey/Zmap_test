@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.fei.zmap_test.HTTP.HTTPCallback;
-import com.example.fei.zmap_test.HTTP.HTTPRequest;
+import com.example.fei.zmap_test.http.HTTPCallback;
+import com.example.fei.zmap_test.http.HTTPRequest;
 import com.example.fei.zmap_test.db.Users;
 
 import org.apache.http.util.TextUtils;

@@ -1,4 +1,4 @@
-package com.example.fei.zmap_test.commonJavaClass;
+package com.example.fei.zmap_test.common;
 
 import android.os.Parcel;
 import android.os.Parcelable;

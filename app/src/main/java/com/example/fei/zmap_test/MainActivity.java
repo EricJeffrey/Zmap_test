@@ -36,7 +36,7 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
-import com.example.fei.zmap_test.commonJavaClass.SearchResultItem;
+import com.example.fei.zmap_test.common.SearchResultItem;
 import com.example.fei.zmap_test.db.Users;
 import com.google.gson.Gson;
 

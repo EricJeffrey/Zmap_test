@@ -1,4 +1,4 @@
-package com.example.fei.zmap_test.HTTP;
+package com.example.fei.zmap_test.http;
 
 import android.content.Context;
 import android.os.Handler;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 /**
  * Created by do_pc on 2017/12/23.
+ * 单体类，处理网络访问与数据库
  */
 
 public class HTTPRequest {

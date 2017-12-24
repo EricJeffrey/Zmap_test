@@ -52,6 +52,7 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'org.litepal.android:core:1.4.1'
+    compile 'org.jsoup:jsoup:1.11.2'
     testCompile 'junit:junit:4.12'
     compile files('libs/AMap_Search_V5.5.0_20171107.jar')
     //compile files('libs/Android_Map3D_SDK_V5.5.0_20171107.jar')   //

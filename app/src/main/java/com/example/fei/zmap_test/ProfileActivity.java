@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fei.zmap_test.customLayout.ProfileColumnLayout;
+import com.example.fei.zmap_test.customlayout.ProfileColumnLayout;
 import com.example.fei.zmap_test.db.Users;
 
 import org.litepal.crud.DataSupport;

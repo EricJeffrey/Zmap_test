@@ -5,7 +5,7 @@
     android:background="@color/colorRiceWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.example.fei.zmap_test.customLayout.TitleLayout
+    <com.example.fei.zmap_test.customlayout.TitleLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@color/colorRiceWhite"
         android:layout_width="match_parent"
@@ -16,20 +16,20 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/colorLightGray"/>
-    <com.example.fei.zmap_test.customLayout.SettingItemLayout
+    <com.example.fei.zmap_test.customlayout.SettingItemLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/SettingActivity_map_setting"
         android:layout_marginTop="@dimen/common_margin"
         style="@style/SettingItemStyle"
         app:setting_text="地图设置"
         app:setting_detail_text=""/>
-    <com.example.fei.zmap_test.customLayout.SettingItemLayout
+    <com.example.fei.zmap_test.customlayout.SettingItemLayout
         android:id="@+id/SettingActivity_navigation_setting"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         style="@style/SettingItemStyle"
         app:setting_text="导航设置"
         app:setting_detail_text=""/>
-    <com.example.fei.zmap_test.customLayout.SettingItemLayout
+    <com.example.fei.zmap_test.customlayout.SettingItemLayout
         android:id="@+id/SettingActivity_city_switch"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         style="@style/SettingItemStyle"
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-    <com.example.fei.zmap_test.customLayout.SettingItemLayout
+    <com.example.fei.zmap_test.customlayout.SettingItemLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/SettingActivity_clear_cache"
         style="@style/SettingItemStyle"
@@ -83,14 +83,14 @@
         app:setting_detail_text=""/>
 
 
-    <com.example.fei.zmap_test.customLayout.SettingItemLayout
+    <com.example.fei.zmap_test.customlayout.SettingItemLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/SettingActivity_check_update"
         android:layout_marginTop="@dimen/common_margin"
         style="@style/SettingItemStyle"
         app:setting_text="检查更新"
         app:setting_detail_text="当前版本：v8.2.0.2141"/>
-    <com.example.fei.zmap_test.customLayout.SettingItemLayout
+    <com.example.fei.zmap_test.customlayout.SettingItemLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/SettingActivity_about_zmap"
         style="@style/SettingItemStyle"

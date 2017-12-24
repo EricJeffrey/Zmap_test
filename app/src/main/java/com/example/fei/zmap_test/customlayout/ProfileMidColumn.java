@@ -1,4 +1,4 @@
-package com.example.fei.zmap_test.customLayout;
+package com.example.fei.zmap_test.customlayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;

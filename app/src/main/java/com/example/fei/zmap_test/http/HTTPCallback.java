@@ -1,7 +1,8 @@
-package com.example.fei.zmap_test.HTTP;
+package com.example.fei.zmap_test.http;
 
 /**
  * Created by do_pc on 2017/12/23.
+ * 回调接口
  */
 
 public interface HTTPCallback {

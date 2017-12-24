@@ -1,14 +1,12 @@
-package com.example.fei.zmap_test.customLayout;
+package com.example.fei.zmap_test.customlayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.fei.zmap_test.R;
 

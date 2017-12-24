@@ -4,6 +4,7 @@
         <attr name="title_text" format="string"/>
         <attr name="right_text" format="string"/>
         <attr name="button_src" format="reference"/>
+        <attr name="bg_color" format="color"/>
     </declare-styleable>
     <declare-styleable name="ProfileColumnLayout">
         <attr name="column_title_text" format="string"/>

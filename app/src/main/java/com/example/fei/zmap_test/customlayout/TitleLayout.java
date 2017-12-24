@@ -1,15 +1,17 @@
-package com.example.fei.zmap_test.customLayout;
+package com.example.fei.zmap_test.customlayout;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.fei.zmap_test.LoginAccountActivity;
@@ -18,7 +20,7 @@ import com.example.fei.zmap_test.RegisterByUsernameActivity;
 
 /**
  * Created by FEI on 2017/12/1.
- * custom title
+ * 自定义标题栏
  */
 
 public class TitleLayout extends LinearLayout {
@@ -34,8 +36,10 @@ public class TitleLayout extends LinearLayout {
         title_text = typedArray.getString(R.styleable.TitleLayout_title_text);
         right_text = typedArray.getString(R.styleable.TitleLayout_right_text);
         button_img = typedArray.getResourceId(R.styleable.TitleLayout_button_src, R.drawable.back_button_blue_pressed_gray);
+        int color= typedArray.getColor(R.styleable.TitleLayout_bg_color, getResources().getColor(R.color.colorActionBar));
         typedArray.recycle();
 
+        findViewById(R.id.title_holder).setBackgroundColor(color);
         setSrc();
         addListener(R.id.back);
         addListener(R.id.right_text);
