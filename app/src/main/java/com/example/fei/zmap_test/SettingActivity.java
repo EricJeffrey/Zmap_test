@@ -49,6 +49,8 @@ public class SettingActivity extends AppCompatActivity {
                         break;
                     case R.id.SettingActivity_check_update:
                         if(versionName == null) getVersionCodeName();
+                        Log.e(TAG, "onClick: now manager is " + manager);
+                        if(manager != null) Log.e(TAG, "onClick: now manager statusCode is " + manager.getStatusCode());
                         if(manager == null || manager.getStatusCode() == 0){
                             manager = new AppUpdateManager(SettingActivity.this, versionCode);
                             manager.checkForUpdate();
@@ -56,7 +58,6 @@ public class SettingActivity extends AppCompatActivity {
                         else{
                             Toast.makeText(SettingActivity.this, "正在检查更新", Toast.LENGTH_SHORT).show();
                         }
-                        Log.e(TAG, "onClick: now manager is " + manager);
                         break;
                     case R.id.SettingActivity_city_switch:
                     case R.id.SettingActivity_clear_cache:

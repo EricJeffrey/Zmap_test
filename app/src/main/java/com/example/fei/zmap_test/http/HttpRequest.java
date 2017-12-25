@@ -233,7 +233,7 @@ public class HttpRequest {
      * 发送远程更换头像数据
      * @param Username  操作用户的用户名
      * @param id_head   操作用户的目的头像ID
-     * @param cBack      实现回调接口的上下文
+     * @param cBack     实现回调接口的上下文
      */
     public void changeHeadIcon(final String Username,final int id_head,HttpCallback cBack){
         this.callback = cBack;
@@ -263,7 +263,7 @@ public class HttpRequest {
     /**
      * 获得更新参数
      * @param version 当前版本
-     * @param cBack     实现回调接口的上下文
+     * @param cBack 实现回调接口的上下文
      */
     public void getUpdateCode(final int version, final HttpCallback cBack){
         this.callback = cBack;

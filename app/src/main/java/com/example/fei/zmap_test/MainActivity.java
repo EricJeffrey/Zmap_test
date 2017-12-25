@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
 
-        //TODO 有导航栏更改margin
         final View decorView = getWindow().getDecorView();
         decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
             @Override

@@ -32,6 +32,12 @@ public class AppUpdateManager extends BroadcastReceiver implements HttpCallback 
     private static final int NEW_VERSION_FOUND = 1;
     private static final int VERSION_UP_TO_DATE = 0;
     private static final int ERROR_ON_CHECKING_UPDATE = -1;
+    /**
+     * context：
+     * versionCode:
+     * statusCode: 当前对象的状态，1表示正在使用（即正在更新），0表示已经完成任务或出错
+     * downloadId: 当前任务在下载队列中的ID
+     */
     private Context context;
     private int versionCode;
     private int statusCode;
@@ -48,20 +54,26 @@ public class AppUpdateManager extends BroadcastReceiver implements HttpCallback 
      * 作用：context取消注册广播接收器并设置其statusCode为0
      */
     public void setUseless(boolean isRegistered){
+        Log.e(TAG, "setUseless: going to set statusCode to 0, isRegistered:" + isRegistered);
         if(isRegistered) context.unregisterReceiver(AppUpdateManager.this);
         statusCode = 0;
     }
 
     /**
      * 接收下载完成的广播
+     * 自动安装有bug，已注释
      * @param context：context
      * @param intent：intent
      */
     @Override
     public void onReceive(Context context, Intent intent) {
         long downloadCompleteId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-        if(downloadCompleteId != -1 && downloadCompleteId== downloadId){
-            installAPK(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/Zmap_test.apk"));
+        if(downloadCompleteId != -1 && downloadCompleteId == downloadId){
+            //installAPK(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/Zmap_test.apk"));
+            Toast.makeText(context, "安装包下载完成", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context, "下载失败", Toast.LENGTH_SHORT).show();
         }
         setUseless(true);
     }
@@ -75,18 +87,11 @@ public class AppUpdateManager extends BroadcastReceiver implements HttpCallback 
     }
 
     /**
-     * 检测到新版本，启动对话框
+     * 检测到新版本，启动对话框，注册广播接收器，启动下载
      */
     private void fireUpDialog(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                dialog.dismiss();
-                setUseless(false);
-            }
-        });
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.setTitle("是否下载最新版本？");
         dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
             @Override
@@ -109,10 +114,16 @@ public class AppUpdateManager extends BroadcastReceiver implements HttpCallback 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                setUseless(false);
             }
         });
         dialog.show();
     }
+
+    /**
+     * 接口方法实现回调
+     * @param status：返回状态
+     */
     @Override
     public void onFinish(int status) {
         switch (status){
