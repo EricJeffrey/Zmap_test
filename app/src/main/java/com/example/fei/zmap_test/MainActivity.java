@@ -3,6 +3,8 @@ package com.example.fei.zmap_test;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.WindowInsetsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -38,6 +42,7 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.example.fei.zmap_test.common.MyApplication;
 import com.example.fei.zmap_test.common.SearchResultItem;
 import com.example.fei.zmap_test.db.Users;
 import com.google.gson.Gson;
@@ -80,11 +85,30 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) actionBar.hide();
 
-        //TODO 有导航栏更改margin
-
         mapView =  findViewById(R.id.MainActivity_map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
+
+        //TODO 有导航栏更改margin
+        final View decorView = getWindow().getDecorView();
+        decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                if(insets.getStableInsetBottom() != 0) {
+                    LinearLayout view = findViewById(R.id.MainActivity_zoom_holder);
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
+                    layoutParams.topMargin = layoutParams.bottomMargin = (int) MyApplication.convertDpToPixel(20);
+                    view.setLayoutParams(layoutParams);
+                }
+                else{
+                    LinearLayout view = findViewById(R.id.MainActivity_zoom_holder);
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
+                    layoutParams.topMargin = layoutParams.bottomMargin = (int) MyApplication.convertDpToPixel(41);
+                    view.setLayoutParams(layoutParams);
+                }
+                return decorView.onApplyWindowInsets(insets);
+            }
+        });
 
         top_view = findViewById(R.id.MainActivity_top_view);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -112,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         SetEdgeBar();       //显示&隐藏地图功能按钮
         SetUI();            //地图原始UI布局设置
     }
+
 
     /**
      * 改变实时路况状态，开 -> 关，关 -> 开

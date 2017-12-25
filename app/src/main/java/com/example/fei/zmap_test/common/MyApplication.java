@@ -3,6 +3,8 @@ package com.example.fei.zmap_test.common;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 
 import org.litepal.LitePal;
 
@@ -23,5 +25,16 @@ public class MyApplication extends Application {
     }
     public static Context getContext(){
         return context;
+    }
+    /**
+     * This method converts dp unit to equivalent pixels, depending on device density.
+     *
+     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @return A float value to represent px equivalent to dp depending on device density
+     */
+    public static float convertDpToPixel(float dp){
+        Resources resources = getContext().getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 }

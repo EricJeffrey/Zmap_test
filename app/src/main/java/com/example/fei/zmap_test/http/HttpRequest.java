@@ -265,7 +265,7 @@ public class HttpRequest {
      * @param version 当前版本
      * @param cBack     实现回调接口的上下文
      */
-    public void getUpdateCode(final int version,HttpCallback cBack){
+    public void getUpdateCode(final int version, final HttpCallback cBack){
         this.callback = cBack;
         new Thread(new Runnable() {
             @Override
@@ -284,7 +284,11 @@ public class HttpRequest {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
-                    //TODO
+                    Log.e(TAG, "run: exception is " + e);
+                    Message message = new Message();
+                    message.what = VERSIONCODE;
+                    message.obj ="-1";
+                    handler.sendMessage(message);
                 }
             }
         }).start();

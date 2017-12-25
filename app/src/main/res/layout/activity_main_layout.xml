@@ -139,6 +139,7 @@
 
             <!--+，-缩放按钮!-->
             <LinearLayout
+                android:id="@+id/MainActivity_zoom_holder"
                 android:orientation="vertical"
                 android:layout_width="@dimen/button_size"
                 android:layout_height="wrap_content"

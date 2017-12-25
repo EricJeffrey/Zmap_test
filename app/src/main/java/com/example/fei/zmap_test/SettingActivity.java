@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,8 +14,10 @@ import com.example.fei.zmap_test.common.AppUpdateManager;
 import com.example.fei.zmap_test.customlayout.SettingItemLayout;
 
 public class SettingActivity extends AppCompatActivity {
+    private static final String TAG = "SettingActivity";
     private String versionName;
     private int versionCode;
+    private AppUpdateManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +49,14 @@ public class SettingActivity extends AppCompatActivity {
                         break;
                     case R.id.SettingActivity_check_update:
                         if(versionName == null) getVersionCodeName();
-                        AppUpdateManager manager = new AppUpdateManager(SettingActivity.this, versionCode);
-                        manager.checkForUpdate();
+                        if(manager == null || manager.getStatusCode() == 0){
+                            manager = new AppUpdateManager(SettingActivity.this, versionCode);
+                            manager.checkForUpdate();
+                        }
+                        else{
+                            Toast.makeText(SettingActivity.this, "正在检查更新", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.e(TAG, "onClick: now manager is " + manager);
                         break;
                     case R.id.SettingActivity_city_switch:
                     case R.id.SettingActivity_clear_cache:

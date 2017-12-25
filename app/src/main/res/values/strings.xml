@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Zmap_test</string>
     <string name="URl">http://www.idooooo.tk/Zmap</string>
+    <string name="DOWNLOAD_URL">http://www.idooooo.tk/Zmap/apk/zmap_test.apk</string>
 </resources>
