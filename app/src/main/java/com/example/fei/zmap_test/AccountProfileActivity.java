@@ -12,13 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fei.zmap_test.http.HTTPCallback;
-import com.example.fei.zmap_test.http.HTTPRequest;
+import com.example.fei.zmap_test.http.HttpCallback;
+import com.example.fei.zmap_test.http.HttpRequest;
 import com.example.fei.zmap_test.db.Users;
 
 import org.litepal.crud.DataSupport;
 
-public class AccountProfileActivity extends AppCompatActivity implements HTTPCallback{
+public class AccountProfileActivity extends AppCompatActivity implements HttpCallback {
     private static final String TAG = "AccountProfileActivity";
     public Users current_user;
     private LinearLayout top_view;
@@ -100,7 +100,7 @@ public class AccountProfileActivity extends AppCompatActivity implements HTTPCal
             public void onClick(View v) {
                 int id_head= Integer.parseInt((String)v.getTag());
                 user_head_icon_btn.setImageResource(getHeadIconResourceFromId(id_head));
-                HTTPRequest.getOurInstance().changeHeadIcon(AccountProfileActivity.this,current_user.getUsername(),id_head,AccountProfileActivity.this);
+                HttpRequest.getOurInstance().changeHeadIcon(current_user.getUsername(),id_head,AccountProfileActivity.this);
                 Users users= new Users();
                 users.setId_head(id_head);
                 users.updateAll("User_id > ?","0");

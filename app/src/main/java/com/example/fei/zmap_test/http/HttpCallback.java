@@ -5,7 +5,7 @@ package com.example.fei.zmap_test.http;
  * 回调接口
  */
 
-public interface HTTPCallback {
+public interface HttpCallback {
     /**
      * 回调处理返回数据
      * @param status：返回状态

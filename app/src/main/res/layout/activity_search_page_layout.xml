@@ -17,7 +17,7 @@
             android:layout_marginTop="@dimen/common_margin"
             android:layout_marginBottom="@dimen/common_margin"
             android:background="@null"
-            android:src="@drawable/back_button_gray_pressed_dark_gray"/>
+            android:src="@drawable/back_button_blue_pressed_gray"/>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_gravity="center_vertical"

@@ -1,17 +1,30 @@
 package com.example.fei.zmap_test;
 
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class SettingActivity extends AppCompatActivity {
+import com.example.fei.zmap_test.common.AppUpdateManager;
+import com.example.fei.zmap_test.customlayout.SettingItemLayout;
 
+public class SettingActivity extends AppCompatActivity {
+    private String versionName;
+    private int versionCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_layout);
-        getSupportActionBar().hide();
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) actionBar.hide();
+        getVersionCodeName();
+
+        SettingItemLayout checkUpdateView = findViewById(R.id.SettingActivity_check_update);
+        checkUpdateView.setVersionName(versionName);
 
         addListener(R.id.SettingActivity_about_zmap);
         addListener(R.id.SettingActivity_check_update);
@@ -28,7 +41,14 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (res){
                     case R.id.SettingActivity_about_zmap:
+                        Intent intent = new Intent(SettingActivity.this, AboutUsActivity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.SettingActivity_check_update:
+                        if(versionName == null) getVersionCodeName();
+                        AppUpdateManager manager = new AppUpdateManager(SettingActivity.this, versionCode);
+                        manager.checkForUpdate();
+                        break;
                     case R.id.SettingActivity_city_switch:
                     case R.id.SettingActivity_clear_cache:
                     case R.id.SettingActivity_map_setting:
@@ -40,5 +60,20 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * 获取App版本号和版本名称
+     */
+    public void getVersionCodeName(){
+        PackageManager packageManager = getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
+            versionCode = packageInfo.versionCode;
+            versionName = packageInfo.versionName;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

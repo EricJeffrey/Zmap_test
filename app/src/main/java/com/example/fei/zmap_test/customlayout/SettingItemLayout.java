@@ -16,6 +16,7 @@ import com.example.fei.zmap_test.R;
  */
 
 public class SettingItemLayout extends LinearLayout {
+    private TextView textView;
 
     public SettingItemLayout(final Context context, AttributeSet attrs){
         super(context, attrs);
@@ -25,8 +26,11 @@ public class SettingItemLayout extends LinearLayout {
         String detail = typedArray.getString(R.styleable.SettingItemLayout_setting_detail_text);
         typedArray.recycle();
         Button button = findViewById(R.id.setting_text);
-        TextView textView = findViewById(R.id.setting_detail_text);
+        textView = findViewById(R.id.setting_detail_text);
         button.setText(text);
         textView.setText(detail);
+    }
+    public void setVersionName(String s){
+        textView.setText(s);
     }
 }

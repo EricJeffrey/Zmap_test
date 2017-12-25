@@ -6,7 +6,7 @@
         android:id="@+id/MessageItem_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/common_margin"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:minLines="2"

@@ -35,8 +35,8 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
-import com.example.fei.zmap_test.http.HTTPCallback;
-import com.example.fei.zmap_test.http.HTTPRequest;
+import com.example.fei.zmap_test.http.HttpCallback;
+import com.example.fei.zmap_test.http.HttpRequest;
 import com.example.fei.zmap_test.common.SearchResultItem;
 import com.example.fei.zmap_test.customlayout.SearchHistoryItemLayout;
 import com.example.fei.zmap_test.db.Users;
@@ -50,7 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SearchPageActivity extends AppCompatActivity implements HTTPCallback{
+public class SearchPageActivity extends AppCompatActivity implements HttpCallback {
     private static final String TAG = "SearchPageActivity";
     public Users current_user =null;
     private String url;
@@ -281,7 +281,7 @@ public class SearchPageActivity extends AppCompatActivity implements HTTPCallbac
         historyList.add(text);
         current_user.setSearchHistory(gson.toJson(historyList));
         current_user.updateAll("User_id = ?",""+current_user.getUser_id());
-        HTTPRequest.getOurInstance().setHistory(SearchPageActivity.this,current_user.getUser_id(),current_user.getUsername(),text,SearchPageActivity.this);//上传到远程数据库
+        HttpRequest.getOurInstance().setHistory(current_user.getUser_id(),current_user.getUsername(),text,SearchPageActivity.this);//上传到远程数据库
     }
 
 
@@ -320,7 +320,7 @@ public class SearchPageActivity extends AppCompatActivity implements HTTPCallbac
         historyList.clear();
         current_user.setSearchHistory(gson.toJson(historyList));
         current_user.updateAll("User_id = ?",""+current_user.getUser_id());
-        HTTPRequest.getOurInstance().clearHistory(SearchPageActivity.this,current_user.getUser_id(),current_user.getUsername(),SearchPageActivity.this);
+        HttpRequest.getOurInstance().clearHistory(current_user.getUser_id(),current_user.getUsername(),SearchPageActivity.this);
         getAndShowSearchHistoryRecord();
     }
 

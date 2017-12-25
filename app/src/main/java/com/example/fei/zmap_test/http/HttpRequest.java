@@ -6,6 +6,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.example.fei.zmap_test.R;
+import com.example.fei.zmap_test.common.MyApplication;
 import com.example.fei.zmap_test.db.Users;
 import com.google.gson.Gson;
 
@@ -26,39 +27,42 @@ import java.util.ArrayList;
  * 单体类，处理网络访问与数据库
  */
 
-public class HTTPRequest {
-    private String url;
-    private static final HTTPRequest ourInstance = new HTTPRequest();
-    private HTTPCallback callback;
-    private static final int LOGIN =2001;  //xxxx=abcd    a:预留   b:1=账户类 2=历史记录类  cd:远程交互标识号
+public class HttpRequest {
+    private static final String TAG = "HttpRequest";
+    private String url = MyApplication.getContext().getResources().getString(R.string.URl);
+    private static final HttpRequest ourInstance = new HttpRequest();
+    private HttpCallback callback;
+    private static final int LOGIN =2001;  //xxxx=abcd    a:预留   b:0=账户类 1=历史记录类 2版本类  cd:远程交互标识号
     private static final int REGISTER =2002;
     private static final int GETHISTORY =2103;
     private static final int SETHISTORY =2104;
     private static final int CLEARFISTORY =2105;
     private static final int CHANGEHEADICON =2006;
+    private static final int VERSIONCODE =2207;
+
     private Users resp_user;
 
 
-    public static HTTPRequest getOurInstance() {
+    public static HttpRequest getOurInstance() {
 
         return ourInstance;
     }
 
-    private HTTPRequest(){
+    private HttpRequest(){
 
     }
 
-    public HTTPCallback getCallback() {
+    public HttpCallback getCallback() {
         return callback;
     }
 
     /**
      * 登陆
-     * @param context: 上下文
-     *
+     * @param username  操作用户用户名
+     * @param password  操作用户密码
+     * @param cBack     实现回调接口的上下文
      */
-    public void login(Context context, final String username , final String password, HTTPCallback cBack) {
-        url=context.getString(R.string.URl); //服务器接口地址
+    public void login(final String username , final String password, HttpCallback cBack) {
         Log.e("HTTPR", "++++"+username+"------"+password);
         try {
             if(username != null && password !=null){
@@ -69,10 +73,10 @@ public class HTTPRequest {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        HttpClient httpCient_login = new DefaultHttpClient();  //创建HttpClient对象
+                        HttpClient httpClient_login = new DefaultHttpClient();  //创建HttpClient对象
                         HttpGet httpGet_login = new HttpGet(url+"/?action=login&username="+username+"&password="+password);
                         try {
-                            HttpResponse httpResponse = httpCient_login.execute(httpGet_login);//第三步：执行请求，获取服务器发还的相应对象
+                            HttpResponse httpResponse = httpClient_login.execute(httpGet_login);//第三步：执行请求，获取服务器发还的相应对象
                             if((httpResponse.getEntity())!=null){
                                 HttpEntity entity =httpResponse.getEntity();
                                 String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
@@ -89,12 +93,12 @@ public class HTTPRequest {
                             Log.e("HTTPR", "等待Username数据写入数据库:"+resp_user.getUsername());
                         //未登陆成功不再进行读取历史记录
                         if(resp_user.getStatusCode()==1){
-                            HttpClient httpCient_getHistory = new DefaultHttpClient();  //创建HttpClient对象
+                            HttpClient httpClient_getHistory = new DefaultHttpClient();  //创建HttpClient对象
                             HttpGet httpGet_getHistory = new HttpGet(url+"/history.php?action=getSearchHistory&id="+resp_user.getUser_id()
                                     +"&username="+resp_user.getUsername());
                             Log.e("HTTPR", "URL:"+httpGet_getHistory.getURI().toString());
                             try {
-                                HttpResponse httpResponse = httpCient_getHistory.execute(httpGet_getHistory);//第三步：执行请求，获取服务器发还的相应对象
+                                HttpResponse httpResponse = httpClient_getHistory.execute(httpGet_getHistory);//第三步：执行请求，获取服务器发还的相应对象
                                 if((httpResponse.getEntity())!=null){
                                     HttpEntity entity =httpResponse.getEntity();
                                     String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
@@ -106,6 +110,7 @@ public class HTTPRequest {
                                 }
                             }catch (Exception e){
                                 e.printStackTrace();
+                                Log.e(TAG, "run: " + e);
                             }
                         }
                     }
@@ -119,12 +124,12 @@ public class HTTPRequest {
     }
 
     /**
-     * 登陆
-     * @param context: 上下文
-     *
+     * 注册
+     * @param username  操作用户用户名
+     * @param password  操作用户密码
+     * @param cBack     实现回调接口的上下文
      */
-    public void register(Context context, final String username , final String password, HTTPCallback cBack) {
-        url=context.getString(R.string.URl); //服务器接口地址
+    public void register(final String username , final String password, HttpCallback cBack) {
         Log.e("HTTPR", "++++"+username+"------"+password);
         try {
             if(username != null && password !=null){
@@ -135,10 +140,10 @@ public class HTTPRequest {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
+                        HttpClient httpClient = new DefaultHttpClient();  //创建HttpClient对象
                         HttpGet httpGet = new HttpGet(url+"/?action=register&username="+username+"&password="+password);
                         try {
-                            HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                            HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
                             if((httpResponse.getEntity())!=null){
                                 HttpEntity entity =httpResponse.getEntity();
                                 String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
@@ -164,18 +169,18 @@ public class HTTPRequest {
      * 将搜索内容发送远端存储
      * @param text：搜索内容
      */
-    public void setHistory(Context context,final int User_id,final String Username ,final String text, HTTPCallback cBack){
-        url=context.getString(R.string.URl); //服务器接口地址
+    public void setHistory(final int User_id,final String Username ,final String text, HttpCallback cBack){
+        this.callback = cBack;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
+                HttpClient httpClient = new DefaultHttpClient();  //创建HttpClient对象
                 HttpGet httpGet = new HttpGet(url+"/history.php?action=setHistory" +
                         "&id="+User_id
                         +"&username="+Username
                         +"&searchHistory="+text);
                 try {
-                    HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
                     if((httpResponse.getEntity())!=null){
                         HttpEntity entity =httpResponse.getEntity();
                         String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
@@ -193,18 +198,21 @@ public class HTTPRequest {
     }
 
     /**
-     * 清除远端搜索数据
+     * 清除远程历史记录
+     * @param User_id   操作用户ID
+     * @param Username  操作用户用户名
+     * @param cBack     实现回调接口上下文
      */
-    public void clearHistory(Context context,final int User_id,final String Username ,HTTPCallback cBack) {
-        url=context.getString(R.string.URl); //服务器接口地址
+    public void clearHistory(final int User_id,final String Username ,HttpCallback cBack) {
+        this.callback = cBack;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
+                HttpClient httpClient = new DefaultHttpClient();  //创建HttpClient对象
                 HttpGet httpGet = new HttpGet(url + "/history.php?action=clearSearchHistory&id=" +User_id
                         + "&username=" + Username);
                 try {
-                    HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
                     if ((httpResponse.getEntity()) != null) {
                         HttpEntity entity = httpResponse.getEntity();
                         String response = EntityUtils.toString(entity, "utf-8");//将entity当中的数据转换为字符串
@@ -221,15 +229,21 @@ public class HTTPRequest {
         }).start();
     }
 
-    //发送远程更换头像数据
-    public void changeHeadIcon(Context context,final String Username,final int id_head,HTTPCallback cBac){
+    /**
+     * 发送远程更换头像数据
+     * @param Username  操作用户的用户名
+     * @param id_head   操作用户的目的头像ID
+     * @param cBack      实现回调接口的上下文
+     */
+    public void changeHeadIcon(final String Username,final int id_head,HttpCallback cBack){
+        this.callback = cBack;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpClient httpCient = new DefaultHttpClient();  //创建HttpClient对象
+                HttpClient httpClient = new DefaultHttpClient();  //创建HttpClient对象
                 HttpGet httpGet = new HttpGet(url+"/?action=modifyheadid&username="+Username+"&id_head="+id_head);
                 try {
-                    HttpResponse httpResponse = httpCient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
                     if((httpResponse.getEntity())!=null){
                         HttpEntity entity =httpResponse.getEntity();
                         String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
@@ -246,6 +260,35 @@ public class HTTPRequest {
         }).start();
     }
 
+    /**
+     * 获得更新参数
+     * @param version 当前版本
+     * @param cBack     实现回调接口的上下文
+     */
+    public void getUpdateCode(final int version,HttpCallback cBack){
+        this.callback = cBack;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpClient httpClient = new DefaultHttpClient();  //创建HttpClient对象
+                HttpGet httpGet = new HttpGet(url+"/version.php?version="+version);
+                try {
+                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                    if((httpResponse.getEntity())!=null){
+                        HttpEntity entity =httpResponse.getEntity();
+                        String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
+                        Message message = new Message();//在子线程中将Message对象发出去
+                        message.what = VERSIONCODE;
+                        message.obj =response;
+                        handler.sendMessage(message);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    //TODO
+                }
+            }
+        }).start();
+    }
 
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -303,6 +346,8 @@ public class HTTPRequest {
                         break;
                     case CHANGEHEADICON:
                         break;
+                    case VERSIONCODE:
+                        callback.onFinish(Integer.parseInt(Response));
                     default:
                         break;
                 }

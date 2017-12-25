@@ -8,10 +8,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private ImageButton my_collection_button;
     private int traffic_accident_button_status;
     private int my_collection_button_status;
+    PoiItem current_POI;
 
     Marker marker =null;
     LatLng POILatlng =null;
@@ -76,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         setContentView(R.layout.activity_main_layout);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) actionBar.hide();
+
+        //TODO 有导航栏更改margin
 
         mapView =  findViewById(R.id.MainActivity_map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
@@ -128,20 +133,17 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mapView.onDestroy();
     }
     @Override
     protected void onResume() {
         super.onResume();
-        //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mapView.onResume();
         top_view.setVisibility(View.VISIBLE);
     }
     @Override
     protected void onPause() {
         super.onPause();
-        //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
         mapView.onPause();
     }
 
@@ -153,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
         mapView.onSaveInstanceState(outState);
     }
 
@@ -242,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         mLocationClient = null;
     }
 
-
     /**
      * 初始化地图view
      */
@@ -262,10 +262,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);//连续定位、蓝点不会移动到地图中心点，定位点依照设备方向旋转，并且蓝点会跟随设备移动。
         myLocationStyle.strokeColor(Color.argb(80,0,0,205));//设置定位蓝点精度圆圈的边框颜色的方法。
         myLocationStyle.radiusFillColor(Color.argb(50,0,191,255));//设置定位蓝点精度圆圈的填充颜色的方法。
-//        BitmapDescriptorFactory mBipmapFactory =new BitmapDescriptorFactory();
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.location64));//设置定位蓝点的icon图标方法，需要用到BitmapDescriptor类对象作为参数。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
-        //aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
     }
 
@@ -278,9 +276,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         mUiSettings.setCompassEnabled(true);                    //显示指南针
         mUiSettings.setScaleControlsEnabled(true);              //显示比例尺，默认右下角显示
         mUiSettings.setMyLocationButtonEnabled(false);          //隐藏默认的定位按钮
-
         aMap.showIndoorMap(true);                            //设置显示室内地图，默认为不显示
-
     }
 
     /**
@@ -306,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         AddListenerById(R.id.MainActivity_take_taxi_button);
         AddListenerById(R.id.MainActivity_shared_bike_button);
         AddListenerById(R.id.MainActivity_team_button);
-        AddListenerById(R.id.MainActivity_home_workplace_set_button);
+        AddListenerById(R.id.MainActivity_home_company_set_button);
         AddListenerById(R.id.MainActivity_route_plan_button);
         AddListenerById(R.id.MainActivity_near_search_box);
         AddListenerById(R.id.MainActivity_report_button);
@@ -323,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             public void onClick(View v) {
                 switch (resId){
                     case R.id.MainActivity_me:
-                        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                        final Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.MainActivity_zoom_in:
@@ -335,8 +331,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     case R.id.MainActivity_location:
                         aMap.moveCamera(CameraUpdateFactory.zoomTo(17)); //设置缩放级别
                         aMap.moveCamera(CameraUpdateFactory.changeBearing(0));
-
-                        aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(MyAmapLocation.getLatitude(), MyAmapLocation.getLongitude())));
+                        if(MyAmapLocation.getErrorCode()==0) {
+                            aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(MyAmapLocation.getLatitude(), MyAmapLocation.getLongitude())));
+                        }else {
+                            aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(39.9032676346,116.3977673938)));
+                            Toast.makeText(MainActivity.this, ""+MyAmapLocation.getErrorInfo().split("信息:")[1], Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.map_mode_normal_button:
                         map_mode_normal_button.setImageResource(R.drawable.map_mode_normal_selector);
@@ -409,8 +409,26 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     case R.id.MainActivity_team_button:
                         Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.MainActivity_home_workplace_set_button:
-                        Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
+                    case R.id.MainActivity_home_company_set_button:
+                        //TODO home company menu
+                        PopupMenu popupMenu = new PopupMenu(MainActivity.this, v, Gravity.START);
+                        popupMenu.getMenuInflater().inflate(R.menu.home_company_menu, popupMenu.getMenu());
+                        popupMenu.show();
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()){
+                                    case R.id.HomeCompanyMenu_exit:
+                                        finish();
+                                        break;
+                                    case R.id.HomeCompanyMenu_company:
+                                    case R.id.HomeCompanyMenu_home:
+                                        Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                                return true;
+                            }
+                        });
                         break;
                     case R.id.MainActivity_route_plan_button:
 //                        Poi start = new Poi("三元桥", new LatLng(39.96087,116.45798), "");
@@ -436,10 +454,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                POILatlng = latLng;
                 SearchPOI(latLng);
- /*               if(!isGetPOI){
-                    if(top_view.getVisibility() == View.VISIBLE) top_view.setVisibility(View.INVISIBLE); else top_view.setVisibility(View.VISIBLE);
-                }*/
             }
         });
     }
@@ -471,16 +487,21 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         boolean isGetPOI;
         if(poiResult.getPageCount()!=0){
             isGetPOI =true;
+            current_POI=poiResult.getPois().get(0);
+            Log.e(TAG, "onPoiSearched:进入"+current_POI.getTitle() );
+            LatLng POILatlng=new LatLng(current_POI.getLatLonPoint().getLatitude(),current_POI.getLatLonPoint().getLongitude());
             if(marker==null){
-                marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(poiResult.getPois().toString().substring(1,poiResult.getPois().toString().length()-1)));
+                Log.e(TAG, "onPoiSearched:marker==null"+ current_POI.getTitle());
+                Log.e(TAG, "onPoiSearched: "+POILatlng.toString());
+                marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(current_POI.getTitle()));
             }
-
             if( marker.getPosition()!=POILatlng) {
                 marker.remove();
-                marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(poiResult.getPois().toString().substring(1,poiResult.getPois().toString().length()-1)));
+                marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(current_POI.getTitle()));
             }
         }else {
             isGetPOI =false;
+            if(marker != null) marker.remove();
         }
         if(!isGetPOI){
             if(top_view.getVisibility() == View.VISIBLE) top_view.setVisibility(View.INVISIBLE); else top_view.setVisibility(View.VISIBLE);
@@ -489,8 +510,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         }
     }
 
-    @Override
-    public void onPoiItemSearched(PoiItem poiItem, int i) {}
 
     /**
      * 初始化未登录用户
@@ -508,6 +527,28 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             users.save();
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                if(resultCode == RESULT_OK){
+                    SearchResultItem item = data.getParcelableExtra("poiData");
+                    if(!item.getItemDetail().equals("NONE")){
+                        //TODO zoom map and add mark
+                        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(item.getItemLatLng(), 15f));
+                        if(marker != null) marker.remove();
+                        marker = aMap.addMarker(new MarkerOptions().position(item.getItemLatLng()));
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {}
 
     /**
      * 导航初始化失败时的回调函数
@@ -540,24 +581,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
      **/
     @Override
     public void onStartNavi(int i) {}
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case 1:
-                if(resultCode == RESULT_OK){
-                    SearchResultItem item = data.getParcelableExtra("poiData");
-                    if(!item.getItemDetail().equals("NONE")){
-                        //TODO zoom map and add mark
-                        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(item.getItemLatLng(), 17f));
-                        //aMap.addMarker(new MarkerOptions().position(item.getItemLatLng()));
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-    }
 
     /**
      * 算路成功回调

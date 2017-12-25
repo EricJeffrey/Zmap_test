@@ -203,7 +203,7 @@
                     android:layout_marginBottom="@dimen/common_margin"
                     android:src="@drawable/route"/>
                 <ImageButton
-                    android:id="@+id/MainActivity_home_workplace_set_button"
+                    android:id="@+id/MainActivity_home_company_set_button"
                     style="@style/CommonButtonStyleSmall"
                     android:layout_margin="@dimen/common_margin"
                     android:src="@drawable/target"
@@ -245,7 +245,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorBlack"
-                    android:text=" 搜索附近"/>
+                    android:text=" 消息中心"/>
             </LinearLayout>
 
         </LinearLayout>

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fei.zmap_test">
+    package="com.example.fei.zmap_test"
+    android:installLocation="auto">
 
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,7 +20,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="org.litepal.LitePalApplication"
+        android:name=".common.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,9 +31,11 @@
             android:value="d75a03af5e5b6dd7d52cb0ae5437a718" />
 
         <service android:name="com.amap.api.location.APSService" />
-        <activity android:name="com.amap.api.navi.AmapRouteActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+
+        <activity
+            android:name="com.amap.api.navi.AmapRouteActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".SearchPageActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ProfileActivity" />
@@ -48,12 +51,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".RegisterByUsernameActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".AccountProfileActivity" />
-        <activity android:name=".MessageCenterActivity"/>
-        <activity android:name=".ArticleActivity"/>
+        <activity android:name=".MessageCenterActivity" />
+        <activity android:name=".ArticleActivity" />
+        <activity android:name=".AboutUsActivity"></activity>
     </application>
 
 </manifest>

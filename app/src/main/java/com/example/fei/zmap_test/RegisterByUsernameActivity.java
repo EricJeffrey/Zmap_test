@@ -9,15 +9,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.fei.zmap_test.http.HTTPCallback;
-import com.example.fei.zmap_test.http.HTTPRequest;
+import com.example.fei.zmap_test.http.HttpCallback;
+import com.example.fei.zmap_test.http.HttpRequest;
 import com.example.fei.zmap_test.db.Users;
 
 import org.apache.http.util.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterByUsernameActivity extends AppCompatActivity implements HTTPCallback {
+public class RegisterByUsernameActivity extends AppCompatActivity implements HttpCallback {
     public Users resp_user;
     private String url;
     private EditText username;
@@ -91,7 +91,7 @@ public class RegisterByUsernameActivity extends AppCompatActivity implements HTT
                         String username_text = username.getText().toString().trim();
                         String password_text = password.getText().toString().trim();
                         if( username_text.length()>0 && password_text.length()>0){
-                            HTTPRequest.getOurInstance().register(RegisterByUsernameActivity.this,username_text,password_text,RegisterByUsernameActivity.this);
+                            HttpRequest.getOurInstance().register(username_text,password_text,RegisterByUsernameActivity.this);
 //                        sendRequestWithHttpClient();
                         }else {
                             Toast.makeText(RegisterByUsernameActivity.this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();

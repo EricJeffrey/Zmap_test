@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.fei.zmap_test.http.HTTPCallback;
-import com.example.fei.zmap_test.http.HTTPRequest;
+import com.example.fei.zmap_test.http.HttpCallback;
+import com.example.fei.zmap_test.http.HttpRequest;
 import com.example.fei.zmap_test.db.Users;
 
-public class LoginAccountActivity extends AppCompatActivity implements HTTPCallback {
+public class LoginAccountActivity extends AppCompatActivity implements HttpCallback {
     private String url;
     private EditText username;
     private EditText password;//用户名和密码
@@ -58,7 +58,7 @@ public class LoginAccountActivity extends AppCompatActivity implements HTTPCallb
                         username_text = username.getText().toString().trim();
                         password_text = password.getText().toString().trim();
                         Log.e("get ", "+" + username_text + "-" + password_text);
-                        HTTPRequest.getOurInstance().login(LoginAccountActivity.this, username_text, password_text, LoginAccountActivity.this);
+                        HttpRequest.getOurInstance().login(username_text, password_text, LoginAccountActivity.this);
                         break;
                 }
             }
