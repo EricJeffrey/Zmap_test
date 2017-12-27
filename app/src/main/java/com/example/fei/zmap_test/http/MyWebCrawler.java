@@ -149,6 +149,8 @@ public class MyWebCrawler {
                         connection.setDoInput(true);
                         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                             Bitmap bitmap = BitmapFactory.decodeStream(connection.getInputStream());
+                            int tmpHeight = (int)(bitmap.getHeight() * 1080.0 / bitmap.getWidth());
+                            bitmap = Bitmap.createScaledBitmap(bitmap, 1080, tmpHeight, true);
                             bitmaps.add(bitmap);
                             msg = new Message();
                             msg.what = ArticleActivity.ON_GETTING_IMG;

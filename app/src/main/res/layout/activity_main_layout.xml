@@ -67,7 +67,6 @@
                     android:layout_gravity="end|center"
                     />
             </LinearLayout>
-
             <!--横排圆形和圆角矩形按钮!-->
             <RelativeLayout
                 android:orientation="horizontal"
@@ -86,7 +85,6 @@
                     android:src="@drawable/map"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
-
             <!--竖排五个按钮!-->
             <LinearLayout
                 android:orientation="vertical"
@@ -136,7 +134,6 @@
                     android:background="@drawable/rectangle_bottom"
                     />
             </LinearLayout>
-
             <!--+，-缩放按钮!-->
             <LinearLayout
                 android:id="@+id/MainActivity_zoom_holder"
@@ -177,7 +174,6 @@
                     android:layout_gravity="end"
                     />
             </LinearLayout>
-
             <!--路线，定位，家 按钮!-->
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -248,9 +244,67 @@
                     android:textColor="@color/colorBlack"
                     android:text=" 消息中心"/>
             </LinearLayout>
-
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/MainActivity_poi_detail_holder"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:visibility="gone">
+            <ImageButton
+                android:id="@+id/MainActivity_poi_detail_location"
+                style="@style/CommonButtonStyleSmall"
+                android:src="@drawable/whereme"
+                android:layout_margin="@dimen/common_margin"
+                android:background="@drawable/oval_white_pressed_gray"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:elevation="10dp"
+                android:layout_gravity="bottom">
+                <TextView
+                    android:id="@+id/MainActivity_poi_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginStart="@dimen/common_margin"
+                    android:layout_marginTop="@dimen/common_margin_middle"
+                    android:layout_marginBottom="@dimen/common_margin"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:text="郑州大学"/>
+                <TextView
+                    android:id="@+id/MainActivity_poi_detail_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginStart="@dimen/common_margin"
+                    android:layout_marginBottom="@dimen/common_margin_middle"
+                    android:layout_below="@id/MainActivity_poi_detail_title"
+                    android:textSize="16sp"
+                    android:text=""/>
+                <Button
+                    android:id="@+id/MainActivity_poi_detail_go_there"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle_light_gray"
+                    android:layout_below="@id/MainActivity_poi_detail_description"
+                    android:textColor="@color/colorSkyBlue"
+                    android:textSize="16sp"
+                    android:text="去这里"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_above="@id/MainActivity_poi_detail_go_there"
+                    android:background="@color/colorLightGray"/>
+            </RelativeLayout>
+        </LinearLayout>
     </FrameLayout>
     <include layout="@layout/sliding_menu_layout"/>
 </android.support.v4.widget.DrawerLayout>

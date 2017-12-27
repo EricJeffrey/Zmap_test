@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.support.design.widget.AppBarLayout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -23,7 +24,7 @@ import com.example.fei.zmap_test.RegisterByUsernameActivity;
  * 自定义标题栏
  */
 
-public class TitleLayout extends LinearLayout {
+public class TitleLayout extends AppBarLayout {
     private String title_text;
     private String right_text;
     private int button_img;
@@ -48,6 +49,10 @@ public class TitleLayout extends LinearLayout {
         ((TextView) findViewById(R.id.title_text)).setText(title_text);
         ((TextView) findViewById(R.id.right_text)).setText(right_text);
         ((ImageButton) findViewById(R.id.back)).setImageResource(button_img);
+    }
+    public void setTitle_text(String title_text){
+        TextView view = findViewById(R.id.title_text);
+        view.setText(title_text);
     }
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new OnClickListener() {

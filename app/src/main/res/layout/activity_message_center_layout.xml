@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorRiceWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.example.fei.zmap_test.customlayout.TitleLayout
-            xmlns:app = "http://schemas.android.com/apk/res-auto"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title_text="今日新闻"
-            app:button_src="@drawable/back_button_blue_pressed_gray"/>
-        <ListView
-            android:id="@+id/MessageCenter_list_view"
+            android:layout_height="wrap_content">
+            <com.example.fei.zmap_test.customlayout.TitleLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title_text="今日新闻"
+                app:button_src="@drawable/back_button_blue_pressed_gray"
+                app:layout_scrollFlags="scroll|enterAlways|snap"/>
+        </android.support.design.widget.AppBarLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/MessageCenter_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </android.support.design.widget.CoordinatorLayout>
     <ProgressBar
         android:id="@+id/MessageCenter_progress_bar"
         android:layout_width="wrap_content"

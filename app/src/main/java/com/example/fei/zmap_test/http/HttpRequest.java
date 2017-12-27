@@ -1,6 +1,5 @@
 package com.example.fei.zmap_test.http;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -39,6 +38,7 @@ public class HttpRequest {
     private static final int CLEARFISTORY =2105;
     private static final int CHANGEHEADICON =2006;
     private static final int VERSIONCODE =2207;
+    private static final int ERROR_NETWORK =1000;
 
     private Users resp_user;
 
@@ -89,8 +89,21 @@ public class HttpRequest {
                             e.printStackTrace();
                         }
 
-                        while (resp_user.getStatusCode()==0)
+                        for(int i=0;i<3 && resp_user.getUsername()==null;i++){
                             Log.e("HTTPR", "等待Username数据写入数据库:"+resp_user.getUsername());
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if(resp_user.getUsername()==null){
+                            Message message = new Message();//在子线程中将Message对象发出去
+                            message.what =ERROR_NETWORK;
+                            message.obj =ERROR_NETWORK;
+                            handler.sendMessage(message);
+                            return;
+                        }
                         //未登陆成功不再进行读取历史记录
                         if(resp_user.getStatusCode()==1){
                             HttpClient httpClient_getHistory = new DefaultHttpClient();  //创建HttpClient对象
@@ -351,6 +364,9 @@ public class HttpRequest {
                     case CHANGEHEADICON:
                         break;
                     case VERSIONCODE:
+                        callback.onFinish(Integer.parseInt(Response));
+                        break;
+                    case ERROR_NETWORK:
                         callback.onFinish(Integer.parseInt(Response));
                     default:
                         break;

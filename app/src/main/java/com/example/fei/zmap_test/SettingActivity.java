@@ -1,11 +1,15 @@
 package com.example.fei.zmap_test;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -14,6 +18,7 @@ import com.example.fei.zmap_test.common.AppUpdateManager;
 import com.example.fei.zmap_test.customlayout.SettingItemLayout;
 
 public class SettingActivity extends AppCompatActivity {
+    public static String MY_CITY_NAME;
     private static final String TAG = "SettingActivity";
     private String versionName;
     private int versionCode;
@@ -24,10 +29,16 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting_layout);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) actionBar.hide();
+
+        if(ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE )!= PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(SettingActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
         getVersionCodeName();
 
         SettingItemLayout checkUpdateView = findViewById(R.id.SettingActivity_check_update);
         checkUpdateView.setVersionName(versionName);
+
+        SettingItemLayout citySwitch = findViewById(R.id.SettingActivity_city_switch);
+        if(!TextUtils.isEmpty(MY_CITY_NAME)) citySwitch.setDetail("城市：" + MY_CITY_NAME);
 
         addListener(R.id.SettingActivity_about_zmap);
         addListener(R.id.SettingActivity_check_update);

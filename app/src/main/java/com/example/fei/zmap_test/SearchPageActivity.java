@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,9 +134,9 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
         searchResultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SearchResultListAdapter adapter = (SearchResultListAdapter)searchResultListView.getAdapter();
                 Intent intent = new Intent();
-                intent.putExtra("poiData", adapter.getItem(position));
+                Log.e(TAG, "onItemClick: now begin finish and put extra");
+                intent.putExtra("poiData", resultListAdapter.getItem(position));
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -239,7 +240,7 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
             @Override
             public void onPoiSearched(PoiResult poiResult, int i) {
                 if(i != 1000){
-                    Toast.makeText(SearchPageActivity.this, "搜索出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchPageActivity.this, "(。・＿・。)出错了", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ArrayList<PoiItem> poiItems = poiResult.getPois();
@@ -250,14 +251,12 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
                     itemList.clear();
                     for (int j = 0; j < poiItems.size(); j++) {
                         PoiItem poiItem = poiItems.get(j);
-                        LatLonPoint point = poiItem.getLatLonPoint();
-                        SearchResultItem item = new SearchResultItem(new LatLng(point.getLatitude(), point.getLongitude()), poiItem.getTitle());
+                        SearchResultItem item = new SearchResultItem(poiItem);
                         itemList.add(item);
                     }
                     resultListAdapter.notifyDataSetChanged();
                 }
             }
-
             @Override
             public void onPoiItemSearched(PoiItem poiItem, int i) {
             }
@@ -344,8 +343,8 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
         }
         else {   //销毁活动
             Intent intent = new Intent();
-            intent.putExtra("poiData", new SearchResultItem(new LatLng(0.0, 0.0), "NONE"));
-            setResult(RESULT_OK, intent);
+            intent.putExtra("poiData", new SearchResultItem(null));
+            setResult(RESULT_CANCELED, intent);
             finish();
         }
     }
@@ -391,7 +390,7 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
                 view = convertView;
                 viewHolder = (ViewHolder) view.getTag();
             }
-            if(item != null) viewHolder.result_text.setText(item.getItemDetail());
+            if(item != null) viewHolder.result_text.setText(item.getPoiItemName());
             else viewHolder.result_text.setText("");
             return view;
 

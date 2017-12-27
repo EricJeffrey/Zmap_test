@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.fei.zmap_test.common.ArticleParagraphHolder;
+import com.example.fei.zmap_test.customlayout.TitleLayout;
 import com.example.fei.zmap_test.http.MyWebCrawler;
 
 import java.util.ArrayList;
@@ -58,12 +59,15 @@ public class ArticleActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.article_activity_layout);
+        setContentView(R.layout.activity_article_layout);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) actionBar.hide();
 
         Intent intent = getIntent();
         String href = intent.getStringExtra("href");
+        String title = intent.getStringExtra("title");
+        TitleLayout titleLayout = findViewById(R.id.article_detail_title);
+        titleLayout.setTitle_text(title);
 
         articleViewHolder = findViewById(R.id.article_holder_view);
         errorText = findViewById(R.id.article_error_text);

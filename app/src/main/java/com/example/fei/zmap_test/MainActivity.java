@@ -1,10 +1,13 @@
 package com.example.fei.zmap_test;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.WindowInsetsCompat;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +15,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -34,8 +37,10 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.services.core.LatLonPoint;
@@ -75,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private int my_collection_button_status;
     PoiItem current_POI;
 
+    private LinearLayout poiDetailHolder;
+
     Marker marker =null;
     LatLng POILatlng =null;
 
@@ -84,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         setContentView(R.layout.activity_main_layout);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) actionBar.hide();
+
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(MainActivity.this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         mapView =  findViewById(R.id.MainActivity_map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
@@ -217,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
                 amapLocation.getCountry();//国家信息
                 amapLocation.getProvince();//省信息
-                amapLocation.getCity();//城市信息
+                SettingActivity.MY_CITY_NAME = amapLocation.getCity();//城市信息
                 amapLocation.getDistrict();//城区信息
                 amapLocation.getStreet();//街道信息
                 amapLocation.getStreetNum();//街道门牌号信息
@@ -331,6 +341,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         AddListenerById(R.id.MainActivity_near_search_box);
         AddListenerById(R.id.MainActivity_report_button);
         AddListenerById(R.id.MainActivity_me);
+        AddListenerById(R.id.MainActivity_poi_detail_go_there);
+        AddListenerById(R.id.MainActivity_poi_detail_location);
     }
 
     /**
@@ -352,14 +364,18 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     case R.id.MainActivity_zoom_out:
                         aMap.animateCamera(CameraUpdateFactory.zoomOut());
                         break;
+                    case R.id.MainActivity_poi_detail_location:
                     case R.id.MainActivity_location:
-                        aMap.moveCamera(CameraUpdateFactory.zoomTo(17)); //设置缩放级别
+                        aMap.moveCamera(CameraUpdateFactory.zoomTo(15)); //设置缩放级别
                         aMap.moveCamera(CameraUpdateFactory.changeBearing(0));
-                        if(MyAmapLocation.getErrorCode()==0) {
+                        if(MyAmapLocation != null && MyAmapLocation.getErrorCode()==0) {
                             aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(MyAmapLocation.getLatitude(), MyAmapLocation.getLongitude())));
                         }else {
                             aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(39.9032676346,116.3977673938)));
-                            Toast.makeText(MainActivity.this, ""+MyAmapLocation.getErrorInfo().split("信息:")[1], Toast.LENGTH_SHORT).show();
+                            if(MyAmapLocation != null)
+                                Toast.makeText(MainActivity.this, ""+MyAmapLocation.getErrorInfo().split("信息:")[1], Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(MainActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.map_mode_normal_button:
@@ -434,35 +450,36 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.MainActivity_home_company_set_button:
-                        //TODO home company menu
                         PopupMenu popupMenu = new PopupMenu(MainActivity.this, v, Gravity.START);
-                        popupMenu.getMenuInflater().inflate(R.menu.home_company_menu, popupMenu.getMenu());
-                        popupMenu.show();
                         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()){
-                                    case R.id.HomeCompanyMenu_exit:
-                                        finish();
-                                        break;
                                     case R.id.HomeCompanyMenu_company:
                                     case R.id.HomeCompanyMenu_home:
                                         Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                                         break;
+                                    case R.id.HomeCompanyMenu_exit:
+                                        finish();
                                 }
                                 return true;
                             }
                         });
+                        popupMenu.inflate(R.menu.home_company_menu);
+                        popupMenu.show();
                         break;
                     case R.id.MainActivity_route_plan_button:
-//                        Poi start = new Poi("三元桥", new LatLng(39.96087,116.45798), "");
-//                        终点传入的是北京站坐标,但是POI的ID "B000A83M61"对应的是北京西站，所以实际算路以北京西站作为终点
-//                        Poi end = new Poi("北京站", new LatLng(39.904556, 116.427231), "B000A83M61");
-//                        AmapNaviPage.getInstance().showRouteActivity(MainActivity.this, new AmapNaviParams(start, null, end, AmapNaviType.DRIVER), MainActivity.this);
                         AmapNaviPage.getInstance().showRouteActivity(MainActivity.this, new AmapNaviParams(null), MainActivity.this);
                         break;
                     case R.id.MainActivity_report_button:
                         Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.MainActivity_poi_detail_go_there:
+                        //Poi start = new Poi()
+                        SearchResultItem item = new SearchResultItem(current_POI);
+                        Poi end = new Poi(item.getPoiItemName(), item.getPoiItemLatLng(), current_POI.getPoiId());
+                        AmapNaviPage.getInstance().showRouteActivity(MainActivity.this,
+                                new AmapNaviParams(null, null, end, AmapNaviType.DRIVER), MainActivity.this);
                         break;
                 }
             }
@@ -507,30 +524,27 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
-        //Toast.makeText(MainActivity.this,"+"+poiResult.getPois().toString()+poiResult.getPageCount(), Toast.LENGTH_SHORT).show();
-        boolean isGetPOI;
-        if(poiResult.getPageCount()!=0){
-            isGetPOI =true;
+        if(poiResult != null && poiResult.getPageCount()!=0){
             current_POI=poiResult.getPois().get(0);
             Log.e(TAG, "onPoiSearched:进入"+current_POI.getTitle() );
             LatLng POILatlng=new LatLng(current_POI.getLatLonPoint().getLatitude(),current_POI.getLatLonPoint().getLongitude());
-            if(marker==null){
-                Log.e(TAG, "onPoiSearched:marker==null"+ current_POI.getTitle());
-                Log.e(TAG, "onPoiSearched: "+POILatlng.toString());
-                marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(current_POI.getTitle()));
-            }
-            if( marker.getPosition()!=POILatlng) {
+            aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(POILatlng, 17f));
+            if(marker != null && marker.getPosition()!=POILatlng) {
                 marker.remove();
-                marker= aMap.addMarker(new MarkerOptions().position(POILatlng).title(current_POI.getTitle()));
             }
-        }else {
-            isGetPOI =false;
-            if(marker != null) marker.remove();
-        }
-        if(!isGetPOI){
-            if(top_view.getVisibility() == View.VISIBLE) top_view.setVisibility(View.INVISIBLE); else top_view.setVisibility(View.VISIBLE);
-        }else {
+            marker= aMap.addMarker(new MarkerOptions().position(POILatlng).
+                    icon(BitmapDescriptorFactory.fromBitmap((BitmapFactory.decodeResource(getResources(), R.drawable.poi_marker))))
+                    .title(current_POI.getTitle()));
             top_view.setVisibility(View.VISIBLE);
+            showPoiDetailAndGo(new SearchResultItem(current_POI));
+        }else {
+            if(poiDetailHolder != null && poiDetailHolder.getVisibility() == View.VISIBLE)
+                poiDetailHolder.setVisibility(View.GONE);
+            else{
+                if(top_view.getVisibility() == View.VISIBLE) top_view.setVisibility(View.INVISIBLE);
+                else top_view.setVisibility(View.VISIBLE);
+            }
+            if(marker != null) marker.remove();
         }
     }
 
@@ -556,19 +570,45 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case 1:
+                Log.e(TAG, "onActivityResult: result code:" + resultCode);
                 if(resultCode == RESULT_OK){
                     SearchResultItem item = data.getParcelableExtra("poiData");
-                    if(!item.getItemDetail().equals("NONE")){
-                        //TODO zoom map and add mark
-                        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(item.getItemLatLng(), 15f));
+                    Log.e(TAG, "onActivityResult: item is: " + item);
+                    if(item == null || item.getPoiItemName().equals("NONE"))
+                        break;
+                    current_POI = item.getItem();
+                    if(current_POI != null){
+                        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(item.getPoiItemLatLng(), 15f));
                         if(marker != null) marker.remove();
-                        marker = aMap.addMarker(new MarkerOptions().position(item.getItemLatLng()));
+                        marker = aMap.addMarker(new MarkerOptions().
+                                icon(BitmapDescriptorFactory.fromBitmap((BitmapFactory.decodeResource(getResources(), R.drawable.poi_marker))))
+                                .position(item.getPoiItemLatLng()));
+                        showPoiDetailAndGo(item);
                     }
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 显示搜索到的POI的信息并提供导航入口
+     * @param resultItem: poi对象的信息
+     */
+    public void showPoiDetailAndGo(SearchResultItem resultItem){
+        poiDetailHolder = findViewById(R.id.MainActivity_poi_detail_holder);
+        poiDetailHolder.setVisibility(View.VISIBLE);
+        TextView titleView = findViewById(R.id.MainActivity_poi_detail_title);
+        TextView desView = findViewById(R.id.MainActivity_poi_detail_description);
+        titleView.setText(resultItem.getPoiItemName());
+        desView.setText((resultItem.getPoiItemLatLngDesription() + "\n" + resultItem.getItem().getSnippet()));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(poiDetailHolder.getVisibility() == View.VISIBLE) poiDetailHolder.setVisibility(View.GONE);
+        else super.onBackPressed();
     }
 
     @Override

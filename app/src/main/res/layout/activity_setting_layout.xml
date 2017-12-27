@@ -33,8 +33,7 @@
         android:id="@+id/SettingActivity_city_switch"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         style="@style/SettingItemStyle"
-        app:setting_text="城市切换"
-        app:setting_detail_text="当前城市：郑州市"/>
+        app:setting_text="城市切换"/>
 
     <LinearLayout
         android:orientation="horizontal"

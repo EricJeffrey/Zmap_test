@@ -2,6 +2,7 @@ package com.example.fei.zmap_test;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,22 +21,19 @@ import com.example.fei.zmap_test.db.Users;
 import org.litepal.crud.DataSupport;
 
 public class AccountProfileActivity extends AppCompatActivity implements HttpCallback {
-    private static final String TAG = "AccountProfileActivity";
     public Users current_user;
-    private LinearLayout top_view;
+    private ScrollView top_view;
     private ImageButton user_head_icon_btn;
     private LinearLayout bottom_view;
-    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_profile_layout);
-        getSupportActionBar().hide();
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) actionBar.hide();
 
-        url=getString(R.string.URl); //服务器接口地址
-
-        user_head_icon_btn = (ImageButton)findViewById(R.id.Account_profile_head_icon_btn);
+        user_head_icon_btn = findViewById(R.id.Account_profile_head_icon_btn);
         top_view = findViewById(R.id.Account_profile_head_icon_choose_view);
         bottom_view = findViewById(R.id.Account_profile_view);
         TextView username_view = findViewById(R.id.Account_profile_nick_name_text);
@@ -48,7 +47,7 @@ public class AccountProfileActivity extends AppCompatActivity implements HttpCal
         addListener(R.id.Account_profile_head_icon_setting);//头像设置界面
         addListener(R.id.Account_profile_logout); //logout
         addListener(R.id.Account_profile_user_name_setting);//设置用户名
-        addListener(R.id.Account_profile_head_icon_choose_view);//头像选择界面
+        addListener(R.id.Account_profile_all_head_icon_holder);//头像选择界面
         addListenerForChooseButton();
     }
     public void addListener(final int res){
@@ -82,12 +81,8 @@ public class AccountProfileActivity extends AppCompatActivity implements HttpCal
                     case R.id.Account_profile_user_name_setting:
                         Toast.makeText(AccountProfileActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.Account_profile_head_icon_choose_view:
+                    case R.id.Account_profile_all_head_icon_holder:
                         topViewAnimDisappear();
-
-                        break;
-                    case R.id.Account_profile_head_icon_choose_btn_1:
-
                         break;
                 }
             }

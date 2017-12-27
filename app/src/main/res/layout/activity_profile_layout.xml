@@ -219,7 +219,7 @@
                 app:sub_column_detail_text1=""
                 app:sub_column_detail_text2="智能车品好货优选"
                 app:sub_column_detail_text3="使用说明以及我的反馈"
-                app:sub_column_detail_text4="感谢高德热心用户"
+                app:sub_column_detail_text4="感谢Zmap热心用户"
                 app:sub_column_img1="@drawable/present"
                 app:sub_column_img2="@drawable/shopping_car"
                 app:sub_column_img3="@drawable/feedback"

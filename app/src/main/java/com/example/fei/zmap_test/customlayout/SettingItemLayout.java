@@ -33,4 +33,7 @@ public class SettingItemLayout extends LinearLayout {
     public void setVersionName(String s){
         textView.setText(s);
     }
+    public void setDetail(String detail){
+        textView.setText(detail);
+    }
 }
