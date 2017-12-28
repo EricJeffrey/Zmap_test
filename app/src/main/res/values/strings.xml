@@ -2,4 +2,39 @@
     <string name="app_name">Zmap_test</string>
     <string name="URl">http://www.idooooo.tk/Zmap</string>
     <string name="DOWNLOAD_URL">http://www.idooooo.tk/Zmap/apk/zmap_test.apk</string>
+    <string-array name="beforedawn">
+        <item>起得挺早的哈</item>
+        <item>good before dawn</item>
+        <item>早起的鸟儿去哪找虫吃？</item>
+    </string-array>
+    <string-array name="morning">
+        <item>起来了</item>
+        <item>good morning</item>
+        <item>早上想要去哪里呢</item>
+    </string-array>
+    <string-array name="noon">
+        <item>中午到了要吃饭啦</item>
+        <item>The hungry noon</item>
+        <item>要去哪里呢</item>
+    </string-array>
+    <string-array name="afternoon">
+        <item>下午睡个午觉？不存在的</item>
+        <item>A tired afternoon</item>
+        <item>告诉我你要去哪里吧</item>
+    </string-array>
+    <string-array name="evening">
+        <item>傍晚约会去喽</item>
+        <item>An exciting evening</item>
+        <item>他/她家？老地方？应该不用搜索了吧</item>
+    </string-array>
+    <string-array name="night">
+        <item>晚上了还是去睡觉吧</item>
+        <item>A sleepy night</item>
+        <item>看看今天的新闻睡觉吧</item>
+    </string-array>
+    <string-array name="midnight">
+        <item>梦游的来了</item>
+        <item>good mid-night</item>
+        <item>梦游想要去哪里呢</item>
+    </string-array>
 </resources>

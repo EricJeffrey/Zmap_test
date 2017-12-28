@@ -63,7 +63,6 @@ public class HttpRequest {
      * @param cBack     实现回调接口的上下文
      */
     public void login(final String username , final String password, HttpCallback cBack) {
-        Log.e("HTTPR", "++++"+username+"------"+password);
         try {
             if(username != null && password !=null){
                 if(cBack !=null){

@@ -50,9 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onStart();
         current_user = DataSupport.findLast(Users.class);
         Log.e(TAG, "onCreate: all user:"+DataSupport.count(Users.class));
-//        for(Users users:DataSupport.findAll(Users.class)){
-//            Log.e(TAG, "onCreate: every user:"+users.getUsername());
-//        }
         if(current_user !=null && current_user.getUser_id() != 0){
             username_textView.setText(current_user.getUsername());  //修改用户名显示
             user_head_icon_btn.setImageResource(AccountProfileActivity.getHeadIconResourceFromId(current_user.getId_head()));
@@ -72,6 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
                 switch (res){
                     case R.id.back:
                         finish();
+                        Toast.makeText(ProfileActivity.this, (""+System.currentTimeMillis()).substring(2,10), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.login_register_text:
                     case R.id.show_me:
@@ -133,4 +131,5 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(ProfileActivity.this, LoginAccountActivity.class);
         startActivity(intent);
     }
+
 }

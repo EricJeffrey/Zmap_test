@@ -81,6 +81,7 @@ public class ArticleActivity extends AppCompatActivity {
 
     /**
      * 加载文章详细内容
+     *
      */
     public void updateArticle(){
         for(ArticleParagraphHolder holder: articleParagraphHolders){

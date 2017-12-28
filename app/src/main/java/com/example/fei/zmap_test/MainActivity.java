@@ -1,13 +1,12 @@
 package com.example.fei.zmap_test;
 
-import android.Manifest;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +47,7 @@ import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.example.fei.zmap_test.common.MyApplication;
+import com.example.fei.zmap_test.common.MyNotification;
 import com.example.fei.zmap_test.common.SearchResultItem;
 import com.example.fei.zmap_test.db.Users;
 import com.google.gson.Gson;
@@ -60,7 +60,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements AMapLocationListener,LocationSource,PoiSearch.OnPoiSearchListener,INaviInfoCallback {
+public class MainActivity extends AppCompatActivity implements AMapLocationListener, LocationSource, PoiSearch.OnPoiSearchListener, INaviInfoCallback {
     private LinearLayout top_view;
     private static final String TAG = "MainActivity";
     private MapView mapView;
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     private AMapLocationClient mLocationClient = null;//定位发起端
     private OnLocationChangedListener mListener = null;//定位监听器
-    private AMapLocation MyAmapLocation=null;
+    private AMapLocation MyAmapLocation = null;
 
     private DrawerLayout drawerLayout;
     private ImageButton map_mode_normal_button;
@@ -82,20 +82,18 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     private LinearLayout poiDetailHolder;
 
-    Marker marker =null;
-    LatLng POILatlng =null;
+    Marker marker = null;
+    LatLng POILatlng = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_layout);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) actionBar.hide();
+        if (actionBar != null) actionBar.hide();
 
-        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(MainActivity.this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-        mapView =  findViewById(R.id.MainActivity_map);
+        mapView = findViewById(R.id.MainActivity_map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
 
@@ -103,13 +101,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
             @Override
             public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                if(insets.getStableInsetBottom() != 0) {
+                if (insets.getStableInsetBottom() != 0) {
                     LinearLayout view = findViewById(R.id.MainActivity_zoom_holder);
                     LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
                     layoutParams.topMargin = layoutParams.bottomMargin = (int) MyApplication.convertDpToPixel(20);
                     view.setLayoutParams(layoutParams);
-                }
-                else{
+                } else {
                     LinearLayout view = findViewById(R.id.MainActivity_zoom_holder);
                     LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
                     layoutParams.topMargin = layoutParams.bottomMargin = (int) MyApplication.convertDpToPixel(41);
@@ -118,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 return decorView.onApplyWindowInsets(insets);
             }
         });
+
 
         top_view = findViewById(R.id.MainActivity_top_view);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -130,10 +128,10 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             }
         });
         map_mode_normal_button = findViewById(R.id.map_mode_normal_button);
-        map_mode_bus_button =  findViewById(R.id.map_mode_bus_button);
-        map_mode_satellite_button =  findViewById(R.id.map_mode_satellite_button);
+        map_mode_bus_button = findViewById(R.id.map_mode_bus_button);
+        map_mode_satellite_button = findViewById(R.id.map_mode_satellite_button);
         traffic_accident_button = findViewById(R.id.traffic_accident_button);
-        my_collection_button =  findViewById(R.id.my_collection_button);
+        my_collection_button = findViewById(R.id.my_collection_button);
         traffic_accident_button_status = 1;
         my_collection_button_status = 1;
 
@@ -150,31 +148,33 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     /**
      * 改变实时路况状态，开 -> 关，关 -> 开
      */
-    public void changeRouteStatus(){
-        if(aMap.isTrafficEnabled()){
+    public void changeRouteStatus() {
+        if (aMap.isTrafficEnabled()) {
             aMap.setTrafficEnabled(false);       //显示实时路况图层，aMap是地图控制器对象。
             Toast.makeText(MainActivity.this, "实时路况已关闭", Toast.LENGTH_SHORT).show();
             ImageButton button = findViewById(R.id.MainActivity_instant_route_status_button);
-            if(button != null) button.setImageResource(R.drawable.route_status_off_route_plan);
-        }
-        else{
+            if (button != null) button.setImageResource(R.drawable.route_status_off_route_plan);
+        } else {
             aMap.setTrafficEnabled(true);        //显示实时路况图层，aMap是地图控制器对象。
             Toast.makeText(MainActivity.this, "实时路况已开启", Toast.LENGTH_SHORT).show();
             ImageButton button = findViewById(R.id.MainActivity_instant_route_status_button);
-            if(button != null) button.setImageResource(R.drawable.route_status_on_route_plan);
+            if (button != null) button.setImageResource(R.drawable.route_status_on_route_plan);
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         mapView.onResume();
         top_view.setVisibility(View.VISIBLE);
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
      * 定位服务
      */
     private void InitLoc() {
-        mLocationClient =new AMapLocationClient(getApplicationContext());               //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());               //初始化定位
         mLocationClient.setLocationListener(this);                                      //设置定位回调监听
         AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy); //设置高精度模式
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
      */
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
-        MyAmapLocation =amapLocation;
+        MyAmapLocation = amapLocation;
         if (amapLocation != null) {
             if (amapLocation.getErrorCode() == 0) {
                 //定位成功回调信息，设置相关消息
@@ -294,8 +294,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);//连续定位、蓝点不会移动到地图中心点，定位点依照设备方向旋转，并且蓝点会跟随设备移动。
-        myLocationStyle.strokeColor(Color.argb(80,0,0,205));//设置定位蓝点精度圆圈的边框颜色的方法。
-        myLocationStyle.radiusFillColor(Color.argb(50,0,191,255));//设置定位蓝点精度圆圈的填充颜色的方法。
+        myLocationStyle.strokeColor(Color.argb(80, 0, 0, 205));//设置定位蓝点精度圆圈的边框颜色的方法。
+        myLocationStyle.radiusFillColor(Color.argb(50, 0, 191, 255));//设置定位蓝点精度圆圈的填充颜色的方法。
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.location64));//设置定位蓝点的icon图标方法，需要用到BitmapDescriptor类对象作为参数。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     /**
      * 地图原始UI布局设置
      */
-    public void SetUI(){
+    public void SetUI() {
         UiSettings mUiSettings = aMap.getUiSettings();
         mUiSettings.setZoomControlsEnabled(false);              //不显示原始缩放按钮
         mUiSettings.setCompassEnabled(true);                    //显示指南针
@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     /**
      * 为每个控件添加监听器
      */
-    public void AddListener(){
+    public void AddListener() {
         AddListenerById(R.id.MainActivity_zoom_in);
         AddListenerById(R.id.MainActivity_zoom_out);
         AddListenerById(R.id.MainActivity_location);
@@ -347,13 +347,14 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 依照ID添加监听器
+     *
      * @param resId：控件id
      */
-    public void AddListenerById(final int resId){
+    public void AddListenerById(final int resId) {
         findViewById(resId).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (resId){
+                switch (resId) {
                     case R.id.MainActivity_me:
                         final Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                         startActivity(intent);
@@ -368,12 +369,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     case R.id.MainActivity_location:
                         aMap.moveCamera(CameraUpdateFactory.zoomTo(15)); //设置缩放级别
                         aMap.moveCamera(CameraUpdateFactory.changeBearing(0));
-                        if(MyAmapLocation != null && MyAmapLocation.getErrorCode()==0) {
+                        if (MyAmapLocation != null && MyAmapLocation.getErrorCode() == 0) {
                             aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(MyAmapLocation.getLatitude(), MyAmapLocation.getLongitude())));
-                        }else {
-                            aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(39.9032676346,116.3977673938)));
-                            if(MyAmapLocation != null)
-                                Toast.makeText(MainActivity.this, ""+MyAmapLocation.getErrorInfo().split("信息:")[1], Toast.LENGTH_SHORT).show();
+                        } else {
+                            aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(39.9032676346, 116.3977673938)));
+                            if (MyAmapLocation != null)
+                                Toast.makeText(MainActivity.this, "" + MyAmapLocation.getErrorInfo().split("信息:")[1], Toast.LENGTH_SHORT).show();
                             else
                                 Toast.makeText(MainActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                         }
@@ -401,14 +402,14 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         break;
                     case (R.id.traffic_accident_button):
-                        if(traffic_accident_button_status == 1)
+                        if (traffic_accident_button_status == 1)
                             traffic_accident_button.setImageResource(R.drawable.traffic_accident_checked);
                         else
                             traffic_accident_button.setImageResource(R.drawable.traffic_accident);
                         traffic_accident_button_status = Math.abs(traffic_accident_button_status - 1);
                         break;
                     case R.id.my_collection_button:
-                        if(my_collection_button_status == 1)
+                        if (my_collection_button_status == 1)
                             my_collection_button.setImageResource(R.drawable.my_collection_checked);
                         else
                             my_collection_button.setImageResource(R.drawable.my_collection);
@@ -441,7 +442,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         changeRouteStatus();
                         break;
                     case R.id.MainActivity_take_taxi_button:
-                        Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
+                        sendNotification();
                         break;
                     case R.id.MainActivity_shared_bike_button:
                         Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
@@ -454,7 +456,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()){
+                                switch (item.getItemId()) {
                                     case R.id.HomeCompanyMenu_company:
                                     case R.id.HomeCompanyMenu_home:
                                         Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
@@ -489,7 +491,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     /**
      * 显示&隐藏地图功能按钮&设置点击地图POI
      */
-    public void SetEdgeBar(){
+    public void SetEdgeBar() {
         Log.d(TAG, "onCreate: Now Create");
         findViewById(R.id.MainActivity_search_box).clearFocus();
         aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
@@ -503,20 +505,21 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 搜索POI信息
+     *
      * @param latLng：搜索地点经纬度
      */
-    public void SearchPOI(LatLng latLng){
+    public void SearchPOI(LatLng latLng) {
 
-        PoiSearch.Query query = new PoiSearch.Query("郑州","","");
+        PoiSearch.Query query = new PoiSearch.Query("郑州", "", "");
         query.setPageSize(1);// 设置每页最多返回多少条poiitem
         query.setPageNum(1);//设置查询页码
         PoiSearch poiSearch = new PoiSearch(this, query);
 
-        List<LatLonPoint> points =new ArrayList<>();
-        points.add(new LatLonPoint(latLng.latitude+0.0001,latLng.longitude+0.0001));
-        points.add(new LatLonPoint(latLng.latitude-0.0001,latLng.longitude-0.0001));
-        points.add(new LatLonPoint(latLng.latitude-0.0001,latLng.longitude+0.0001));
-        points.add(new LatLonPoint(latLng.latitude+0.0001,latLng.longitude-0.0001));
+        List<LatLonPoint> points = new ArrayList<>();
+        points.add(new LatLonPoint(latLng.latitude + 0.0001, latLng.longitude + 0.0001));
+        points.add(new LatLonPoint(latLng.latitude - 0.0001, latLng.longitude - 0.0001));
+        points.add(new LatLonPoint(latLng.latitude - 0.0001, latLng.longitude + 0.0001));
+        points.add(new LatLonPoint(latLng.latitude + 0.0001, latLng.longitude - 0.0001));
         poiSearch.setBound(new PoiSearch.SearchBound(points));//设置多边形区域
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
@@ -524,27 +527,28 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
-        if(poiResult != null && poiResult.getPageCount()!=0){
-            current_POI=poiResult.getPois().get(0);
-            Log.e(TAG, "onPoiSearched:进入"+current_POI.getTitle() );
-            LatLng POILatlng=new LatLng(current_POI.getLatLonPoint().getLatitude(),current_POI.getLatLonPoint().getLongitude());
+        if (poiResult != null && poiResult.getPageCount() != 0) {
+            current_POI = poiResult.getPois().get(0);
+            Log.e(TAG, "onPoiSearched:进入" + current_POI.getTitle());
+            LatLng POILatlng = new LatLng(current_POI.getLatLonPoint().getLatitude(), current_POI.getLatLonPoint().getLongitude());
             aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(POILatlng, 17f));
-            if(marker != null && marker.getPosition()!=POILatlng) {
+            if (marker != null && marker.getPosition() != POILatlng) {
                 marker.remove();
             }
-            marker= aMap.addMarker(new MarkerOptions().position(POILatlng).
+            marker = aMap.addMarker(new MarkerOptions().position(POILatlng).
                     icon(BitmapDescriptorFactory.fromBitmap((BitmapFactory.decodeResource(getResources(), R.drawable.poi_marker))))
                     .title(current_POI.getTitle()));
             top_view.setVisibility(View.VISIBLE);
             showPoiDetailAndGo(new SearchResultItem(current_POI));
-        }else {
-            if(poiDetailHolder != null && poiDetailHolder.getVisibility() == View.VISIBLE)
+        } else {
+            if (poiDetailHolder != null && poiDetailHolder.getVisibility() == View.VISIBLE)
                 poiDetailHolder.setVisibility(View.GONE);
-            else{
-                if(top_view.getVisibility() == View.VISIBLE) top_view.setVisibility(View.INVISIBLE);
+            else {
+                if (top_view.getVisibility() == View.VISIBLE)
+                    top_view.setVisibility(View.INVISIBLE);
                 else top_view.setVisibility(View.VISIBLE);
             }
-            if(marker != null) marker.remove();
+            if (marker != null) marker.remove();
         }
     }
 
@@ -552,12 +556,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     /**
      * 初始化未登录用户
      */
-    private void unLoginAccount(){
+    private void unLoginAccount() {
         Users users;
-        users=DataSupport.findLast(Users.class);
-        if(users==null){
-            Gson gson =new Gson();
-            users =new Users();
+        users = DataSupport.findLast(Users.class);
+        if (users == null) {
+            Gson gson = new Gson();
+            users = new Users();
             users.setUsername("noName");
             users.setSearchHistory(gson.toJson(new ArrayList<String>()));
             users.setUser_id(0);
@@ -566,20 +570,32 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         }
     }
 
+    /**
+     * 发送基于时间的问候通知
+     */
+    public void sendNotification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        SharedPreferences sharedPreferences =getSharedPreferences("time",0);
+        SharedPreferences.Editor editor =sharedPreferences.edit();
+        if(MyNotification.isTimeToSend(sharedPreferences,editor)){
+            MyNotification.whichToSend(notificationManager);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case 1:
                 Log.e(TAG, "onActivityResult: result code:" + resultCode);
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     SearchResultItem item = data.getParcelableExtra("poiData");
                     Log.e(TAG, "onActivityResult: item is: " + item);
-                    if(item == null || item.getPoiItemName().equals("NONE"))
+                    if (item == null || item.getPoiItemName().equals("NONE"))
                         break;
                     current_POI = item.getItem();
-                    if(current_POI != null){
+                    if (current_POI != null) {
                         aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(item.getPoiItemLatLng(), 15f));
-                        if(marker != null) marker.remove();
+                        if (marker != null) marker.remove();
                         marker = aMap.addMarker(new MarkerOptions().
                                 icon(BitmapDescriptorFactory.fromBitmap((BitmapFactory.decodeResource(getResources(), R.drawable.poi_marker))))
                                 .position(item.getPoiItemLatLng()));
@@ -594,9 +610,10 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 显示搜索到的POI的信息并提供导航入口
+     *
      * @param resultItem: poi对象的信息
      */
-    public void showPoiDetailAndGo(SearchResultItem resultItem){
+    public void showPoiDetailAndGo(SearchResultItem resultItem) {
         poiDetailHolder = findViewById(R.id.MainActivity_poi_detail_holder);
         poiDetailHolder.setVisibility(View.VISIBLE);
         TextView titleView = findViewById(R.id.MainActivity_poi_detail_title);
@@ -607,61 +624,74 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     @Override
     public void onBackPressed() {
-        if(poiDetailHolder.getVisibility() == View.VISIBLE) poiDetailHolder.setVisibility(View.GONE);
+        if (poiDetailHolder.getVisibility() == View.VISIBLE)
+            poiDetailHolder.setVisibility(View.GONE);
         else super.onBackPressed();
     }
 
     @Override
-    public void onPoiItemSearched(PoiItem poiItem, int i) {}
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
+    }
 
     /**
      * 导航初始化失败时的回调函数
      **/
     @Override
-    public void onInitNaviFailure() {}
+    public void onInitNaviFailure() {
+    }
 
     /**
      * 导航播报信息回调函数。
+     *
      * @param s 语音播报文字
      **/
     @Override
-    public void onGetNavigationText(String s) {}
+    public void onGetNavigationText(String s) {
+    }
 
     /**
      * 当GPS位置有更新时的回调函数。
-     *@param aMapNaviLocation 当前自车坐标位置
+     *
+     * @param aMapNaviLocation 当前自车坐标位置
      **/
     @Override
-    public void onLocationChange(AMapNaviLocation aMapNaviLocation) {}
+    public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
+    }
 
     /**
      * 到达目的地后回调函数。
      **/
     @Override
-    public void onArriveDestination(boolean b) {}
+    public void onArriveDestination(boolean b) {
+    }
 
     /**
      * 启动导航后的回调函数
      **/
     @Override
-    public void onStartNavi(int i) {}
+    public void onStartNavi(int i) {
+    }
 
     /**
      * 算路成功回调
+     *
      * @param ints 路线id数组
      */
     @Override
-    public void onCalculateRouteSuccess(int[] ints) {}
+    public void onCalculateRouteSuccess(int[] ints) {
+    }
 
     /**
      * 步行或者驾车路径规划失败后的回调函数
      **/
     @Override
-    public void onCalculateRouteFailure(int i) {}
+    public void onCalculateRouteFailure(int i) {
+    }
 
     /**
      * 停止语音回调，收到此回调后用户可以停止播放语音
      **/
     @Override
-    public void onStopSpeaking() {}
+    public void onStopSpeaking() {
+    }
 }

@@ -262,6 +262,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:background="@color/colorWhite"
                 android:elevation="10dp"
                 android:layout_gravity="bottom">
@@ -282,6 +284,7 @@
                     android:id="@+id/MainActivity_poi_detail_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_marginStart="@dimen/common_margin"
