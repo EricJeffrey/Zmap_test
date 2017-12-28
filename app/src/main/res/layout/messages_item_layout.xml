@@ -13,8 +13,7 @@
         android:layout_margin="@dimen/common_margin"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:minLines="2"
-        android:maxLines="2"
+        android:lines="2"
         android:clickable="false"
         android:textColor="#111111"
         android:textSize="16sp"/>

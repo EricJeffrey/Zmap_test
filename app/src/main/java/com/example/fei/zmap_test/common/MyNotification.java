@@ -15,6 +15,7 @@ import com.example.fei.zmap_test.SearchPageActivity;
 
 /**
  * Created by do_pc on 2017/12/28.
+ *
  */
 
 public class MyNotification {
@@ -25,22 +26,16 @@ public class MyNotification {
      *  基于时间的间隔确定是否推送
      * @param sharedPreferences 源
      * @param editor    源
-     * @return
+     * @return boolean
      */
     public static boolean isTimeToSend(SharedPreferences sharedPreferences, SharedPreferences.Editor editor){
+        int interval = sharedPreferences.getInt("interval", 43200);
         int last_time =sharedPreferences.getInt("last_time",0);
-        Log.e(TAG, "isTimeToSend: curr"+last_time );
         String curr_time =""+System.currentTimeMillis();
-        curr_time = curr_time.substring(2,10);
-        Log.e(TAG, "isTimeToSend: curr"+Integer.valueOf(curr_time) );
+        curr_time = curr_time.substring(1,10);
         editor.putInt("last_time",Integer.valueOf(curr_time));
         editor.apply();
-        if((Integer.valueOf(curr_time)-last_time)>5){
-            Log.e(TAG, "isTimeToSend: TRUE" );
-            return true;
-        }
-        Log.e(TAG, "isTimeToSend: false" );
-        return false;
+        return (Integer.valueOf(curr_time) - last_time) > interval;
     }
 
     /**
@@ -64,16 +59,16 @@ public class MyNotification {
             case 8:
             case 9:stringArray=res.getStringArray(R.array.morning);break;
             case 10:
-            case 11:stringArray=res.getStringArray(R.array.noon);break;
+            case 11:
             case 12:
-            case 13:
+            case 13:stringArray=res.getStringArray(R.array.noon);break;
             case 14:
             case 15:
             case 16:stringArray=res.getStringArray(R.array.afternoon);break;
             case 17:
-            case 18:stringArray=res.getStringArray(R.array.evening);break;
+            case 18:
             case 19:
-            case 20:
+            case 20:stringArray=res.getStringArray(R.array.evening);break;
             case 21:
             case 22:stringArray=res.getStringArray(R.array.night);break;
             case 23:
@@ -83,7 +78,7 @@ public class MyNotification {
         }
 
         Notification.Builder builder = new Notification.Builder(MyApplication.getContext());
-        builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setSmallIcon(R.drawable.snowy_day)
                 .setTicker(stringArray[1])
                 .setContentTitle(stringArray[0])
                 .setContentText(stringArray[2])

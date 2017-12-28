@@ -2,6 +2,7 @@ package com.example.fei.zmap_test;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.fei.zmap_test.common.AppUpdateManager;
@@ -74,6 +76,8 @@ public class SettingActivity extends AppCompatActivity {
                     case R.id.SettingActivity_clear_cache:
                     case R.id.SettingActivity_map_setting:
                     case R.id.SettingActivity_message_notify:
+                        changeNotificationStatus();
+                        break;
                     case R.id.SettingActivity_navigation_setting:
                     case R.id.SettingActivity_wifi_auto_download:
                         Toast.makeText(SettingActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
@@ -82,7 +86,17 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
     }
-
+    public void changeNotificationStatus(){
+        Switch s = findViewById(R.id.SettingActivity_message_notify);
+        SharedPreferences sharedPreferences = getSharedPreferences("time", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if(s.isChecked()){
+            editor.putInt("interval", 43200);
+        } else{
+            editor.putInt("interval", 0x7FFFFFFF);
+        }
+        editor.apply();
+    }
     /**
      * 获取App版本号和版本名称
      */

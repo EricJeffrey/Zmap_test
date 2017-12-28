@@ -61,7 +61,10 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    //添加监听器
+    /**
+     * 添加监听器
+     * @param res：控件id
+     */
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +72,6 @@ public class ProfileActivity extends AppCompatActivity {
                 switch (res){
                     case R.id.back:
                         finish();
-                        Toast.makeText(ProfileActivity.this, (""+System.currentTimeMillis()).substring(2,10), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.login_register_text:
                     case R.id.show_me:

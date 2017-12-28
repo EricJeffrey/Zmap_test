@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
 
+        sendNotification();
 
         mapView = findViewById(R.id.MainActivity_map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
@@ -442,8 +443,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         changeRouteStatus();
                         break;
                     case R.id.MainActivity_take_taxi_button:
-                        //Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
-                        sendNotification();
+                        Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.MainActivity_shared_bike_button:
                         Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
