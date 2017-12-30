@@ -45,15 +45,29 @@ public class TitleLayout extends AppBarLayout {
         addListener(R.id.back);
         addListener(R.id.right_text);
     }
+
+    /**
+     * 设置标题栏的控件
+     */
     public void setSrc(){
         ((TextView) findViewById(R.id.title_text)).setText(title_text);
         ((TextView) findViewById(R.id.right_text)).setText(right_text);
         ((ImageButton) findViewById(R.id.back)).setImageResource(button_img);
     }
+
+    /**
+     * 设置标题栏文字
+     * @param title_text 标题
+     */
     public void setTitle_text(String title_text){
         TextView view = findViewById(R.id.title_text);
         view.setText(title_text);
     }
+
+    /**
+     * 为控件添加监听器
+     * @param res 控件ID
+     */
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new OnClickListener() {
             @Override

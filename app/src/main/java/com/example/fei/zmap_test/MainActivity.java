@@ -60,6 +60,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * 地图主界面
+ * 包括地图，地图空间，导航入口，消息中心入口
+ */
 public class MainActivity extends AppCompatActivity implements AMapLocationListener, LocationSource, PoiSearch.OnPoiSearchListener, INaviInfoCallback {
     private LinearLayout top_view;
     private static final String TAG = "MainActivity";
@@ -211,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 定位成功后回调函数
+     * @param amapLocation  AMapLocation对象
      */
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
@@ -348,8 +353,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 依照ID添加监听器
-     *
-     * @param resId：控件id
+     * @param resId 控件id
      */
     public void AddListenerById(final int resId) {
         findViewById(resId).setOnClickListener(new View.OnClickListener() {
@@ -505,8 +509,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 搜索POI信息
-     *
-     * @param latLng：搜索地点经纬度
+     * @param latLng 搜索地点经纬度
      */
     public void SearchPOI(LatLng latLng) {
 
@@ -525,6 +528,11 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         poiSearch.searchPOIAsyn();
     }
 
+    /**
+     * 搜索到POI的时候回调
+     * @param poiResult 搜索到的POI数据
+     * @param i
+     */
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
         if (poiResult != null && poiResult.getPageCount() != 0) {
@@ -582,6 +590,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         }
     }
 
+    /**
+     * 下一个活动返回个这个活动数据时调用
+     * @param requestCode 请求码，用来表示每个活动
+     * @param resultCode 返回码，表示返回的状态
+     * @param data 返回的数据
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -610,8 +624,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 显示搜索到的POI的信息并提供导航入口
-     *
-     * @param resultItem: poi对象的信息
+     * @param resultItem  poi对象的信息
      */
     public void showPoiDetailAndGo(SearchResultItem resultItem) {
         poiDetailHolder = findViewById(R.id.MainActivity_poi_detail_holder);

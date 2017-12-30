@@ -27,10 +27,9 @@ public class MyApplication extends Application {
         return context;
     }
     /**
-     * This method converts dp unit to equivalent pixels, depending on device density.
-     *
-     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
-     * @return A float value to represent px equivalent to dp depending on device density
+     * 这个方法将dp转换为px
+     * @param dp 需要转换为px的dp值
+     * @return 返回一个float型变量，表示px值
      */
     public static float convertDpToPixel(float dp){
         Resources resources = getContext().getResources();

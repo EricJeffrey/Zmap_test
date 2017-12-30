@@ -12,6 +12,9 @@ import com.example.fei.zmap_test.http.HttpCallback;
 import com.example.fei.zmap_test.http.HttpRequest;
 import com.example.fei.zmap_test.db.Users;
 
+/**
+ * 账号登录活动
+ */
 public class LoginAccountActivity extends AppCompatActivity implements HttpCallback {
     private String url;
     private EditText username;
@@ -41,6 +44,10 @@ public class LoginAccountActivity extends AppCompatActivity implements HttpCallb
 
     }
 
+    /**
+     * 为控件添加监听器
+     * @param res 控件的ID
+     */
     public void addListener(final int res) {
         findViewById(res).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +72,10 @@ public class LoginAccountActivity extends AppCompatActivity implements HttpCallb
         });
     }
 
+    /**
+     * 重写onFinish
+     * @param status 返回状态
+     */
     @Override
     public void onFinish(int status) {
         if (status > 0) {

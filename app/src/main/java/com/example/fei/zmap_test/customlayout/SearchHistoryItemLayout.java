@@ -12,7 +12,7 @@ import com.example.fei.zmap_test.R;
 
 /**
  * Created by FEI on 2017/12/8.
- * item of search history list
+ * 搜索历史记录列表的每一项
  */
 
 public class SearchHistoryItemLayout extends LinearLayout {
@@ -37,6 +37,11 @@ public class SearchHistoryItemLayout extends LinearLayout {
         view.setFocusable(true);
         view.setClickable(true);
     }
+
+    /**
+     * 为其设置监听器
+     * @param onClickListener 监听器
+     */
     public void setOnItemClickListener(View.OnClickListener onClickListener){
         findViewById(R.id.search_history_item).setOnClickListener(onClickListener);
     }

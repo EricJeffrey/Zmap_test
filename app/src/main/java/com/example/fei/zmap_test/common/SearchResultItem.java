@@ -11,6 +11,7 @@ import com.amap.api.services.core.PoiItem;
 /**
  * Created by FEI on 2017/12/20.
  * 搜索得到的结果项
+ * 实现了parcelable接口
  */
 
 public class SearchResultItem implements Parcelable {
@@ -32,7 +33,7 @@ public class SearchResultItem implements Parcelable {
         return poiItemLatLng;
     }
     public String getPoiItemLatLngDesription(){
-        return "经度：" + poiItemLatLng.longitude + ", 纬度：" + poiItemLatLng.latitude;
+        return "经度 " + poiItemLatLng.longitude + ", 纬度 " + poiItemLatLng.latitude;
     }
     public String getPoiItemName() {
         return poiItemName;

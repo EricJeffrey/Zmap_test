@@ -4,6 +4,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/**
+ * 关于小组的简介
+ */
 public class AboutUsActivity extends AppCompatActivity {
 
     @Override

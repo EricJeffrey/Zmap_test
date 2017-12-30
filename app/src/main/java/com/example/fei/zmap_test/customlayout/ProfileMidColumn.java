@@ -15,7 +15,7 @@ import com.example.fei.zmap_test.R;
 
 /**
  * Created by FEI on 2017/12/3.
- * ProfileActivity middle four column
+ * 个人信息界面中间上部四个按钮
  */
 
 public class ProfileMidColumn extends LinearLayout{

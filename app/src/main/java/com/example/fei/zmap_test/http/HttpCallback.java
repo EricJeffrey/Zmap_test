@@ -8,7 +8,7 @@ package com.example.fei.zmap_test.http;
 public interface HttpCallback {
     /**
      * 回调处理返回数据
-     * @param status：返回状态
+     * @param status 返回状态
      */
     void onFinish(int status);
 }

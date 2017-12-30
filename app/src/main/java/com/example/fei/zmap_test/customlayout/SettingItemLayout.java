@@ -30,9 +30,19 @@ public class SettingItemLayout extends LinearLayout {
         button.setText(text);
         textView.setText(detail);
     }
+
+    /**
+     * 设置版本号
+     * @param s 版本号
+     */
     public void setVersionName(String s){
         textView.setText(s);
     }
+
+    /**
+     * 设置内容描述
+     * @param detail 内容描述
+     */
     public void setDetail(String detail){
         textView.setText(detail);
     }

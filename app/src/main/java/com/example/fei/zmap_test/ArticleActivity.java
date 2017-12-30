@@ -20,6 +20,10 @@ import com.example.fei.zmap_test.http.MyWebCrawler;
 
 import java.util.ArrayList;
 
+/**
+ * 消息中心每个新闻的界面
+ * 使用ScrollView+TextView+ImageView排版
+ */
 public class ArticleActivity extends AppCompatActivity {
     public static final int GET_ARTICLE_DOWN = 3;
     public static final int ERROR_ON_GET_ARTICLE = -1;
@@ -81,7 +85,6 @@ public class ArticleActivity extends AppCompatActivity {
 
     /**
      * 加载文章详细内容
-     *
      */
     public void updateArticle(){
         for(ArticleParagraphHolder holder: articleParagraphHolders){

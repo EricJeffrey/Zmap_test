@@ -33,10 +33,10 @@ public class HttpRequest {
     private HttpCallback callback;
     private static final int LOGIN =2001;  //xxxx=abcd    a:预留   b:0=账户类 1=历史记录类 2版本类  cd:远程交互标识号
     private static final int REGISTER =2002;
-    private static final int GETHISTORY =2103;
-    private static final int SETHISTORY =2104;
-    private static final int CLEARFISTORY =2105;
-    private static final int CHANGEHEADICON =2006;
+    private static final int GET_HISTORY =2103;
+    private static final int SET_HISTORY =2104;
+    private static final int CLEAR_HISTORY =2105;
+    private static final int CHANGE_HEAD_ICON =2006;
     private static final int VERSIONCODE =2207;
     private static final int ERROR_NETWORK =1000;
 
@@ -75,7 +75,7 @@ public class HttpRequest {
                         HttpClient httpClient_login = new DefaultHttpClient();  //创建HttpClient对象
                         HttpGet httpGet_login = new HttpGet(url+"/?action=login&username="+username+"&password="+password);
                         try {
-                            HttpResponse httpResponse = httpClient_login.execute(httpGet_login);//第三步：执行请求，获取服务器发还的相应对象
+                            HttpResponse httpResponse = httpClient_login.execute(httpGet_login);//第三步 执行请求，获取服务器发还的相应对象
                             if((httpResponse.getEntity())!=null){
                                 HttpEntity entity =httpResponse.getEntity();
                                 String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
@@ -110,13 +110,13 @@ public class HttpRequest {
                                     +"&username="+resp_user.getUsername());
                             Log.e("HTTPR", "URL:"+httpGet_getHistory.getURI().toString());
                             try {
-                                HttpResponse httpResponse = httpClient_getHistory.execute(httpGet_getHistory);//第三步：执行请求，获取服务器发还的相应对象
+                                HttpResponse httpResponse = httpClient_getHistory.execute(httpGet_getHistory);//第三步 执行请求，获取服务器发还的相应对象
                                 if((httpResponse.getEntity())!=null){
                                     HttpEntity entity =httpResponse.getEntity();
                                     String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
                                     Log.e("HTTPR", "re:"+response);
                                     Message message = new Message();//在子线程中将Message对象发出去
-                                    message.what =GETHISTORY;
+                                    message.what = GET_HISTORY;
                                     message.obj =response;
                                     handler.sendMessage(message);
                                 }
@@ -155,7 +155,7 @@ public class HttpRequest {
                         HttpClient httpClient = new DefaultHttpClient();  //创建HttpClient对象
                         HttpGet httpGet = new HttpGet(url+"/?action=register&username="+username+"&password="+password);
                         try {
-                            HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                            HttpResponse httpResponse = httpClient.execute(httpGet);//第三步 执行请求，获取服务器发还的相应对象
                             if((httpResponse.getEntity())!=null){
                                 HttpEntity entity =httpResponse.getEntity();
                                 String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
@@ -179,7 +179,7 @@ public class HttpRequest {
 
     /**
      * 将搜索内容发送远端存储
-     * @param text：搜索内容
+     * @param text 搜索内容
      */
     public void setHistory(final int User_id,final String Username ,final String text, HttpCallback cBack){
         this.callback = cBack;
@@ -192,13 +192,13 @@ public class HttpRequest {
                         +"&username="+Username
                         +"&searchHistory="+text);
                 try {
-                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步 执行请求，获取服务器发还的相应对象
                     if((httpResponse.getEntity())!=null){
                         HttpEntity entity =httpResponse.getEntity();
                         String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
                         //TODO ido 处理增加搜索记录的返回结果，规范化验证逻辑
                         Message message = new Message();//在子线程中将Message对象发出去
-                        message.what = SETHISTORY;
+                        message.what = SET_HISTORY;
                         message.obj =response;
                         handler.sendMessage(message);
                     }
@@ -224,13 +224,13 @@ public class HttpRequest {
                 HttpGet httpGet = new HttpGet(url + "/history.php?action=clearSearchHistory&id=" +User_id
                         + "&username=" + Username);
                 try {
-                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步 执行请求，获取服务器发还的相应对象
                     if ((httpResponse.getEntity()) != null) {
                         HttpEntity entity = httpResponse.getEntity();
                         String response = EntityUtils.toString(entity, "utf-8");//将entity当中的数据转换为字符串
                         //TODO 处理返回值
                         Message message = new Message();//在子线程中将Message对象发出去
-                        message.what = CLEARFISTORY;
+                        message.what = CLEAR_HISTORY;
                         message.obj =response;
                         handler.sendMessage(message);
                     }
@@ -255,13 +255,13 @@ public class HttpRequest {
                 HttpClient httpClient = new DefaultHttpClient();  //创建HttpClient对象
                 HttpGet httpGet = new HttpGet(url+"/?action=modifyheadid&username="+Username+"&id_head="+id_head);
                 try {
-                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步 执行请求，获取服务器发还的相应对象
                     if((httpResponse.getEntity())!=null){
                         HttpEntity entity =httpResponse.getEntity();
                         String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
                         //TODO 数据根据返回值设置需要才更加严谨
                         Message message = new Message();//在子线程中将Message对象发出去
-                        message.what = CHANGEHEADICON;
+                        message.what = CHANGE_HEAD_ICON;
                         message.obj =response;
                         handler.sendMessage(message);
                     }
@@ -285,7 +285,7 @@ public class HttpRequest {
                 HttpClient httpClient = new DefaultHttpClient();  //创建HttpClient对象
                 HttpGet httpGet = new HttpGet(url+"/version.php?version="+version);
                 try {
-                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步：执行请求，获取服务器发还的相应对象
+                    HttpResponse httpResponse = httpClient.execute(httpGet);//第三步 执行请求，获取服务器发还的相应对象
                     if((httpResponse.getEntity())!=null){
                         HttpEntity entity =httpResponse.getEntity();
                         String response = EntityUtils.toString(entity,"utf-8");//将entity当中的数据转换为字符串
@@ -328,7 +328,7 @@ public class HttpRequest {
                             e.printStackTrace();
                         }
                         break;
-                    case GETHISTORY:
+                    case GET_HISTORY:
                         try {
                             resp_user.setSearchHistory(Response);
                             Log.e("HTTPR", "+++++" + Response);
@@ -356,11 +356,11 @@ public class HttpRequest {
                             e.printStackTrace();
                         }
                         break;
-                    case SETHISTORY:
+                    case SET_HISTORY:
                         break;
-                    case CLEARFISTORY:
+                    case CLEAR_HISTORY:
                         break;
-                    case CHANGEHEADICON:
+                    case CHANGE_HEAD_ICON:
                         break;
                     case VERSIONCODE:
                         callback.onFinish(Integer.parseInt(Response));

@@ -15,6 +15,10 @@ import com.example.fei.zmap_test.db.Users;
 
 import org.litepal.crud.DataSupport;
 
+/**
+ * 个人中心界面
+ * 包括设置入口，登录注册入口以及用户信息入口
+ */
 public class ProfileActivity extends AppCompatActivity {
     public Users current_user =null;
     public TextView username_textView;
@@ -63,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     /**
      * 添加监听器
-     * @param res：控件id
+     * @param res 控件id
      */
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new View.OnClickListener() {
@@ -97,8 +101,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     /**
      * 向我的，驾车，其他三栏中某一栏的每个子项添加监听器
-     * @param tmp：我的，驾车，其他三栏中的某一栏
-     * @param id：表示某一栏中第几个子项
+     * @param tmp 我的，驾车，其他三栏中的某一栏
+     * @param id 表示某一栏中第几个子项
      */
     public void addListenerForSubColumn(final ProfileColumnLayout tmp, final int id){
         View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -129,6 +133,10 @@ public class ProfileActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    /**
+     * 启动登录
+     */
     public void login(){
         Intent intent = new Intent(ProfileActivity.this, LoginAccountActivity.class);
         startActivity(intent);
