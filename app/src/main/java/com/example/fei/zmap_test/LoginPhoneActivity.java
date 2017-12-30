@@ -19,6 +19,11 @@ public class LoginPhoneActivity extends AppCompatActivity {
         //按钮目前只有返回功能
         addListener(R.id.login_phone_button);
     }
+
+    /**
+     * 为控件添加监听器
+     * @param res 控件ID
+     */
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new View.OnClickListener() {
             @Override

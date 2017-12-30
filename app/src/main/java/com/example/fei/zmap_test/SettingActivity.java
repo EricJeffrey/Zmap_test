@@ -19,6 +19,10 @@ import android.widget.Toast;
 import com.example.fei.zmap_test.common.AppUpdateManager;
 import com.example.fei.zmap_test.customlayout.SettingItemLayout;
 
+/**
+ * 设置界面
+ * 现有功能包括 版本更新，消息推送
+ */
 public class SettingActivity extends AppCompatActivity {
     public static String MY_CITY_NAME;
     private static final String TAG = "SettingActivity";
@@ -40,7 +44,7 @@ public class SettingActivity extends AppCompatActivity {
         checkUpdateView.setVersionName(versionName);
 
         SettingItemLayout citySwitch = findViewById(R.id.SettingActivity_city_switch);
-        if(!TextUtils.isEmpty(MY_CITY_NAME)) citySwitch.setDetail("城市：" + MY_CITY_NAME);
+        if(!TextUtils.isEmpty(MY_CITY_NAME)) citySwitch.setDetail("城市 " + MY_CITY_NAME);
 
         addListener(R.id.SettingActivity_about_zmap);
         addListener(R.id.SettingActivity_check_update);
@@ -51,6 +55,11 @@ public class SettingActivity extends AppCompatActivity {
         addListener(R.id.SettingActivity_navigation_setting);
         addListener(R.id.SettingActivity_wifi_auto_download);
     }
+
+    /**
+     * 为每个控件添加监听器
+     * @param res 控件ID
+     */
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +95,10 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * 改变消息推送的开启状态
+     */
     public void changeNotificationStatus(){
         Switch s = findViewById(R.id.SettingActivity_message_notify);
         SharedPreferences sharedPreferences = getSharedPreferences("time", MODE_PRIVATE);

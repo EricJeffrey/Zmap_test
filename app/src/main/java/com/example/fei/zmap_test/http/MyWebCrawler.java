@@ -26,13 +26,12 @@ import java.util.ArrayList;
  */
 
 public class MyWebCrawler {
-    private static final String TAG = "MyWebCrawler";
     private Handler handler;
     private static MyWebCrawler webCrawler;
 
     /**
      * 获取单体
-     * @param handler：处理消息的对象
+     * @param handler 处理消息的对象
      */
     public static MyWebCrawler getInstance(Handler handler){
         if(webCrawler != null) {
@@ -89,7 +88,7 @@ public class MyWebCrawler {
     }
     /**
      * 获取每个文章的详细内容
-     * @param href：文章对应链接
+     * @param href 文章对应链接
      */
     public void getTextDetail(final String href, final ArrayList<ArticleParagraphHolder> resultList){
         new Thread(new Runnable() {
@@ -130,8 +129,8 @@ public class MyWebCrawler {
 
     /**
      * 根据图片URL获取图片
-     * @param holders：保存图片URL的类
-     * @param bitmaps：保存获取到的图片到ArrayList中
+     * @param holders 保存图片URL的类
+     * @param bitmaps 保存获取到的图片到ArrayList中
      */
     public void getImages(final ArrayList<ArticleParagraphHolder> holders, final ArrayList<Bitmap> bitmaps){
         new Thread(new Runnable() {

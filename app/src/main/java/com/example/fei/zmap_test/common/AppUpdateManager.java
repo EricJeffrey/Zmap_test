@@ -33,7 +33,7 @@ public class AppUpdateManager extends BroadcastReceiver implements HttpCallback 
     private static final int VERSION_UP_TO_DATE = 0;
     private static final int ERROR_ON_CHECKING_UPDATE = -1;
     /**
-     * context：
+     * context
      * versionCode:
      * statusCode: 当前对象的状态，1表示正在使用（即正在更新），0表示已经完成任务或出错
      * downloadId: 当前任务在下载队列中的ID
@@ -51,7 +51,7 @@ public class AppUpdateManager extends BroadcastReceiver implements HttpCallback 
 
     /**
      * 当该对象任务出错或任务执行完毕之后调用
-     * 作用：context取消注册广播接收器并设置其statusCode为0
+     * 作用 context取消注册广播接收器并设置其statusCode为0
      */
     public void setUseless(boolean isRegistered){
         Log.e(TAG, "setUseless: going to set statusCode to 0, isRegistered:" + isRegistered);
@@ -62,8 +62,8 @@ public class AppUpdateManager extends BroadcastReceiver implements HttpCallback 
     /**
      * 接收下载完成的广播
      * 自动安装有bug，已注释
-     * @param context：context
-     * @param intent：intent
+     * @param context context
+     * @param intent intent
      */
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -122,7 +122,7 @@ public class AppUpdateManager extends BroadcastReceiver implements HttpCallback 
 
     /**
      * 接口方法实现回调
-     * @param status：返回状态
+     * @param status 返回状态
      */
     @Override
     public void onFinish(int status) {
@@ -142,17 +142,6 @@ public class AppUpdateManager extends BroadcastReceiver implements HttpCallback 
                 break;
         }
     }
-    protected void installAPK(File file) {
-        if (!file.exists()) return;
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = Uri.parse("file://" + file.toString());
-        intent.setDataAndType(uri, "application/vnd.android.package-archive");
-        //在服务中开启activity必须设置flag,后面解释
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-        setUseless(false);
-    }
-
     public int getStatusCode() {
         return statusCode;
     }

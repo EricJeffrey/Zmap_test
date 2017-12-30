@@ -51,10 +51,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 搜索页面
+ * 提供搜索，搜索历史记录查看等功能
+ */
 public class SearchPageActivity extends AppCompatActivity implements HttpCallback {
     private static final String TAG = "SearchPageActivity";
     public Users current_user =null;
-    private String url;
     private Gson gson;
     private ArrayList <String> historyList;
     private LinearLayout searchHistoryHolder;
@@ -92,7 +95,7 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
         setContentView(R.layout.activity_search_page_layout);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) actionBar.hide();
-        url=getString(R.string.URl); //服务器接口地址
+        String url = getString(R.string.URl);
 
         gson = new Gson();
         searchButton =  findViewById(R.id.SearchPageActivity_search_button);
@@ -173,7 +176,7 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
 
     /**
      * 为可见的控件添加监听器
-     * @param res：控件的id
+     * @param res 控件的id
      */
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new View.OnClickListener() {
@@ -229,7 +232,7 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
 
     /**
      * 获取搜索结果并更新listView
-     * @param text：搜索内容
+     * @param text 搜索内容
      */
     public void getSearchResultAndUpdateList(String text){
         typeButtonHistoryView.setVisibility(View.GONE);
@@ -269,7 +272,7 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
 
     /**
      * 将记录保存到本地以及远程数据库
-     * @param text：搜索内容
+     * @param text 搜索内容
      */
     public void putSearchRecordToDatabase(String text){
         if(TextUtils.isEmpty(text)) return;
@@ -329,7 +332,7 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
     }
 
     /**
-     * 如果搜索列表可见-》隐藏
+     * 如果搜索列表可见则置为隐藏
      * 否则销毁活动，返回数据
      */
     @Override
@@ -349,6 +352,9 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
         }
     }
 
+    /**
+     * 重新加载历史记录
+     */
     public void onResume(){
         super.onResume();
         getAndShowSearchHistoryRecord();
@@ -357,14 +363,15 @@ public class SearchPageActivity extends AppCompatActivity implements HttpCallbac
 
     /**
      * 回调处理返回数据
-     *
-     * @param status ：返回状态
+     * @param status  返回状态
      */
     @Override
     public void onFinish(int status) {
-
     }
 
+    /**
+     * 展示搜索结果的ListView的适配器
+     */
     class SearchResultListAdapter extends ArrayAdapter<SearchResultItem> {
         private int resourceId;
 

@@ -16,6 +16,10 @@ import com.example.fei.zmap_test.http.MyWebCrawler;
 
 import java.util.ArrayList;
 
+/**
+ * 消息中心
+ * 显示从网页www.ithome.com获得的新闻数据
+ */
 public class MessageCenterActivity extends AppCompatActivity {
     public static final int ERROR_ON_GET_TITLE = -1;
     public static final int GET_TITLE_START = 1;

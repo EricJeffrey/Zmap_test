@@ -4,6 +4,7 @@ import org.litepal.crud.DataSupport;
 
 /**
  * Created by do_pc on 2017/12/10.
+ * 数据库连接使用
  */
 
 public class Users extends DataSupport {

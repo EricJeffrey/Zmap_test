@@ -20,6 +20,10 @@ import com.example.fei.zmap_test.db.Users;
 
 import org.litepal.crud.DataSupport;
 
+/**
+ * 账户中心
+ * 提供头像修改和退出登录功能
+ */
 public class AccountProfileActivity extends AppCompatActivity implements HttpCallback {
     public Users current_user;
     private ScrollView top_view;
@@ -50,6 +54,11 @@ public class AccountProfileActivity extends AppCompatActivity implements HttpCal
         addListener(R.id.Account_profile_all_head_icon_holder);//头像选择界面
         addListenerForChooseButton();
     }
+
+    /**
+     * 为每个控件添加监听器
+     * @param res 控件id
+     */
     public void addListener(final int res){
         findViewById(res).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +97,10 @@ public class AccountProfileActivity extends AppCompatActivity implements HttpCal
             }
         });
     }
-    //为每个头像选择图标设置监听器
+
+    /**
+     * 为每个头像选择图标设置监听器
+     */
     public void addListenerForChooseButton(){
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -123,6 +135,11 @@ public class AccountProfileActivity extends AppCompatActivity implements HttpCal
         findViewById(R.id.Account_profile_head_icon_choose_btn_18).setOnClickListener(onClickListener);
     }
 
+    /**
+     * 重写返回键
+     * 当头像选择界面可见时，按下back键使其消息
+     * 否则退出活动
+     */
     @Override
     public void onBackPressed() {
         if(top_view.getVisibility() == View.GONE) finish();
@@ -131,7 +148,10 @@ public class AccountProfileActivity extends AppCompatActivity implements HttpCal
         }
     }
 
-    //头像选择界面动画出现，同时取消底层界面激活状态
+    /**
+     * 使头像选择界面动画出现
+     * 取消底层界面激活状态
+     */
     public void topViewAnimShow(){
         Animation pop_up_anim = AnimationUtils.loadAnimation(AccountProfileActivity.this, R.anim.activity_account_profile_head_icon_choose_pop_up);
         top_view.startAnimation(pop_up_anim);
@@ -139,7 +159,10 @@ public class AccountProfileActivity extends AppCompatActivity implements HttpCal
         bottom_view.setActivated(false);
     }
 
-    //头像选择界面动画消失，同时激活底层界面
+    /**
+     * 使头像选择界面动画消失
+     * 同时激活底层界面
+     */
     public void topViewAnimDisappear(){
         Animation pop_down_anim = AnimationUtils.loadAnimation(AccountProfileActivity.this, R.anim.activity_account_profile_head_icon_pop_down);
         top_view.startAnimation(pop_down_anim);
@@ -148,7 +171,11 @@ public class AccountProfileActivity extends AppCompatActivity implements HttpCal
     }
 
 
-    //通过ID获得View
+    /**
+     * 通过ID获得View
+     * @param id 控件ID
+     * @return 控件的drawable资源
+     */
     public static int getHeadIconResourceFromId(int id){
         switch (id){
             case 0:return R.drawable.profile_head;
@@ -176,11 +203,9 @@ public class AccountProfileActivity extends AppCompatActivity implements HttpCal
 
     /**
      * 回调处理返回数据
-     *
-     * @param status ：返回状态
+     * @param status  返回状态
      */
     @Override
     public void onFinish(int status) {
-
     }
 }
