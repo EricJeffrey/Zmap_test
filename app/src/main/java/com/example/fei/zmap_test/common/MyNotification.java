@@ -34,8 +34,11 @@ public class MyNotification {
         String curr_time =""+System.currentTimeMillis();
         curr_time = curr_time.substring(1,10);
         editor.putInt("last_time",Integer.valueOf(curr_time));
-        editor.apply();
-        return (Integer.valueOf(curr_time) - last_time) > interval;
+        if((Integer.valueOf(curr_time) - last_time) > interval){
+            editor.apply();
+            return true;
+        }
+        return false;
     }
 
     /**
