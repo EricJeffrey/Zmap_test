@@ -33,8 +33,11 @@ public class MyNotification {
         int last_time =sharedPreferences.getInt("last_time",0);
         String curr_time =""+System.currentTimeMillis();
         curr_time = curr_time.substring(1,10);
-        editor.putInt("last_time",Integer.valueOf(curr_time));
+        Log.e(TAG, "isTimeToSend: curr : "+curr_time );
+        Log.e(TAG, "isTimeToSend: last : "+last_time );
+        Log.e(TAG, "isTimeToSend: interval : "+interval );
         if((Integer.valueOf(curr_time) - last_time) > interval){
+            editor.putInt("last_time",Integer.valueOf(curr_time));
             editor.apply();
             return true;
         }
