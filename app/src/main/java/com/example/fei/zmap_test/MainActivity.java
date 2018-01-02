@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private int traffic_accident_button_status;
     private int my_collection_button_status;
     PoiItem current_POI;
+    private long mExitTime; //back按钮计时
 
     private LinearLayout poiDetailHolder;
 
@@ -637,27 +638,21 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     }
 
     @Override
-    public void onBackPressed() {
-        if (poiDetailHolder.getVisibility() == View.VISIBLE)
-            poiDetailHolder.setVisibility(View.GONE);
-        else super.onBackPressed();
-    }
-
-    private long mExitTime;
-    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-            if ((System.currentTimeMillis() - mExitTime) > 2000) {
-
-                Toast.makeText(this, "再按一次退出Zmap", Toast.LENGTH_SHORT).show();//大于2000ms则认为是误操作，使用Toast进行提示
-
-                mExitTime = System.currentTimeMillis(); //记录下本次点击“返回键”的时刻，以便下次进行判断
+            if (poiDetailHolder!=null && poiDetailHolder.getVisibility() == View.VISIBLE ){
+                poiDetailHolder.setVisibility(View.GONE);
+                return true;
             } else {
-                System.exit(0); //完全退出程序，释放内存
+                if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                    Toast.makeText(this, "再按一次退出Zmap", Toast.LENGTH_SHORT).show();//大于2000ms则认为是误操作，使用Toast进行提示
+                    mExitTime = System.currentTimeMillis(); //记录下本次点击“返回键”的时刻，以便下次进行判断
+                } else {
+                    System.exit(0); //完全退出程序，释放内存
+                }
+                return true;
             }
-            return true;
         }
         return super.onKeyDown(keyCode, event);
     }
