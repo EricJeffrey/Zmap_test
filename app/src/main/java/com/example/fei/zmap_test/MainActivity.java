@@ -429,7 +429,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.map_setting:
-                        Toast.makeText(MainActivity.this, "正在全力开发中...", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(MainActivity.this, MapSettingActivity.class);
+                        startActivity(intent1);
                         break;
                     case R.id.MainActivity_search_box:
                         top_view.setVisibility(View.GONE);
@@ -442,8 +443,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                         break;
                     case R.id.MainActivity_near_search_box:
                     case R.id.MainActivity_msg_center_button:
-                        Intent intent1 = new Intent(MainActivity.this, MessageCenterActivity.class);
-                        startActivity(intent1);
+                        intent2 = new Intent(MainActivity.this, MessageCenterActivity.class);
+                        startActivity(intent2);
                         break;
                     case R.id.MainActivity_instant_route_status_button:
                         changeRouteStatus();
@@ -533,7 +534,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     /**
      * 搜索到POI的时候回调
      * @param poiResult 搜索到的POI数据
-     * @param i
+     * @param i nothing
      */
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {

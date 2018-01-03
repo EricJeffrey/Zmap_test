@@ -31,5 +31,6 @@
     <declare-styleable name="SettingItemLayout">
         <attr name="setting_text" format="string"/>
         <attr name="setting_detail_text" format="string"/>
+        <attr name="setting_switch_on" format="boolean"/>
     </declare-styleable>
 </resources>

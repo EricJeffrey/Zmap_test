@@ -51,9 +51,7 @@ public class SettingActivity extends AppCompatActivity {
         addListener(R.id.SettingActivity_city_switch);
         addListener(R.id.SettingActivity_clear_cache);
         addListener(R.id.SettingActivity_map_setting);
-        addListener(R.id.SettingActivity_message_notify);
         addListener(R.id.SettingActivity_navigation_setting);
-        addListener(R.id.SettingActivity_wifi_auto_download);
     }
 
     /**
@@ -82,8 +80,14 @@ public class SettingActivity extends AppCompatActivity {
                         }
                         break;
                     case R.id.SettingActivity_city_switch:
+                        intent = new Intent(SettingActivity.this, CitySelectActivity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.SettingActivity_clear_cache:
                     case R.id.SettingActivity_map_setting:
+                        intent = new Intent(SettingActivity.this, MapSettingActivity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.SettingActivity_message_notify:
                         changeNotificationStatus();
                         break;
