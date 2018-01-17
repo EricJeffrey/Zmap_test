@@ -366,7 +366,7 @@ public class HttpRequest {
                         callback.onFinish(Integer.parseInt(Response));
                         break;
                     case ERROR_NETWORK:
-                        callback.onFinish(Integer.parseInt(Response));
+                        callback.onFinish(-1);
                     default:
                         break;
                 }

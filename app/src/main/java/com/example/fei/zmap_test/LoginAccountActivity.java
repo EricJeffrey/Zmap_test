@@ -81,9 +81,11 @@ public class LoginAccountActivity extends AppCompatActivity implements HttpCallb
         if (status > 0) {
             Toast.makeText(LoginAccountActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
             finish();
-        } else {
+        } else if (status ==0) {
             Toast.makeText(LoginAccountActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();
             password.setText("");
+        } else {
+            Toast.makeText(LoginAccountActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
         }
 
     }
